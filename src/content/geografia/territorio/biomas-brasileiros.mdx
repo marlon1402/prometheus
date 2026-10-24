@@ -1,14 +1,329 @@
 ---
 titulo: Biomas brasileiros
-descricao: Os seis biomas do Brasil, onde ficam e o que os caracteriza.
+descricao: O Brasil tem seis biomas, cada um com clima, vegetação e fauna próprios. Escolha um no mapa ou nas abas abaixo dele.
 ordem: 1
 nivel: fundamental-medio
 duracao: 15
 rascunho: true
 ---
 
-Conteúdo de teste para validar a plataforma. Rascunho: só aparece no ambiente de desenvolvimento.
+import { biomas } from '../../../mapas/biomas';
 
-## Os seis biomas
+{/*
+  Conteúdo de teste para validar a plataforma. Os textos vêm do rascunho do protótipo
+  e precisam ser revisados com fontes antes de publicar (ver registro de decisões).
+  Números de espécies: IBGE Educa. As fotos ainda não existem: os espaços reservados
+  descrevem o que vai em cada uma.
+*/}
 
-Texto de exemplo.
+<Mapa
+  geometria={biomas}
+  rotulo="Mapa dos biomas do Brasil"
+  rotuloAbas="Biomas"
+  regioes={[
+    { id: 'AMZ', nome: 'Amazônia' },
+    { id: 'CER', nome: 'Cerrado' },
+    { id: 'MAT', nome: 'Mata Atlântica' },
+    { id: 'CAAT', nome: 'Caatinga' },
+    { id: 'PMP', nome: 'Pampa' },
+    { id: 'PTN', nome: 'Pantanal' },
+  ]}
+>
+  <Regiao id="nenhuma" lugar="topo" titulo="Escolha um bioma" destaque="6 biomas no território brasileiro">
+    Bioma é uma grande região com clima e vegetação parecidos. Clique no mapa ou nas abas para conhecer cada um.
+  </Regiao>
+
+  {/* Amazônia */}
+  <Regiao id="AMZ" lugar="topo" titulo="Amazônia" destaque="Ocupa cerca de 49% do território brasileiro">
+    A maior floresta tropical do mundo, cortada pela maior bacia hidrográfica do planeta.
+  </Regiao>
+  <Regiao id="AMZ" lugar="esquerda">
+    ### Clima
+
+    Equatorial: quente e úmido o ano inteiro, com média perto de 25 °C e chuvas abundantes.
+
+    <SaibaMais titulo="Saiba mais sobre o clima">
+      Boa parte da chuva é reciclada pela própria floresta: as árvores devolvem umidade ao ar pela transpiração. Os ventos levam parte desse vapor para o Centro-Oeste e o Sudeste, nos chamados rios voadores.
+    </SaibaMais>
+
+    ### Vegetação
+
+    Predomina a floresta densa, de árvores altas e copas fechadas. Nas margens dos rios ficam as matas de várzea e de igapó.
+
+    <SaibaMais titulo="Saiba mais sobre a vegetação">
+      A várzea é alagada só nas cheias, quando os rios podem subir mais de 10 metros; o igapó fica inundado quase o ano todo. Os rios também mudam de cor: o Solimões é barrento, o Negro tem cor de chá escuro e o Tapajós tem águas claras.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="AMZ" lugar="direita">
+    ### Fauna
+
+    Onça-pintada, boto-cor-de-rosa, peixe-boi-da-amazônia, pirarucu e harpia.
+
+    <SaibaMais titulo="Saiba mais sobre a fauna">
+      A bacia amazônica tem mais espécies de peixes do que qualquer outra bacia de rios do mundo, e muitas espécies da floresta ainda nem foram descritas pela ciência.
+    </SaibaMais>
+
+    ### Ameaças
+
+    Desmatamento para pecuária e agricultura, garimpo ilegal e queimadas.
+
+    <SaibaMais titulo="Saiba mais sobre as ameaças">
+      A maior parte das áreas desmatadas vira pasto. Como a floresta ajuda a produzir chuva, perdê-la pode reduzir as chuvas em outras regiões do país.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="AMZ" lugar="abaixo">
+    <Numeros titulo="Espécies conhecidas" fonte="IBGE Educa" itens={[[13229, 'plantas'], [1000, 'aves'], [3000, 'peixes'], [311, 'mamíferos'], [550, 'répteis'], [163, 'anfíbios']]} />
+  </Regiao>
+  <Regiao id="AMZ" lugar="rodape">
+    <Galeria titulo="Imagens">
+      <Foto titulo="Mata de igapó" legenda="Árvores com o tronco dentro d’água, num trecho de floresta que fica inundado quase o ano todo." previsto="Foto: Mata de igapó" />
+      <Foto titulo="Encontro das águas" legenda="O rio Negro, escuro, e o Solimões, barrento, correm lado a lado por quilômetros sem se misturar." previsto="Foto: Encontro das águas" />
+      <Foto titulo="Boto-cor-de-rosa" legenda="O maior golfinho de água doce do mundo vive nos rios da bacia amazônica." previsto="Foto: Boto-cor-de-rosa" />
+    </Galeria>
+  </Regiao>
+
+  {/* Cerrado */}
+  <Regiao id="CER" lugar="topo" titulo="Cerrado" destaque="Ocupa cerca de 24% do território brasileiro">
+    A savana com maior biodiversidade do mundo, chamada de “berço das águas” por abrigar nascentes de grandes rios.
+  </Regiao>
+  <Regiao id="CER" lugar="esquerda">
+    ### Clima
+
+    Tropical, com verão chuvoso e inverno seco bem marcados.
+
+    <SaibaMais titulo="Saiba mais sobre o clima">
+      Na seca, que dura cerca de cinco a seis meses, a umidade do ar cai muito e a paisagem fica amarelada. Com as primeiras chuvas, o Cerrado rebrota rapidamente.
+    </SaibaMais>
+
+    ### Vegetação
+
+    Árvores baixas, de troncos tortos e casca grossa, misturadas a campos de gramíneas.
+
+    <SaibaMais titulo="Saiba mais sobre a vegetação">
+      Boa parte da vida do Cerrado está debaixo da terra: as raízes são profundas para alcançar a água na seca, e por isso ele é chamado de “floresta de cabeça para baixo”. A casca grossa protege as plantas do fogo, que faz parte do ciclo natural do bioma.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="CER" lugar="direita">
+    ### Fauna
+
+    Lobo-guará, tamanduá-bandeira, tatu-canastra, seriema e ema.
+
+    <SaibaMais titulo="Saiba mais sobre a fauna">
+      O lobo-guará, símbolo do Cerrado, come muitas frutas, principalmente a lobeira, e ajuda a espalhar suas sementes pelo bioma.
+    </SaibaMais>
+
+    ### Ameaças
+
+    Expansão da agricultura e da pecuária desde os anos 1960.
+
+    <SaibaMais titulo="Saiba mais sobre as ameaças">
+      Com a construção de Brasília e de novas estradas, grandes áreas viraram lavouras, principalmente de soja. Como no Cerrado nascem rios de bacias como a do São Francisco, o desmatamento afeta a água de boa parte do país.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="CER" lugar="abaixo">
+    <Numeros titulo="Espécies conhecidas" fonte="IBGE Educa" itens={[[12683, 'plantas'], [850, 'aves'], [1000, 'peixes'], [252, 'mamíferos'], [187, 'répteis'], [113, 'anfíbios']]} />
+  </Regiao>
+  <Regiao id="CER" lugar="rodape">
+    <Galeria titulo="Imagens">
+      <Foto titulo="Árvores do Cerrado" legenda="Troncos tortos e casca grossa, uma adaptação ao fogo e à seca." previsto="Foto: Árvores do Cerrado" />
+      <Foto titulo="Lobo-guará" legenda="O maior canídeo da América do Sul, símbolo do Cerrado." previsto="Foto: Lobo-guará" />
+      <Foto titulo="Vereda com buritis" legenda="Áreas úmidas com palmeiras de buriti, onde brotam nascentes." previsto="Foto: Vereda com buritis" />
+    </Galeria>
+  </Regiao>
+
+  {/* Mata Atlântica */}
+  <Regiao id="MAT" lugar="topo" titulo="Mata Atlântica" destaque="Ocupa cerca de 13% do território brasileiro">
+    A floresta que acompanha o litoral. É o bioma mais devastado do país: resta menos de um terço da cobertura original.
+  </Regiao>
+  <Regiao id="MAT" lugar="esquerda">
+    ### Clima
+
+    Tropical úmido na maior parte, com forte influência do oceano. No Sul, é subtropical.
+
+    <SaibaMais titulo="Saiba mais sobre o clima">
+      A umidade que vem do mar sobe as encostas da Serra do Mar, esfria e vira chuva. Por isso, algumas áreas do litoral estão entre as mais chuvosas do Brasil.
+    </SaibaMais>
+
+    ### Vegetação
+
+    Floresta densa nas encostas, mata de araucárias no Sul, restingas e manguezais na costa.
+
+    <SaibaMais titulo="Saiba mais sobre a vegetação">
+      A mata de araucárias, com o pinheiro-do-paraná, ocupa os planaltos frios do Sul. Os manguezais, na foz dos rios, funcionam como berçário de peixes e caranguejos.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="MAT" lugar="direita">
+    ### Fauna
+
+    Mico-leão-dourado, muriqui, onça-pintada, tucanos e uma enorme variedade de anfíbios.
+
+    <SaibaMais titulo="Saiba mais sobre a fauna">
+      O muriqui é o maior macaco das Américas. O mico-leão-dourado chegou perto da extinção nos anos 1970 e se recuperou graças a programas de conservação.
+    </SaibaMais>
+
+    ### Ameaças
+
+    Ocupação urbana, agricultura e exploração de madeira desde a colonização.
+
+    <SaibaMais titulo="Saiba mais sobre as ameaças">
+      É na região da Mata Atlântica que vive a maior parte da população brasileira, e os rios que nascem ali abastecem grandes cidades.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="MAT" lugar="abaixo">
+    <Numeros titulo="Espécies conhecidas" fonte="IBGE Educa" itens={[[18713, 'plantas'], [934, 'aves'], [350, 'peixes'], [370, 'mamíferos'], [311, 'répteis'], [456, 'anfíbios']]} />
+  </Regiao>
+  <Regiao id="MAT" lugar="rodape">
+    <Galeria titulo="Imagens">
+      <Foto titulo="Serra do Mar" legenda="Floresta densa nas encostas que acompanham o litoral." previsto="Foto: Serra do Mar" />
+      <Foto titulo="Mico-leão-dourado" legenda="Espécie que quase desapareceu e virou símbolo da conservação." previsto="Foto: Mico-leão-dourado" />
+      <Foto titulo="Mata de araucárias" legenda="Os pinheiros-do-paraná dominam os planaltos frios do Sul." previsto="Foto: Mata de araucárias" />
+    </Galeria>
+  </Regiao>
+
+  {/* Caatinga */}
+  <Regiao id="CAAT" lugar="topo" titulo="Caatinga" destaque="Ocupa cerca de 10% do território brasileiro">
+    O único bioma exclusivamente brasileiro. Parece sem vida na seca, mas fica verde em poucos dias quando a chuva chega.
+  </Regiao>
+  <Regiao id="CAAT" lugar="esquerda">
+    ### Clima
+
+    Semiárido: quente, com chuvas escassas, irregulares e concentradas em poucos meses.
+
+    <SaibaMais titulo="Saiba mais sobre o clima">
+      Há anos em que a chuva quase não vem, o que causa secas longas. Mesmo assim, a região é um dos semiáridos mais habitados do mundo.
+    </SaibaMais>
+
+    ### Vegetação
+
+    Plantas adaptadas à falta d’água: muitas perdem as folhas na seca, e há cactos como o mandacaru e o xique-xique.
+
+    <SaibaMais titulo="Saiba mais sobre a vegetação">
+      O nome vem do tupi e significa “mata branca”, pela cor da vegetação sem folhas na estiagem. Quando chove, as plantas brotam em poucos dias.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="CAAT" lugar="direita">
+    ### Fauna
+
+    Tatu-bola, arara-azul-de-lear, asa-branca, preá e mocó.
+
+    <SaibaMais titulo="Saiba mais sobre a fauna">
+      O tatu-bola se enrola numa bola quase perfeita para se proteger. A arara-azul-de-lear vive apenas no norte da Bahia.
+    </SaibaMais>
+
+    ### Ameaças
+
+    Desmatamento para lenha e pastagem.
+
+    <SaibaMais titulo="Saiba mais sobre as ameaças">
+      Sem a vegetação, o solo fica exposto e se degrada. Em algumas áreas isso leva à desertificação, quando a terra perde a capacidade de produzir.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="CAAT" lugar="abaixo">
+    <Numeros titulo="Espécies conhecidas" fonte="IBGE Educa" itens={[[5311, 'plantas'], [510, 'aves'], [240, 'peixes'], [148, 'mamíferos'], [107, 'répteis'], [49, 'anfíbios']]} />
+  </Regiao>
+  <Regiao id="CAAT" lugar="rodape">
+    <Galeria titulo="Imagens">
+      <Foto titulo="Mandacaru" legenda="Cacto que guarda água e floresce mesmo na seca." previsto="Foto: Mandacaru" />
+      <Foto titulo="Caatinga na seca" legenda="A “mata branca”, com as árvores sem folhas durante a estiagem." previsto="Foto: Caatinga na seca" />
+      <Foto titulo="Caatinga depois da chuva" legenda="Em poucos dias, a mesma paisagem fica verde." previsto="Foto: Caatinga depois da chuva" />
+    </Galeria>
+  </Regiao>
+
+  {/* Pampa */}
+  <Regiao id="PMP" lugar="topo" titulo="Pampa" destaque="Ocupa cerca de 2% do território brasileiro">
+    Campos abertos e ondulados no sul do Rio Grande do Sul, que continuam pelo Uruguai e pela Argentina.
+  </Regiao>
+  <Regiao id="PMP" lugar="esquerda">
+    ### Clima
+
+    Subtropical, com quatro estações bem definidas, chuvas ao longo do ano e invernos frios.
+
+    <SaibaMais titulo="Saiba mais sobre o clima">
+      No inverno são comuns as geadas, e ventos frios vindos do sul, como o minuano, derrubam as temperaturas.
+    </SaibaMais>
+
+    ### Vegetação
+
+    Campos de gramíneas, com matas apenas ao longo dos rios.
+
+    <SaibaMais titulo="Saiba mais sobre a vegetação">
+      É uma paisagem naturalmente aberta, não uma floresta derrubada. Os campos nativos abrigam centenas de espécies de capins e flores e são usados há séculos para a criação de gado.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="PMP" lugar="direita">
+    ### Fauna
+
+    Veado-campeiro, ema, quero-quero e graxaim.
+
+    <SaibaMais titulo="Saiba mais sobre a fauna">
+      O quero-quero, que defende o ninho com voos rasantes e gritos, é um dos símbolos do Rio Grande do Sul.
+    </SaibaMais>
+
+    ### Ameaças
+
+    Conversão dos campos em lavouras e em plantações de árvores exóticas.
+
+    <SaibaMais titulo="Saiba mais sobre as ameaças">
+      Por ser um bioma de campo, sua destruição chama menos atenção que a de uma floresta. Plantas invasoras, como o capim-annoni, também ocupam o lugar das espécies nativas.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="PMP" lugar="abaixo">
+    <Numeros titulo="Espécies conhecidas" fonte="IBGE Educa" itens={[[1623, 'plantas'], [120, 'aves'], [18, 'peixes'], [74, 'mamíferos'], [97, 'répteis'], [50, 'anfíbios']]} />
+  </Regiao>
+  <Regiao id="PMP" lugar="rodape">
+    <Galeria titulo="Imagens">
+      <Foto titulo="Coxilhas" legenda="Os campos ondulados típicos do Pampa." previsto="Foto: Coxilhas" />
+      <Foto titulo="Quero-quero" legenda="Ave dos campos abertos, um dos símbolos do Rio Grande do Sul." previsto="Foto: Quero-quero" />
+      <Foto titulo="Mata ciliar" legenda="As árvores do Pampa se concentram ao longo dos rios." previsto="Foto: Mata ciliar" />
+    </Galeria>
+  </Regiao>
+
+  {/* Pantanal */}
+  <Regiao id="PTN" lugar="topo" titulo="Pantanal" destaque="Ocupa cerca de 2% do território brasileiro">
+    A maior planície alagável contínua do planeta. Todo ano, as cheias transformam a paisagem.
+  </Regiao>
+  <Regiao id="PTN" lugar="esquerda">
+    ### Clima
+
+    Tropical, com verão chuvoso e inverno seco.
+
+    <SaibaMais titulo="Saiba mais sobre o clima">
+      As chuvas do verão enchem os rios, que transbordam devagar pela planície, porque o terreno é muito plano. A água pode levar meses para escoar.
+    </SaibaMais>
+
+    ### Vegetação
+
+    Mosaico de campos alagáveis, matas, lagoas e “cordilheiras”.
+
+    <SaibaMais titulo="Saiba mais sobre a vegetação">
+      As cordilheiras são faixas de terreno um pouco mais alto que não alagam e servem de abrigo para os animais na cheia. A vegetação mistura elementos do Cerrado, da Amazônia e do Chaco.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="PTN" lugar="direita">
+    ### Fauna
+
+    Tuiuiú, jacaré-do-pantanal, capivara, ariranha e cervo-do-pantanal.
+
+    <SaibaMais titulo="Saiba mais sobre a fauna">
+      Como a paisagem é aberta e os animais se concentram perto da água na seca, o Pantanal é um dos melhores lugares do mundo para observar fauna silvestre.
+    </SaibaMais>
+
+    ### Ameaças
+
+    Grandes incêndios em anos de seca extrema e assoreamento dos rios.
+
+    <SaibaMais titulo="Saiba mais sobre as ameaças">
+      Em 2020, os incêndios atingiram cerca de um quarto do bioma. O desmatamento nas nascentes, fora do Pantanal, também altera o ciclo de cheias de que ele depende.
+    </SaibaMais>
+  </Regiao>
+  <Regiao id="PTN" lugar="abaixo">
+    <Numeros titulo="Espécies conhecidas" fonte="IBGE Educa" itens={[[1197, 'plantas'], [463, 'aves'], [263, 'peixes'], [132, 'mamíferos'], [85, 'répteis'], [35, 'anfíbios']]} />
+  </Regiao>
+  <Regiao id="PTN" lugar="rodape">
+    <Galeria titulo="Imagens">
+      <Foto titulo="Tuiuiú" legenda="A ave símbolo do Pantanal, que pode passar de 1,5 m de altura." previsto="Foto: Tuiuiú" />
+      <Foto titulo="Planície alagada" legenda="Na cheia, a água cobre grandes extensões por meses." previsto="Foto: Planície alagada" />
+      <Foto titulo="Jacaré-do-pantanal" legenda="Comum nas lagoas, sobretudo na época da seca." previsto="Foto: Jacaré-do-pantanal" />
+    </Galeria>
+  </Regiao>
+</Mapa>

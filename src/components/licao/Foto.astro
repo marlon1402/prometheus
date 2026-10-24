@@ -70,7 +70,8 @@ const legendaCompleta = [titulo, legenda, credito].filter(Boolean).join(' · ');
     aspect-ratio: 4 / 3;
     border-radius: 16px;
     object-fit: cover;
-    background: var(--cor, var(--surface));
+    /* Cor da região ou da disciplina, suavizada com o fundo para o texto ter contraste */
+    background: color-mix(in srgb, var(--cor, var(--surface)) 45%, var(--bg));
     transition: transform 0.4s;
   }
 

@@ -1,0 +1,114 @@
+---
+// Mapa interativo com camadas de conteúdo por região.
+//
+//   <Mapa geometria={biomas} rotulo="Mapa dos biomas do Brasil" rotuloAbas="Biomas"
+//         regioes={[{ id: 'AMZ', nome: 'Amazônia' }, …]}>
+//     <Regiao id="nenhuma" lugar="topo" titulo="Escolha um bioma">…</Regiao>
+//     <Regiao id="AMZ" lugar="topo" titulo="Amazônia" destaque="…">…</Regiao>
+//     <Regiao id="AMZ" lugar="esquerda">…</Regiao>
+//   </Mapa>
+//
+// Cada <Regiao> é um bloco de conteúdo que aparece quando a região é escolhida,
+// no lugar indicado: topo (acima do mapa), esquerda, direita, abaixo ou rodape
+// (largura total). Os blocos com id="nenhuma" aparecem antes da primeira escolha.
+// Todo o texto fica no HTML: sem JavaScript, os blocos aparecem em sequência.
+// As cores vêm dos tokens --<id> e --<id>-ink em tokens.css.
+import type { Geometria } from '../../../mapas/tipos';
+import '../../../styles/mapa.css';
+
+interface Props {
+  geometria: Geometria;
+  /** Ordem das abas. */
+  regioes: { id: string; nome: string }[];
+  rotulo: string;
+  rotuloAbas: string;
+}
+
+const { geometria, regioes, rotulo, rotuloAbas } = Astro.props;
+const nomes = Object.fromEntries(regioes.map((r) => [r.id, r.nome]));
+for (const id of Object.keys(geometria.regioes)) {
+  if (!nomes[id]) throw new Error(`Mapa: a região "${id}" do mapa não está na lista "regioes".`);
+}
+
+// Moldura: círculo pastel atrás do país e brilhos ao redor, como na abertura do site.
+const [x, y, w, h] = geometria.viewBox.split(/\s+/).map(Number);
+const caixa = `${x - w / 12} ${y - h / 13} ${w + w / 6} ${h + h / 6.5}`;
+const fundo = { cx: x + w / 2, cy: y + h / 2, r: Math.max(w, h) / 2 };
+const brilho = (fx: number, fy: number, s: number) => {
+  const bx = x + fx * w;
+  const by = y + fy * h;
+  return `M${bx} ${by - s}Q${bx} ${by} ${bx + s} ${by}Q${bx} ${by} ${bx} ${by + s}Q${bx} ${by} ${bx - s} ${by}Q${bx} ${by} ${bx} ${by - s}z`;
+};
+const brilhos = [brilho(-0.02, 0.11, 14), brilho(1.02, 0.22, 11), brilho(0.93, 0.97, 12), brilho(0.05, 0.88, 9)].join('');
+const pontos = [[0.13, -0.015, 5], [1, 0.56, 4], [-0.03, 0.56, 4], [0.78, 1.05, 5]];
+---
+
+<div class="mapa-camadas amplo" data-mapa>
+  <div class="mc-centro">
+    <div class="mc-caixa">
+      <svg viewBox={caixa} role="group" aria-label={rotulo}>
+        <circle class="mc-fundo" cx={fundo.cx} cy={fundo.cy} r={fundo.r}></circle>
+        <g class="mc-deco">
+          <path d={brilhos}></path>
+          {pontos.map(([fx, fy, r]) => <circle cx={x + fx * w} cy={y + fy * h} r={r} />)}
+        </g>
+        <g class="mc-sombra" transform="translate(6 8)">
+          {Object.values(geometria.regioes).map((d) => <path d={d} fill-rule="evenodd" />)}
+        </g>
+        {
+          Object.entries(geometria.regioes).map(([id, d]) => {
+            const icone = geometria.icones?.[id];
+            return (
+              <g class="mc-regiao" data-id={id} aria-label={nomes[id]} style={`--regiao: var(--${id})`}>
+                <path d={d} fill-rule="evenodd" />
+                {icone && (
+                  <g class="mc-icone" transform={`translate(${icone.x} ${icone.y}) scale(${icone.tamanho / 40})`} set:html={icone.svg} />
+                )}
+              </g>
+            );
+          })
+        }
+      </svg>
+      <div class="mc-dica" aria-hidden="true"></div>
+    </div>
+    <div class="mc-abas" role="tablist" aria-label={rotuloAbas}>
+      {
+        regioes.map(({ id, nome }, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`aba-${id}`}
+            data-id={id}
+            aria-selected="false"
+            aria-controls={`regiao-${id}-topo`}
+            tabindex={i === 0 ? 0 : -1}
+            style={`--regiao: var(--${id})`}
+          >
+            <i style={`background: var(--${id}-ink)`} />
+            {nome}
+          </button>
+        ))
+      }
+    </div>
+    <p class="mc-fonte">{geometria.fonte}</p>
+  </div>
+  <slot />
+</div>
+<script is:inline>
+  // Marca o mapa como interativo antes da primeira pintura (sem piscar o conteúdo).
+  document.currentScript.previousElementSibling.classList.add('com-js');
+</script>
+
+<script>
+  import { iniciarMapa } from './mapa';
+
+  for (const raiz of document.querySelectorAll<HTMLElement>('[data-mapa]')) {
+    try {
+      iniciarMapa(raiz);
+    } catch (erro) {
+      // Sem a interação, o conteúdo volta a aparecer em sequência, como sem JavaScript.
+      console.error('Mapa falhou:', erro);
+      raiz.classList.remove('com-js');
+    }
+  }
+</script>

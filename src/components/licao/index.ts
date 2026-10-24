@@ -5,6 +5,9 @@ import Formula from './Formula.astro';
 import Foto from './Foto.astro';
 import Galeria from './Galeria.astro';
 import Ilustracao from './Ilustracao.astro';
+import Mapa from './mapa/Mapa.astro';
+import Regiao from './mapa/Regiao.astro';
+import Numeros from './Numeros.astro';
 import Pergunta from './Pergunta.astro';
 import Quadro from './Quadro.astro';
 import SaibaMais from './SaibaMais.astro';
@@ -16,7 +19,10 @@ export const componentesDaLicao = {
   Foto,
   Galeria,
   Ilustracao,
+  Mapa,
+  Numeros,
   Pergunta,
+  Regiao,
   Quadro,
   SaibaMais,
   Tex,

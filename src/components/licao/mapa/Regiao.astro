@@ -1,0 +1,30 @@
+---
+// Bloco de conteúdo de uma região do <Mapa>, visível quando ela está escolhida.
+// O título é renderizado aqui (e não com ## no MDX) para não entrar no índice da lição.
+interface Props {
+  /** Id da região, ou "nenhuma" para o estado inicial. */
+  id: string;
+  lugar: 'topo' | 'esquerda' | 'direita' | 'abaixo' | 'rodape';
+  titulo?: string;
+  /** Linha curta abaixo do título, por exemplo a área ocupada. */
+  destaque?: string;
+}
+
+const { id, lugar, titulo, destaque } = Astro.props;
+const ativa = id === 'nenhuma';
+const painel = lugar === 'topo' && !ativa;
+---
+
+<div
+  class:list={['mc-bloco', { ativa }]}
+  data-regiao={id}
+  data-lugar={lugar}
+  id={`regiao-${id}-${lugar}`}
+  role={painel ? 'tabpanel' : undefined}
+  aria-labelledby={painel ? `aba-${id}` : undefined}
+  style={ativa ? undefined : `--cor: var(--${id}); --cor-ink: var(--${id}-ink)`}
+>
+  {titulo && <h2 class="mc-titulo">{titulo}</h2>}
+  {destaque && <p class="mc-destaque">{destaque}</p>}
+  <slot />
+</div>
