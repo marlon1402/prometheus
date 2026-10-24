@@ -46,7 +46,7 @@ const pontos = [[0.13, -0.015, 5], [1, 0.56, 4], [-0.03, 0.56, 4], [0.78, 1.05, 
 <div class="mapa-camadas amplo" data-mapa>
   <div class="mc-centro">
     <div class="mc-caixa">
-      <svg viewBox={caixa} role="group" aria-label={rotulo}>
+      <svg viewBox={caixa} role="img" aria-label={rotulo}>
         <circle class="mc-fundo" cx={fundo.cx} cy={fundo.cy} r={fundo.r}></circle>
         <g class="mc-deco">
           <path d={brilhos}></path>
@@ -59,7 +59,7 @@ const pontos = [[0.13, -0.015, 5], [1, 0.56, 4], [-0.03, 0.56, 4], [0.78, 1.05, 
           Object.entries(geometria.regioes).map(([id, d]) => {
             const icone = geometria.icones?.[id];
             return (
-              <g class="mc-regiao" data-id={id} aria-label={nomes[id]} style={`--regiao: var(--${id})`}>
+              <g class="mc-regiao" data-id={id} data-nome={nomes[id]} style={`--regiao: var(--${id})`}>
                 <path d={d} fill-rule="evenodd" />
                 {icone && (
                   <g class="mc-icone" transform={`translate(${icone.x} ${icone.y}) scale(${icone.tamanho / 40})`} set:html={icone.svg} />

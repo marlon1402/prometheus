@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,5 +9,9 @@ export default defineConfig({
   // Ao usar prometheus.com.br, trocar site para 'https://prometheus.com.br' e remover base.
   site: 'https://marlon1402.github.io',
   base: '/prometheus',
-  integrations: [mdx()],
+  integrations: [
+    mdx(),
+    // Rascunhos não entram no build de produção, então também ficam fora do sitemap.
+    sitemap({ filter: (pagina) => !pagina.endsWith('/404/') }),
+  ],
 });

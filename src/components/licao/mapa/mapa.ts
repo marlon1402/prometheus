@@ -39,7 +39,7 @@ export function iniciarMapa(raiz: HTMLElement) {
   }
 
   for (const g of regioes) {
-    const nome = g.getAttribute('aria-label') ?? '';
+    const nome = g.dataset.nome ?? '';
     g.addEventListener('click', () => escolher(g.dataset.id!));
     g.addEventListener('pointermove', (e) => {
       const r = caixa.getBoundingClientRect();

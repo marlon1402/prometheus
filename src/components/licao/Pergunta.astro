@@ -23,11 +23,16 @@ const { titulo, opcoes, certa, explicacao } = Astro.props;
 if (!Number.isInteger(certa) || certa < 1 || certa > opcoes.length) {
   throw new Error(`Pergunta: "certa" deve ser um número de 1 a ${opcoes.length}, mas é ${certa}.`);
 }
+
+// Sem título, o enunciado serve de nome para o leitor de tela distinguir as perguntas.
+const enunciado = await Astro.slots.render('default');
+const texto = enunciado.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+const rotulo = titulo ?? (texto.length > 80 ? `${texto.slice(0, 79)}…` : texto);
 ---
 
-<section class="atividade pergunta" data-certa={certa} aria-label={titulo ?? 'Pergunta'}>
+<section class="atividade pergunta" data-certa={certa} aria-label={rotulo || 'Pergunta'}>
   {titulo && <h3>{titulo}</h3>}
-  <div class="enunciado"><slot /></div>
+  <div class="enunciado" set:html={enunciado} />
   <div class="opcoes" role="group" aria-label="Opções">
     {
       opcoes.map((texto, i) => (

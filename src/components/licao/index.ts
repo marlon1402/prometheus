@@ -1,29 +1,26 @@
-// Componentes disponíveis em toda lição .mdx sem precisar de import.
-// Ilustrações e simulações específicas são importadas no próprio .mdx.
+// Componentes leves, disponíveis em toda lição .mdx sem precisar de import.
+//
+// Componentes com CSS ou JavaScript pesado são importados no próprio .mdx, para
+// que só as lições que os usam carreguem esse código:
+//   import Formula from '…/components/licao/Formula.astro';      (e Tex: KaTeX)
+//   import Mapa from '…/components/licao/mapa/Mapa.astro';       (e Regiao)
+//   import CaixaNoGelo from '…/sims/fisica/caixa-no-gelo/CaixaNoGelo.astro';
 import Classificar from './Classificar.astro';
-import Formula from './Formula.astro';
 import Foto from './Foto.astro';
 import Galeria from './Galeria.astro';
 import Ilustracao from './Ilustracao.astro';
-import Mapa from './mapa/Mapa.astro';
-import Regiao from './mapa/Regiao.astro';
 import Numeros from './Numeros.astro';
 import Pergunta from './Pergunta.astro';
 import Quadro from './Quadro.astro';
 import SaibaMais from './SaibaMais.astro';
-import Tex from './Tex.astro';
 
 export const componentesDaLicao = {
   Classificar,
-  Formula,
   Foto,
   Galeria,
   Ilustracao,
-  Mapa,
   Numeros,
   Pergunta,
-  Regiao,
   Quadro,
   SaibaMais,
-  Tex,
 };

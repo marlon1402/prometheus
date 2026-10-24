@@ -18,7 +18,7 @@ const partes = headings.filter((h) => h.depth === 2);
 const cor = disciplina.data.cor;
 ---
 
-<Base titulo={licao.data.titulo} descricao={licao.data.descricao}>
+<Base titulo={licao.data.titulo} descricao={licao.data.descricao} tipo="article">
   <article class="licao" style={`--cor: var(--${cor}); --cor-ink: var(--${cor}-ink)`}>
     <header class="leitura">
       <Trilha disciplina={disciplina} modulo={modulo} moduloComLink />

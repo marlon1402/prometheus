@@ -11,7 +11,20 @@ permissions:
   id-token: write
 
 jobs:
+  # Testes da física das simulações: se algum falhar, o site não é publicado.
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
   build:
+    needs: testes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

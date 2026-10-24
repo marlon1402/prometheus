@@ -4,17 +4,22 @@ import '../styles/base.css';
 import Fontes from '../components/Fontes.astro';
 import Cabecalho from '../components/Cabecalho.astro';
 import Rodape from '../components/Rodape.astro';
+import { url } from '../lib/url';
 import { SITE } from '../site';
 
 interface Props {
   /** Título da página, sem o nome do site. Vazio na Home. */
   titulo?: string;
   descricao?: string;
+  /** "article" nas lições; o padrão é "website". */
+  tipo?: 'website' | 'article';
 }
 
-const { titulo, descricao = SITE.descricao } = Astro.props;
+const { titulo, descricao = SITE.descricao, tipo = 'website' } = Astro.props;
 const tituloCompleto = titulo ? `${titulo} · ${SITE.nome}` : SITE.nome;
 const canonica = new URL(Astro.url.pathname, Astro.site);
+// Imagem de compartilhamento (1200×630). Uma só para o site, por enquanto.
+const imagem = new URL(url('og.png'), Astro.site);
 ---
 
 <!doctype html>
@@ -27,6 +32,28 @@ const canonica = new URL(Astro.url.pathname, Astro.site);
     <title>{tituloCompleto}</title>
     <meta name="description" content={descricao} />
     <link rel="canonical" href={canonica} />
+
+    <!-- Ícones -->
+    <link rel="icon" href={url('favicon.ico')} sizes="32x32" />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={url('apple-touch-icon.png')} />
+    <link rel="manifest" href={url('site.webmanifest')} />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#16181b" media="(prefers-color-scheme: dark)" />
+
+    <!-- Compartilhamento (WhatsApp, redes sociais) -->
+    <meta property="og:site_name" content={SITE.nome} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content={tipo} />
+    <meta property="og:title" content={titulo ?? SITE.nome} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:image" content={imagem} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Prometheus: Entenda como o mundo funciona. Ilustração da Terra com o canhão de Newton." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="sitemap" href={url('sitemap-index.xml')} />
 
     <!-- Aplica o tema salvo antes da primeira pintura, para não piscar. -->
     <script is:inline>
