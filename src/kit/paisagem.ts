@@ -96,7 +96,7 @@ export function desenharRegua(ctx: Ctx, w: number, h: number, chao: number, came
   }
 }
 
-/** Caixa de madeira com a base em (x, base), lado em pixels e uma etiqueta (por exemplo, "5 kg"). */
+/** Caixa de madeira com a base em (x, base), lado em pixels e uma etiqueta (por exemplo, "5 kg"; vazia, não aparece). */
 export function desenharCaixa(ctx: Ctx, x: number, base: number, lado: number, etiqueta: string) {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
   ctx.beginPath();
@@ -120,6 +120,7 @@ export function desenharCaixa(ctx: Ctx, x: number, base: number, lado: number, e
   ctx.lineTo(x0 + lado - 7, y0 + 7);
   ctx.stroke();
 
+  if (!etiqueta) return;
   ctx.font = `700 12px ${cor('--sans')}`;
   const tw = ctx.measureText(etiqueta).width + 12;
   ctx.fillStyle = '#ffffff';

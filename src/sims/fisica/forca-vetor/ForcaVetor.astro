@@ -1,0 +1,66 @@
+---
+// Força arrastável: uma caixa com uma seta presa a ela. Arraste a ponta da seta
+// para mudar a intensidade e o ângulo e veja as componentes horizontal e vertical.
+//   <ForcaVetor />
+//   <ForcaVetor forca={100} angulo={60} />
+import Sim from '../../../components/licao/Sim.astro';
+import { fmt } from '../../../kit/formato';
+import { componentes, F_MAX } from './simulacao';
+
+interface Props {
+  /** Valores iniciais. */
+  forca?: number;
+  angulo?: number;
+  dica?: string;
+}
+
+const {
+  forca = 50,
+  angulo = 30,
+  dica = 'Arraste a ponta da seta, ou use os controles. Deite a força e veja a componente horizontal crescer; levante e veja a vertical crescer.',
+} = Astro.props;
+const { fx, fy } = componentes({ F: forca, theta: angulo });
+---
+
+<Sim nome="forca-vetor" rotulo="Simulação: força como vetor" dica={dica}>
+  <div class="sim-palco">
+    <canvas
+      data-palco
+      class="arrastavel"
+      role="img"
+      aria-label="Uma caixa sobre o chão com uma seta presa a ela, representando a força. As componentes horizontal e vertical aparecem tracejadas."
+    ></canvas>
+  </div>
+  <div class="sim-ctl">
+    <label>
+      <b>Intensidade <output data-saida="F">{forca} N</output></b>
+      <input type="range" data-entrada="F" min="0" max={F_MAX} step="1" value={forca} />
+    </label>
+    <label>
+      <b>Ângulo com a horizontal <output data-saida="theta">{angulo}°</output></b>
+      <input type="range" data-entrada="theta" min="0" max="180" step="1" value={angulo} />
+    </label>
+    <div class="sim-btns">
+      <button type="button" class="sim-btn" data-acao="retangulo" aria-pressed="false">Mostrar o retângulo</button>
+    </div>
+  </div>
+  <div class="sim-leituras">
+    <span>Componente horizontal <b data-leitura="fx">{fmt(fx)} N</b></span>
+    <span>Componente vertical <b data-leitura="fy">{fmt(fy)} N</b></span>
+  </div>
+</Sim>
+
+<style>
+  /* Sem isso, arrastar a seta no celular rolaria a página. */
+  .arrastavel {
+    touch-action: none;
+    cursor: crosshair;
+  }
+</style>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciar } from './index';
+
+  montar('forca-vetor', iniciar);
+</script>

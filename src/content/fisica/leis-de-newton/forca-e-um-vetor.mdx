@@ -1,5 +1,76 @@
 ---
 titulo: Força é um vetor
+descricao: Imagine que alguém diz “empurrei a caixa com 10 newtons”. Você já sabe o tamanho da força, mas ainda não sabe o que aconteceu com a caixa.
 ordem: 2
-embreve: true
+nivel: fundamental-medio
+duracao: 10
 ---
+
+import Formula from '../../../components/licao/Formula.astro';
+import Tex from '../../../components/licao/Tex.astro';
+import ForcaVetor from '../../../sims/fisica/forca-vetor/ForcaVetor.astro';
+
+Ela foi para a direita ou para a esquerda? Foi empurrada para a frente ou contra o chão? Para descrever uma força por completo, o número não basta.
+
+## Intensidade, direção e sentido
+
+Toda força tem três características:
+
+- **Intensidade** (ou módulo): o quanto ela é forte, medida em newtons.
+- **Direção**: a linha em que ela age, como horizontal, vertical ou inclinada a 30°.
+- **Sentido**: para qual lado dessa linha ela aponta, como para a direita ou para a esquerda, para cima ou para baixo.
+
+Grandezas que precisam dessas três informações se chamam *vetoriais*. Força é uma delas, assim como velocidade e aceleração. Já massa, tempo e temperatura são *escalares*: um número com unidade basta.
+
+## Como desenhar uma força
+
+Representamos uma força com uma seta. O comprimento da seta mostra a intensidade, a linha mostra a direção e a ponta mostra o sentido. Duas forças de 10 N, uma apontando para a direita e outra para cima, têm a mesma intensidade, mas são forças diferentes, com efeitos diferentes.
+
+Nos textos, uma força costuma aparecer com uma pequena seta sobre a letra, <Tex tex="\vec{F}" />, para lembrar que ela é um vetor. Quando falamos só da intensidade, escrevemos a letra sem a seta: <Tex tex="F = 10\,\text{N}" />.
+
+<Pergunta
+  titulo="Antes de testar, aposte"
+  opcoes={['Alça bem inclinada, quase vertical', 'Alça mais baixa, quase horizontal', 'Tanto faz, a força é a mesma']}
+  certa={2}
+  explicacao="Com a alça quase horizontal, quase toda a força puxa a mala para a frente. Com a alça quase vertical, boa parte da força puxa a mala para cima, o que não ajuda a andar."
+>
+  Você puxa uma mala de rodinhas pela alça com 50 N. Em qual caso a mala anda para a frente com mais facilidade?
+</Pergunta>
+
+## Componentes de uma força
+
+Uma força inclinada pode ser pensada como duas forças ao mesmo tempo: uma horizontal e outra vertical. Essas duas partes são as *componentes* da força. Quando você puxa a mala pela alça inclinada, a componente horizontal faz a mala andar, e a vertical alivia um pouco o peso que a mala faz no chão.
+
+Para uma força <Tex tex="F" /> inclinada de um ângulo <Tex tex="\theta" /> em relação à horizontal:
+
+<Formula tex="F_x = F \cdot \cos\theta" legenda="componente horizontal" />
+
+<Formula tex="F_y = F \cdot \operatorname{sen}\theta" legenda="componente vertical" />
+
+Quanto mais deitada a força, maior a componente horizontal. Quanto mais em pé, maior a vertical.
+
+<ForcaVetor />
+
+## Teste o que você aprendeu
+
+<Pergunta
+  opcoes={['Sim, porque têm o mesmo valor', 'Não, porque podem ter direções ou sentidos diferentes', 'Só se agirem no mesmo objeto']}
+  certa={2}
+  explicacao="Força é um vetor. Duas forças só são iguais se tiverem a mesma intensidade, a mesma direção e o mesmo sentido."
+>
+  Duas forças têm intensidade de 20 N. Elas são necessariamente iguais?
+</Pergunta>
+
+<Pergunta
+  opcoes={['100 N', '50 N', '0 N']}
+  certa={2}
+  explicacao="A componente horizontal é F · cos 60° = 100 · 0,5 = 50 N. Só metade da força puxa o trenó para a frente."
+>
+  Uma força de 100 N puxa um trenó, inclinada a 60° com a horizontal. Qual é a componente horizontal, que faz o trenó andar para a frente? (cos 60° = 0,5)
+</Pergunta>
+
+<Quadro tipo="resumo">
+  - Força é uma grandeza vetorial: tem intensidade, direção e sentido.
+  - Representamos forças com setas: o tamanho indica a intensidade, a ponta indica o sentido.
+  - Uma força inclinada pode ser separada em componentes horizontal e vertical.
+</Quadro>
