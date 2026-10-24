@@ -1,2 +1,20 @@
 /Prometheus.html
 /Prometheus — Registro de decisões.md
+
+# build e tipos gerados
+dist/
+.astro/
+
+# dependências
+node_modules/
+
+# logs
+npm-debug.log*
+
+# variáveis de ambiente
+.env
+.env.production
+
+# sistema
+.DS_Store
+.idea/
