@@ -1,0 +1,233 @@
+---
+// Doação por Pix estático, como no LumeRead: valores sugeridos ou valor livre,
+// QR Code e “Pix copia e cola”. Os QR Codes são gerados no build (um SVG por
+// valor), então a página não carrega biblioteca de QR. A troca de valor
+// funciona sem JavaScript (botões de opção e CSS); o script só cuida do botão
+// de copiar.
+import QRCode from 'qrcode';
+import { pixCopiaECola } from '../lib/pix';
+import { DOACAO } from '../site';
+
+const reais = (v: number) => `R$ ${v}`;
+
+const opcoes = await Promise.all(
+  [...DOACAO.valores, null].map(async (valor) => {
+    const codigo = pixCopiaECola({ ...DOACAO, valor: valor ?? undefined });
+    const svg = await QRCode.toString(codigo, {
+      type: 'svg',
+      margin: 0,
+      errorCorrectionLevel: 'M',
+      color: { dark: '#111111', light: '#ffffff' },
+    });
+    return {
+      id: valor === null ? 'livre' : String(valor),
+      rotulo: valor === null ? 'Valor livre' : reais(valor),
+      descricao: valor === null ? 'valor livre, digitado no app do banco' : `${reais(valor)},00`,
+      codigo,
+      svg,
+    };
+  }),
+);
+const inicial = '10';
+---
+
+<div class="doacao">
+  <fieldset class="valores">
+    <legend>Escolha um valor</legend>
+    {
+      opcoes.map(({ id, rotulo }) => (
+        <label>
+          <input type="radio" name="valor-pix" value={id} checked={id === inicial} />
+          <span>{rotulo}</span>
+        </label>
+      ))
+    }
+  </fieldset>
+
+  {
+    opcoes.map(({ id, descricao, codigo, svg }) => (
+      <div class="painel" data-valor={id}>
+        <figure class="qr">
+          {/* Fundo branco sempre: leitores de QR precisam de escuro sobre claro, em qualquer tema. */}
+          <div class="qr-img" role="img" aria-label={`QR Code Pix, ${descricao}`} set:html={svg} />
+          <figcaption>QR Code Pix · {descricao}</figcaption>
+        </figure>
+        <label class="copia">
+          <span>Pix copia e cola</span>
+          <input type="text" readonly value={codigo} spellcheck="false" />
+        </label>
+        <button type="button" class="btn copiar" data-codigo={codigo}>
+          Copiar código Pix
+        </button>
+        <p class="copiado" aria-live="polite"></p>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .doacao {
+    padding: 24px 26px;
+    border-radius: 20px;
+    background: var(--surface);
+    font-family: var(--sans);
+  }
+
+  .valores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 20px;
+    padding: 0;
+    border: 0;
+  }
+
+  legend {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .valores label {
+    flex: 1 1 90px;
+  }
+
+  .valores input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .valores span {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--bg);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      background var(--rapido),
+      color var(--rapido);
+  }
+
+  .valores input:checked + span {
+    background: var(--ink);
+    color: var(--bg);
+    box-shadow: none;
+  }
+
+  .valores input:focus-visible + span {
+    outline: 2px solid var(--vel);
+    outline-offset: 2px;
+  }
+
+  /* Só o painel do valor escolhido aparece. */
+  .painel {
+    display: none;
+  }
+
+  .doacao:has(input[value='5']:checked) .painel[data-valor='5'],
+  .doacao:has(input[value='10']:checked) .painel[data-valor='10'],
+  .doacao:has(input[value='20']:checked) .painel[data-valor='20'],
+  .doacao:has(input[value='livre']:checked) .painel[data-valor='livre'] {
+    display: block;
+  }
+
+  .qr {
+    margin: 0 0 18px;
+    padding: 20px;
+    border-radius: 16px;
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .qr-img {
+    display: inline-block;
+    width: 200px;
+    max-width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    background: #ffffff;
+    line-height: 0;
+  }
+
+  .qr-img :global(svg) {
+    width: 100%;
+    height: auto;
+  }
+
+  figcaption {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .copia {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .copia span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .copia input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--bg);
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--muted);
+    font: 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    text-overflow: ellipsis;
+  }
+
+  .copiar {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .copiado {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .copiado:empty {
+    display: none;
+  }
+</style>
+
+<script>
+  for (const botao of document.querySelectorAll<HTMLButtonElement>('.doacao .copiar')) {
+    const aviso = botao.nextElementSibling as HTMLElement;
+    const campo = botao.parentElement!.querySelector<HTMLInputElement>('.copia input')!;
+    let timer = 0;
+    botao.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(botao.dataset.codigo ?? '');
+        botao.textContent = 'Código copiado!';
+        aviso.textContent = 'Agora é só colar no app do seu banco, na opção Pix copia e cola.';
+      } catch {
+        // Sem acesso à área de transferência: seleciona o código para copiar à mão.
+        campo.select();
+        aviso.textContent = 'Não foi possível copiar automaticamente. O código está selecionado: copie com Ctrl+C.';
+      }
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        botao.textContent = 'Copiar código Pix';
+      }, 1800);
+    });
+  }
+</script>

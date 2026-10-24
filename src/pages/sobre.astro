@@ -1,4 +1,5 @@
 ---
+import Doacao from '../components/Doacao.astro';
 import Base from '../layouts/Base.astro';
 import { url } from '../lib/url';
 import { SITE } from '../site';
@@ -75,6 +76,15 @@ const contatos = [
         ))
       }
     </ul>
+
+    <h2 id="apoie">Apoie o projeto</h2>
+    <p>
+      Se o Prometheus acende alguma luz nos seus estudos ou nas suas aulas, considere apoiar o projeto com um Pix. Isso me
+      ajuda a dedicar mais tempo a novas lições e simulações, mantendo o site gratuito, sem anúncios e sem cadastro. A doação
+      é opcional: nada no site depende dela.
+    </p>
+    <Doacao />
+    <p class="obrigado">Obrigado por ajudar a manter esse fogo aceso.</p>
 
     <h2>Outros projetos em educação</h2>
     <section class="projeto" aria-labelledby="lumeread">
@@ -225,6 +235,14 @@ const contatos = [
 
   .projeto p:last-child {
     margin-bottom: 0;
+  }
+
+  .obrigado {
+    margin-top: 14px;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--muted);
+    text-align: center;
   }
 
   .voltar {
