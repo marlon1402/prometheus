@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Licao from '../../../layouts/Licao.astro';
+import { componentesDaLicao } from '../../../components/licao';
 import { licoes } from '../../../lib/catalogo';
 
 export async function getStaticPaths() {
@@ -15,5 +16,5 @@ const { Content, headings } = await render(licao);
 ---
 
 <Licao licao={licao} headings={headings}>
-  <Content />
+  <Content components={componentesDaLicao} />
 </Licao>

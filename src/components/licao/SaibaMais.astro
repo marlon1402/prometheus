@@ -1,0 +1,71 @@
+---
+// Texto extra, fechado por padrão: <SaibaMais titulo="…">…</SaibaMais>.
+// Usa <details>, então abre e fecha sem JavaScript e funciona com teclado e leitor de tela.
+interface Props {
+  titulo: string;
+}
+
+const { titulo } = Astro.props;
+---
+
+<details class="saiba-mais">
+  <summary>{titulo}</summary>
+  <div class="conteudo">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .saiba-mais {
+    margin: 24px auto;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--cor-ink, var(--ink));
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::before {
+    content: "+";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--cor, var(--surface));
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  details[open] summary::before {
+    content: "−";
+  }
+
+  .conteudo {
+    padding: 0 0 16px;
+    font-size: 18px;
+  }
+
+  .conteudo :global(p) {
+    margin: 0 0 12px;
+  }
+
+  .conteudo :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

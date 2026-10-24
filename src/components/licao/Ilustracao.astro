@@ -1,0 +1,63 @@
+---
+// Moldura de uma ilustração: ocupa a largura maior e leva legenda.
+//   <Ilustracao legenda="…"><EfeitosDaForca /></Ilustracao>
+// As ilustrações em si ficam em src/components/ilustracoes/, uma por arquivo.
+// As classes il-* abaixo são compartilhadas entre elas.
+interface Props {
+  legenda?: string;
+}
+
+const { legenda } = Astro.props;
+---
+
+<figure class="ilustracao largo">
+  <slot />
+  {legenda && <figcaption>{legenda}</figcaption>}
+</figure>
+
+<style>
+  .ilustracao {
+    margin: 36px auto 40px;
+  }
+
+  .ilustracao :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  figcaption {
+    margin-top: 10px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* Peças comuns às ilustrações */
+  .ilustracao :global(.il-fundo) {
+    fill: var(--cor, var(--fis));
+  }
+
+  .ilustracao :global(.il-seta path) {
+    fill: var(--grav);
+    stroke: var(--grav);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ilustracao :global(.il-seta path:first-child) {
+    fill: none;
+  }
+
+  .ilustracao :global(.il-txt) {
+    font: 600 14px var(--sans);
+    fill: var(--grav);
+  }
+
+  .ilustracao :global(.il-rot) {
+    font: 600 15px var(--sans);
+    fill: var(--ink);
+  }
+</style>

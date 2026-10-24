@@ -1,0 +1,44 @@
+---
+// Fórmula em destaque, renderizada com KaTeX no build (sem JavaScript na página).
+//   <Formula tex="F = m \cdot a" legenda="força = massa × aceleração" />
+// Dentro do texto, use <Tex tex="…" />.
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
+interface Props {
+  tex: string;
+  legenda?: string;
+}
+
+const { tex, legenda } = Astro.props;
+const html = katex.renderToString(tex, { displayMode: true, throwOnError: true, output: 'htmlAndMathml' });
+---
+
+<figure class="formula">
+  <div set:html={html} />
+  {legenda && <figcaption>{legenda}</figcaption>}
+</figure>
+
+<style>
+  .formula {
+    margin: 30px auto;
+    text-align: center;
+  }
+
+  .formula :global(.katex) {
+    font-size: 1.35em;
+  }
+
+  .formula :global(.katex-display) {
+    margin: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  figcaption {
+    margin-top: 6px;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--muted);
+  }
+</style>

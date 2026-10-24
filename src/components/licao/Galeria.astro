@@ -1,0 +1,123 @@
+---
+// Grade de fotos com imagem ampliada.
+//   <Galeria titulo="Imagens"><Foto … /><Foto … /></Galeria>
+// Sem JavaScript, clicar numa foto abre a versão grande direto;
+// com JavaScript, ela abre num <dialog> por cima da página.
+interface Props {
+  titulo?: string;
+}
+
+const { titulo } = Astro.props;
+---
+
+<section class="galeria largo" aria-label={titulo ?? 'Galeria de imagens'}>
+  {titulo && <h3>{titulo}</h3>}
+  <div class="grade">
+    <slot />
+  </div>
+  <dialog class="ampliada" aria-label="Imagem ampliada">
+    <button type="button" class="fechar" aria-label="Fechar">×</button>
+    <img alt="" />
+    <p class="legenda"></p>
+  </dialog>
+</section>
+
+<style>
+  .galeria {
+    margin: 48px auto;
+  }
+
+  h3 {
+    margin: 0 0 12px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .grade {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .ampliada {
+    max-width: min(1100px, 92vw);
+    max-height: 92vh;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .ampliada::backdrop {
+    background: rgb(10 12 15 / 0.85);
+  }
+
+  .ampliada img {
+    display: block;
+    max-width: 100%;
+    max-height: 80vh;
+    margin: 0 auto;
+    border-radius: 12px;
+  }
+
+  .legenda {
+    margin: 12px 0 0;
+    color: #e6e7e9;
+    font-size: 17px;
+    text-align: center;
+  }
+
+  .fechar {
+    position: absolute;
+    top: -48px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.15);
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 1080px) {
+    .grade {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .grade {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+</style>
+
+<script>
+  for (const galeria of document.querySelectorAll<HTMLElement>('.galeria')) {
+    const dialogo = galeria.querySelector('dialog')!;
+    const img = dialogo.querySelector('img')!;
+    const legenda = dialogo.querySelector('.legenda')!;
+
+    for (const link of galeria.querySelectorAll<HTMLAnchorElement>('.foto-link')) {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        img.src = link.href;
+        img.alt = link.querySelector('img')?.alt ?? '';
+        legenda.textContent = link.dataset.legenda ?? '';
+        dialogo.showModal();
+      });
+    }
+
+    dialogo.querySelector('.fechar')!.addEventListener('click', () => dialogo.close());
+    // Clique fora da imagem fecha; Esc já fecha por padrão.
+    dialogo.addEventListener('click', (e) => {
+      if (e.target === dialogo) dialogo.close();
+    });
+  }
+</script>

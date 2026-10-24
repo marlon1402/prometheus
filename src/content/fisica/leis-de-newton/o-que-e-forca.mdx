@@ -1,18 +1,123 @@
 ---
 titulo: O que é força
-descricao: Força é uma interação entre dois corpos, e pode mudar o movimento ou a forma das coisas.
+descricao: Você empurra uma porta, chuta uma bola, segura uma mochila. Em todas essas situações existe algo em comum, uma força. Mas o que ela é, exatamente?
 ordem: 1
 nivel: fundamental-medio
 duracao: 12
 bncc: [EF09CI01]
 ---
 
-Conteúdo de teste para validar a plataforma.
+import EfeitosDaForca from '../../../components/ilustracoes/fisica/EfeitosDaForca.astro';
+
+{/*
+  Lição de exemplo para validar a plataforma: usa todos os componentes de lição.
+  O texto vem do rascunho do protótipo e ainda não é o conteúdo final (Etapa 2).
+*/}
 
 ## Força é uma interação
 
-Texto de exemplo.
+Uma força sempre aparece entre dois corpos: quem empurra e quem é empurrado, quem puxa e quem é puxado. Quando você chuta uma bola, a força existe porque o seu pé e a bola estão interagindo. Quando o contato acaba, a força acaba também.
+
+Por isso, força não é algo que um objeto “tem” ou “carrega”. Uma bola rolando não leva o chute dentro dela. Essa ideia parece estranha no começo, e vamos voltar a ela com calma na lição sobre inércia.
+
+<Quadro tipo="historia">
+  Por quase dois mil anos, valeu a ideia de Aristóteles: para um objeto continuar se movendo, algo precisava continuar empurrando. Só no século XVII, com Galileu e depois Newton, ficou claro que a força não serve para manter o movimento, e sim para mudá-lo.
+</Quadro>
 
 ## O que uma força faz
 
-Texto de exemplo.
+Uma força pode ter dois tipos de efeito sobre um corpo. Ela pode mudar o seu movimento, fazendo-o começar a se mover, parar, acelerar, frear ou mudar de direção. E pode deformá-lo, amassando, esticando ou torcendo.
+
+<Ilustracao legenda="Os dois efeitos de uma força: mudar o movimento (começar, parar, desviar) e deformar.">
+  <EfeitosDaForca />
+</Ilustracao>
+
+## Forças de contato e forças à distância
+
+Algumas forças só existem enquanto os corpos se tocam: empurrar um carrinho, puxar uma corda, o atrito entre o pneu e o asfalto. São as *forças de contato*.
+
+Outras agem mesmo com os corpos separados. A Terra puxa uma maçã que se solta da árvore, e um ímã atrai um clipe sem encostar nele. São as *forças de campo*, também chamadas de forças à distância.
+
+<Classificar
+  titulo="Classifique as forças"
+  instrucao="Para cada situação, escolha se a força é de contato ou à distância."
+  categorias={{ contato: 'Contato', distancia: 'À distância' }}
+  dicas={{
+    contato: 'Esta força só existe enquanto os corpos se tocam: é de contato.',
+    distancia: 'Esta força age mesmo sem os corpos se tocarem: é à distância.',
+  }}
+  itens={[
+    { texto: 'Uma pessoa empurrando um carrinho de supermercado', categoria: 'contato' },
+    { texto: 'Um ímã puxando um clipe de papel', categoria: 'distancia' },
+    { texto: 'O atrito entre o pneu de uma bicicleta e o chão', categoria: 'contato' },
+    { texto: 'A Terra puxando uma maçã que cai da árvore', categoria: 'distancia' },
+    { texto: 'Duas equipes puxando a corda num cabo de guerra', categoria: 'contato' },
+    { texto: 'Um pente eletrizado atraindo pedacinhos de papel', categoria: 'distancia' },
+  ]}
+/>
+
+<Galeria titulo="Forças no dia a dia">
+  <Foto titulo="Contato" legenda="Um chute: a força existe só enquanto o pé toca a bola." previsto="Foto de um pé chutando uma bola" />
+  <Foto titulo="À distância" legenda="Um ímã atrai clipes sem encostar neles." previsto="Foto de um ímã atraindo clipes" />
+  <Foto titulo="Deformação" legenda="Uma bola de tênis se achata no instante da raquetada." previsto="Foto em alta velocidade de uma bola de tênis achatada na raquete" />
+</Galeria>
+
+## Como medir uma força
+
+A força é medida em *newtons* (N), em homenagem a Isaac Newton. Para ter uma ideia do tamanho de 1 newton: segurar uma maçã pequena, de cerca de 100 gramas, exige uma força de aproximadamente 1 N.
+
+<Formula tex="1\,\text{N} = 1\,\text{kg} \cdot \text{m/s}^2" legenda="1 newton é a força que acelera 1 kg em 1 m/s a cada segundo" />
+
+O instrumento que mede forças é o *dinamômetro*: uma mola presa a uma escala. Quanto maior a força que puxa a mola, mais ela estica, e a escala mostra o valor. Para molas comuns, o estiramento <Tex tex="x" /> é proporcional à força: <Tex tex="F = k \cdot x" />.
+
+<SaibaMais titulo="Por que a unidade se chama newton">
+  Isaac Newton (1643–1727) publicou em 1687 os *Princípios Matemáticos da Filosofia Natural*, o livro em que apresentou as três leis do movimento e a gravitação universal. O nome newton para a unidade de força foi adotado em 1948 e depois incorporado ao Sistema Internacional de Unidades, criado em 1960.
+</SaibaMais>
+
+<Pergunta
+  titulo="Antes de testar, aposte"
+  opcoes={['Menos de 10 vezes mais', 'Exatamente 10 vezes mais', 'Mais de 10 vezes mais']}
+  certa={2}
+  explicacao="A mola estica sempre na mesma proporção da força: dez vezes mais força, dez vezes mais estiramento. Confira na simulação."
+>
+  A garrafa d’água tem 10 vezes a massa da maçã. Pendurada no dinamômetro, ela vai esticar a mola:
+</Pergunta>
+
+{/* A simulação do dinamômetro entra aqui quando o kit de simulação existir (Passo 6). */}
+
+## Teste o que você aprendeu
+
+<Pergunta
+  opcoes={[
+    'Continua agindo dentro da bola',
+    'Não existe mais, porque o pé já não toca a bola',
+    'Vai diminuindo até a bola parar',
+  ]}
+  certa={2}
+  explicacao="A força do chute só existe durante o contato entre o pé e a bola. Depois, a bola continua rolando sem precisar dela, e vai parando por causa de outras forças, como o atrito com a grama."
+>
+  Uma bola foi chutada e agora rola sozinha pelo campo. Enquanto ela rola, a força do chute:
+</Pergunta>
+
+<Pergunta
+  opcoes={[
+    'O vento empurrando a vela de um barco',
+    'O peso de uma pessoa, a atração da Terra sobre ela',
+    'A mão segurando um copo',
+  ]}
+  certa={2}
+  explicacao="O peso é a atração gravitacional da Terra, que age mesmo sem contato. O vento e a mão precisam tocar o objeto para empurrá-lo ou segurá-lo."
+>
+  Qual destas é uma força à distância?
+</Pergunta>
+
+<Quadro tipo="resumo">
+  - Força é uma interação entre dois corpos, não algo que um corpo carrega.
+  - Uma força pode mudar o movimento de um corpo ou deformá-lo.
+  - Há forças de contato e forças à distância, como a gravidade e a força magnética.
+  - A força é medida em newtons (N), com um dinamômetro.
+</Quadro>
+
+<Quadro tipo="casa">
+  Monte um dinamômetro simples: prenda um elástico num gancho, pendure uma sacolinha na ponta de baixo e cole uma régua ao lado. Coloque na sacola um pacote de 500 g e marque quanto o elástico esticou; depois, use essa marca para estimar a força de outros objetos. O elástico não é tão regular quanto uma mola, mas dá uma boa ideia.
+</Quadro>

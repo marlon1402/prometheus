@@ -1,0 +1,61 @@
+---
+// Quadro de destaque dentro da lição.
+//   <Quadro tipo="historia">…</Quadro>
+//   <Quadro tipo="nota" titulo="Atenção">…</Quadro>
+// Cada tipo tem um título padrão e uma cor; `titulo` substitui o padrão.
+interface Props {
+  tipo: 'historia' | 'resumo' | 'casa' | 'nota';
+  titulo?: string;
+}
+
+const TIPOS = {
+  historia: { titulo: 'Um pouco de história', cor: 'geo' },
+  resumo: { titulo: 'Resumo', cor: 'fis' },
+  casa: { titulo: 'Experimente em casa', cor: 'bio' },
+  nota: { titulo: 'Nota', cor: 'fis' },
+} as const;
+
+const { tipo, titulo } = Astro.props;
+const { titulo: padrao, cor } = TIPOS[tipo];
+---
+
+<aside class="quadro" style={`--q: var(--${cor}); --q-ink: var(--${cor}-ink)`}>
+  <strong>{titulo ?? padrao}</strong>
+  <slot />
+</aside>
+
+<style>
+  .quadro {
+    margin: 28px auto;
+    padding: 20px 24px;
+    border-radius: 18px;
+    background: var(--q);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  strong {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--q-ink);
+  }
+
+  .quadro :global(p) {
+    margin: 0 0 10px;
+  }
+
+  .quadro :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .quadro :global(ul),
+  .quadro :global(ol) {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding-left: 20px;
+  }
+</style>

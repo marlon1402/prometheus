@@ -1,0 +1,99 @@
+---
+// Pergunta de múltipla escolha, para previsão ("antes de testar, aposte")
+// ou verificação. A explicação aparece depois da resposta.
+//   <Pergunta
+//     titulo="Antes de testar, aposte"
+//     opcoes={['Menos de 10 vezes mais', 'Exatamente 10 vezes mais', 'Mais de 10 vezes mais']}
+//     certa={2}
+//     explicacao="A mola estica na mesma proporção da força."
+//   >
+//     O enunciado vai aqui, em Markdown.
+//   </Pergunta>
+// `certa` é a posição da opção correta, contando a partir de 1.
+import '../../styles/atividade.css';
+
+interface Props {
+  titulo?: string;
+  opcoes: string[];
+  certa: number;
+  explicacao: string;
+}
+
+const { titulo, opcoes, certa, explicacao } = Astro.props;
+if (!Number.isInteger(certa) || certa < 1 || certa > opcoes.length) {
+  throw new Error(`Pergunta: "certa" deve ser um número de 1 a ${opcoes.length}, mas é ${certa}.`);
+}
+---
+
+<section class="atividade pergunta" data-certa={certa} aria-label={titulo ?? 'Pergunta'}>
+  {titulo && <h3>{titulo}</h3>}
+  <div class="enunciado"><slot /></div>
+  <div class="opcoes" role="group" aria-label="Opções">
+    {
+      opcoes.map((texto, i) => (
+        <button type="button" data-opcao={i + 1}>
+          {texto}
+        </button>
+      ))
+    }
+  </div>
+  <p class="fb" aria-live="polite" data-explicacao={explicacao}></p>
+</section>
+
+<style>
+  .enunciado {
+    font-family: var(--serif);
+    font-size: 19px;
+  }
+
+  .enunciado :global(p) {
+    margin: 0 0 12px;
+  }
+
+  .opcoes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .fb {
+    margin: 14px 0 0;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--bg);
+    font-size: 15.5px;
+  }
+
+  .fb:empty {
+    display: none;
+  }
+
+  .fb :global(b) {
+    display: block;
+    margin-bottom: 2px;
+  }
+</style>
+
+<script>
+  for (const pergunta of document.querySelectorAll<HTMLElement>('.pergunta')) {
+    const certa = pergunta.dataset.certa;
+    const fb = pergunta.querySelector<HTMLElement>('.fb')!;
+    const botoes = [...pergunta.querySelectorAll<HTMLButtonElement>('.opcoes button')];
+
+    for (const botao of botoes) {
+      botao.addEventListener('click', () => {
+        const acertou = botao.dataset.opcao === certa;
+        for (const b of botoes) {
+          b.disabled = true;
+          if (b.dataset.opcao === certa) b.classList.add('certo');
+        }
+        if (!acertou) botao.classList.add('errado');
+
+        const veredito = document.createElement('b');
+        veredito.textContent = acertou ? 'Você acertou.' : 'Não foi dessa vez.';
+        fb.replaceChildren(veredito, fb.dataset.explicacao ?? '');
+      });
+    }
+  }
+</script>
