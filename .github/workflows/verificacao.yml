@@ -1,0 +1,24 @@
+name: Verificação
+
+# Roda em cada pull request para a main: testes da física, checagem de tipos
+# e build. É a verificação exigida pela regra de proteção da main.
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verificacao:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run check
+      - run: npm run build

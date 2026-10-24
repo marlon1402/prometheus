@@ -38,3 +38,7 @@ No mito grego, Prometeu entregou o fogo aos humanos. A ideia aqui é a mesma: le
 - **Textos** das lições e das páginas: [CC BY-SA 4.0](LICENSE-CONTENT). Pode copiar, adaptar e redistribuir, inclusive para fins comerciais, desde que cite a fonte e compartilhe sob a mesma licença.
 
 Imagens de terceiros, como fotos do Wikimedia Commons, seguem a licença indicada no crédito de cada uma.
+
+## Como contribuir
+
+Correções e sugestões são bem-vindas. Veja o [guia de contribuição](CONTRIBUTING.md): as mudanças entram por pull request e passam por revisão antes de serem publicadas.
