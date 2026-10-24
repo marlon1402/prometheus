@@ -4,7 +4,7 @@
 // e cada disciplina tem um link para compartilhar.
 import Base from '../layouts/Base.astro';
 import Etiquetas from './Etiquetas.astro';
-import { disciplinas, licoes, modulos, rota, type Disciplina, type Modulo } from '../lib/catalogo';
+import { disciplinas, modulos, roteiro, rota, temPagina, type Disciplina, type Modulo } from '../lib/catalogo';
 import { url } from '../lib/url';
 import { SITE } from '../site';
 
@@ -16,11 +16,16 @@ interface Props {
 const { filtro } = Astro.props;
 const todas = await disciplinas();
 
-type Grupo = { disciplina: Disciplina; itens: { modulo: Modulo; total: number }[] };
+/** total: lições com página; breve: lições “em breve”. */
+type Grupo = { disciplina: Disciplina; itens: { modulo: Modulo; total: number; breve: number }[] };
 const grupos: Grupo[] = [];
 for (const disciplina of todas) {
   const itens = await Promise.all(
-    (await modulos(disciplina.id)).map(async (modulo) => ({ modulo, total: (await licoes(modulo.id)).length })),
+    (await modulos(disciplina.id)).map(async (modulo) => {
+      const lista = await roteiro(modulo.id);
+      const total = lista.filter(temPagina).length;
+      return { modulo, total, breve: lista.length - total };
+    }),
   );
   // Módulos publicados primeiro, mantendo a ordem do catálogo dentro de cada grupo.
   itens.sort((a, b) => Number(b.total > 0) - Number(a.total > 0));
@@ -72,7 +77,7 @@ const atual = filtro ? todas.find((d) => d.id === filtro) : undefined;
           </h2>
           {itens.length ? (
             <ul class="lista" data-revelar="filhos">
-              {itens.map(({ modulo: m, total }) => (
+              {itens.map(({ modulo: m, total, breve }) => (
                 <li class:list={{ breve: !total }}>
                   <i style={`background: var(--${d.data.cor}-ink)`} />
                   {total ? (
@@ -84,6 +89,8 @@ const atual = filtro ? todas.find((d) => d.id === filtro) : undefined;
                   )}
                   <span class="meta">
                     {total ? <span class="ok">{total === 1 ? '1 lição' : `${total} lições`}</span> : 'Em breve'}
+                    {total > 0 && breve > 0 && ` · ${breve} em breve`}
+                    {!total && breve > 0 && ` · ${breve === 1 ? '1 lição' : `${breve} lições`}`}
                   </span>
                   <span class="desc">{m.data.descricao}</span>
                   <Etiquetas modulo={m} rotulo="Antes:" class="pre-item" />

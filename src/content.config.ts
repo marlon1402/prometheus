@@ -51,23 +51,39 @@ const licoes = defineCollection({
     // fisica/leis-de-newton/inercia.mdx → fisica/leis-de-newton/inercia
     generateId: ({ entry }) => entry.replace(/\.mdx$/, ''),
   }),
-  schema: z.object({
-    titulo: z.string(),
-    descricao: z.string(),
-    /** Posição dentro do módulo, a partir de 1. */
-    ordem: z.number().int().positive(),
-    nivel: z.enum(['fundamental', 'fundamental-medio', 'medio']),
-    /** Tempo estimado de leitura e experimentação, em minutos. */
-    duracao: z.number().int().positive(),
-    /** Habilidades da BNCC, como EF09CI01 ou EM13CNT204. */
-    bncc: z
-      .array(z.string().regex(/^(EF\d{2}[A-Z]{2}\d{2}|EM13[A-Z]{3}\d{3})$/, 'Código da BNCC inválido'))
-      .default([]),
-    /** Lições de outros módulos que convém ler antes. */
-    prerequisitos: z.array(reference('licoes')).default([]),
-    /** Rascunhos aparecem só no ambiente de desenvolvimento. */
-    rascunho: z.boolean().default(false),
-  }),
+  schema: z
+    .object({
+      titulo: z.string(),
+      /** Obrigatória, exceto em lições “em breve”. */
+      descricao: z.string().optional(),
+      /** Posição dentro do módulo, a partir de 1. */
+      ordem: z.number().int().positive(),
+      /** Obrigatório, exceto em lições “em breve”. */
+      nivel: z.enum(['fundamental', 'fundamental-medio', 'medio']).optional(),
+      /** Tempo estimado de leitura e experimentação, em minutos. Obrigatório, exceto em lições “em breve”. */
+      duracao: z.number().int().positive().optional(),
+      /** Habilidades da BNCC, como EF09CI01 ou EM13CNT204. */
+      bncc: z
+        .array(z.string().regex(/^(EF\d{2}[A-Z]{2}\d{2}|EM13[A-Z]{3}\d{3})$/, 'Código da BNCC inválido'))
+        .default([]),
+      /** Lições de outros módulos que convém ler antes. */
+      prerequisitos: z.array(reference('licoes')).default([]),
+      /** Rascunhos aparecem só no ambiente de desenvolvimento. */
+      rascunho: z.boolean().default(false),
+      /**
+       * Lição planejada, ainda sem texto: aparece na lista do módulo como
+       * “Em breve”, sem página. Só precisa de título e ordem.
+       */
+      embreve: z.boolean().default(false),
+    })
+    .superRefine((licao, ctx) => {
+      if (licao.embreve) return;
+      for (const campo of ['descricao', 'nivel', 'duracao'] as const) {
+        if (licao[campo] === undefined) {
+          ctx.addIssue({ code: 'custom', path: [campo], message: 'Obrigatório, exceto em lições com embreve: true.' });
+        }
+      }
+    }),
 });
 
 export const collections = { disciplinas, modulos, licoes };

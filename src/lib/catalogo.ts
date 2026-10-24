@@ -6,13 +6,19 @@ import { url } from './url';
 
 export type Disciplina = CollectionEntry<'disciplinas'>;
 export type Modulo = CollectionEntry<'modulos'>;
-export type Licao = CollectionEntry<'licoes'>;
+/** Qualquer lição do catálogo, inclusive as “em breve”, que ainda não têm texto. */
+export type EntradaLicao = CollectionEntry<'licoes'>;
+type DadosLicao = EntradaLicao['data'];
+/** Lição com texto e página própria: descrição, nível e duração estão sempre presentes. */
+export type Licao = EntradaLicao & {
+  data: DadosLicao & Required<Pick<DadosLicao, 'descricao' | 'nivel' | 'duracao'>>;
+};
 
 /** Id da disciplina: primeira pasta do id do módulo ou da lição. */
 export const disciplinaId = (id: string) => id.split('/')[0];
 
 /** Id do módulo de uma lição: as duas primeiras pastas. */
-export const moduloId = (licao: Licao) => licao.id.split('/').slice(0, 2).join('/');
+export const moduloId = (licao: EntradaLicao) => licao.id.split('/').slice(0, 2).join('/');
 
 /** Rótulo de cada nível, como aparece nas listas. */
 export const NIVEIS: Record<Licao['data']['nivel'], string> = {
@@ -26,7 +32,12 @@ export const rota = (entrada: Modulo | Licao) => url(`${entrada.id}/`);
 
 const porOrdem = (a: { data: { ordem: number } }, b: { data: { ordem: number } }) => a.data.ordem - b.data.ordem;
 
-const visivel = (licao: Licao) => import.meta.env.DEV || !licao.data.rascunho;
+const visivel = (licao: EntradaLicao) => import.meta.env.DEV || !licao.data.rascunho;
+
+/** Diferencia as lições com texto e página das “em breve”. */
+export const temPagina = (licao: EntradaLicao): licao is Licao => !licao.data.embreve;
+
+const porModuloEOrdem = (a: EntradaLicao, b: EntradaLicao) => moduloId(a).localeCompare(moduloId(b)) || porOrdem(a, b);
 
 let validacao: Promise<void> | undefined;
 
@@ -106,16 +117,21 @@ export async function modulos(disciplina?: string): Promise<Modulo[]> {
   return lista.sort(porOrdem);
 }
 
-export async function moduloDe(licao: Licao): Promise<Modulo> {
+export async function moduloDe(licao: EntradaLicao): Promise<Modulo> {
   await validar();
   return (await getEntry('modulos', moduloId(licao)))!;
 }
 
-/** Lições visíveis de um módulo, em ordem. Sem argumento, todas as lições. */
+/** Lições visíveis e com página de um módulo, em ordem. Sem argumento, todas as lições. */
 export async function licoes(modulo?: string): Promise<Licao[]> {
+  return (await roteiro(modulo)).filter(temPagina);
+}
+
+/** Sequência completa de um módulo, em ordem: as lições com página e as “em breve”. */
+export async function roteiro(modulo?: string): Promise<EntradaLicao[]> {
   await validar();
   const lista = await getCollection('licoes', (l) => visivel(l) && (!modulo || moduloId(l) === modulo));
-  return lista.sort((a, b) => moduloId(a).localeCompare(moduloId(b)) || porOrdem(a, b));
+  return lista.sort(porModuloEOrdem);
 }
 
 /** Um módulo está publicado quando tem ao menos uma lição visível. */
@@ -140,13 +156,17 @@ export async function prerequisitos(modulo: Modulo) {
   );
 }
 
-/** Posição da lição no módulo e as vizinhas, para “Lição 4 de 11” e anterior/próxima. */
+/**
+ * Posição da lição no módulo e as vizinhas, para “Lição 4 de 11” e anterior/próxima.
+ * A posição conta as lições “em breve”; as vizinhas são sempre lições com página.
+ */
 export async function navegacao(licao: Licao) {
-  const lista = await licoes(moduloId(licao));
+  const sequencia = await roteiro(moduloId(licao));
+  const lista = sequencia.filter(temPagina);
   const i = lista.findIndex((l) => l.id === licao.id);
   return {
-    posicao: i + 1,
-    total: lista.length,
+    posicao: sequencia.findIndex((l) => l.id === licao.id) + 1,
+    total: sequencia.length,
     anterior: lista[i - 1] as Licao | undefined,
     proxima: lista[i + 1] as Licao | undefined,
   };
