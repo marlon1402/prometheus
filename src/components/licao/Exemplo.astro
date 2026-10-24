@@ -1,0 +1,80 @@
+---
+// Exemplo resolvido: o enunciado, os passos numerados e a conclusão, em Markdown.
+//   <Exemplo>
+//     Um carrinho de 50 kg é empurrado com 150 N…
+//
+//     1. **Força resultante:** Fr = 150 − 50 = 100 N.
+//     2. **Segunda lei:** a = Fr / m = 2 m/s².
+//
+//     O carrinho ganha 2 m/s de velocidade a cada segundo.
+//   </Exemplo>
+// A lista numerada vira a sequência de passos, com os números em círculos.
+interface Props {
+  titulo?: string;
+}
+
+const { titulo = 'Exemplo resolvido' } = Astro.props;
+---
+
+<section class="exemplo" aria-label={titulo}>
+  <h3>{titulo}</h3>
+  <slot />
+</section>
+
+<style>
+  .exemplo {
+    margin: 32px auto;
+    padding: 22px 24px;
+    border-radius: 18px;
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  h3 {
+    margin: 0 0 8px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--cor-ink, var(--ink));
+  }
+
+  .exemplo :global(p) {
+    margin: 0 0 14px;
+  }
+
+  .exemplo :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .exemplo :global(ol) {
+    display: grid;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 0;
+    list-style: none;
+    counter-reset: passo;
+  }
+
+  .exemplo :global(ol > li) {
+    counter-increment: passo;
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .exemplo :global(ol > li)::before {
+    content: counter(passo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--cor, var(--surface));
+    color: var(--cor-ink, var(--ink));
+    font: 600 14px var(--sans);
+    transform: translateY(4px);
+  }
+</style>

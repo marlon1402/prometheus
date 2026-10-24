@@ -1,22 +1,87 @@
 ---
 titulo: Força e aceleração
-descricao: Empurrar mais forte ou empurrar algo mais leve, as duas coisas fazem um objeto ganhar velocidade mais depressa. A segunda lei de Newton.
+descricao: Um carro e uma moto partem lado a lado no semáforo, com motores que empurram com a mesma força. Quem arranca mais rápido?
 ordem: 7
 nivel: fundamental-medio
-duracao: 12
+duracao: 15
 prerequisitos:
   - fisica/leis-de-newton/inercia
 ---
 
 import Formula from '../../../components/licao/Formula.astro';
+import Tex from '../../../components/licao/Tex.astro';
 import CaixaNoGelo from '../../../sims/fisica/caixa-no-gelo/CaixaNoGelo.astro';
 
-{/* Conteúdo de teste para validar a plataforma. O texto vem do rascunho do protótipo. */}
+E se você empurrar um carrinho de supermercado vazio e depois o mesmo carrinho cheio, com a mesma força? A primeira lei diz que a força muda o movimento. A segunda lei diz quanto.
 
-Se uma força age, a velocidade muda. Quanto maior a força, mais rápido ela muda; quanto maior a massa, mais o objeto “resiste” à mudança. Essa relação é a *segunda lei de Newton*:
+## A segunda lei de Newton
 
-<Formula tex="F = m \cdot a" legenda="força (N) = massa (kg) × aceleração (m/s²)" />
+Quando uma força resultante age sobre um corpo, ele ganha *aceleração*, isto é, sua velocidade muda. A segunda lei de Newton diz como essa aceleração depende da força e da massa:
 
-Na simulação, a caixa desliza sem atrito. Aplique uma força, depois leve a força a zero com a caixa em movimento e observe o gráfico.
+<Formula tex="F_r = m \cdot a" legenda="segunda lei de Newton" />
 
-<CaixaNoGelo />
+- <Tex tex="F_r" />: força resultante, em newtons (N)
+- <Tex tex="m" />: massa, em quilogramas (kg)
+- <Tex tex="a" />: aceleração, em metros por segundo ao quadrado (m/s²)
+
+Podemos ler a mesma relação como <Tex tex="a = F_r / m" />:
+
+- Com a mesma massa, o dobro da força produz o dobro da aceleração.
+- Com a mesma força, o dobro da massa produz metade da aceleração.
+
+Por isso a moto, com menos massa, arranca mais rápido que o carro com a mesma força, e o carrinho vazio ganha velocidade mais depressa que o cheio.
+
+## Um newton, de onde vem
+
+A segunda lei também define a unidade de força. Um newton é a força que faz um corpo de 1 kg ganhar 1 m/s de velocidade a cada segundo:
+
+<Formula tex="1\,\text{N} = 1\,\text{kg} \cdot \text{m/s}^2" />
+
+## A direção também importa
+
+A aceleração sempre aponta na mesma direção e no mesmo sentido da força resultante. Se a resultante aponta para a frente, o corpo acelera; se aponta para trás, contra o movimento, ele freia. E se a resultante for zero, a aceleração é zero e o corpo mantém a velocidade: é a primeira lei, como um caso especial da segunda.
+
+<Pergunta
+  titulo="Antes de testar, aposte"
+  opcoes={['Dobra', 'Fica igual', 'Cai pela metade']}
+  certa={3}
+  explicacao="a = F/m. Com a massa dobrada e a mesma força, a aceleração cai de 4 m/s² para 2 m/s². Confira no gráfico: a linha da velocidade fica menos inclinada."
+>
+  Na simulação, uma força de 20 N empurra uma caixa de 5 kg. Se você trocar por uma caixa de 10 kg e mantiver a força, a aceleração:
+</Pergunta>
+
+<CaixaNoGelo dica="A inclinação da linha no gráfico é a aceleração. Dobre a massa mantendo a força e compare. Depois, com a caixa em movimento, leve a força a zero: a linha fica horizontal." />
+
+<Exemplo>
+  Um carrinho de 50 kg é empurrado com 150 N, e o atrito com o chão vale 50 N. Qual é a aceleração?
+
+  1. **Força resultante:** <Tex tex="F_r = 150 - 50 = 100\,\text{N}" />, para a frente.
+  2. **Segunda lei:** <Tex tex="a = F_r / m = 100 / 50 = 2\,\text{m/s}^2" />.
+
+  O carrinho ganha 2 m/s de velocidade a cada segundo. Repare que se usa a força resultante, não só a força aplicada.
+</Exemplo>
+
+## Teste o que você aprendeu
+
+<Pergunta
+  opcoes={['48 m/s²', '3 m/s²', '0,33 m/s²']}
+  certa={2}
+  explicacao="a = Fr / m = 12 / 4 = 3 m/s²."
+>
+  Um corpo de 4 kg sofre uma força resultante de 12 N. Qual é a sua aceleração?
+</Pergunta>
+
+<Pergunta
+  opcoes={['Ela é grande, porque a velocidade é alta', 'Ela é zero, porque não há aceleração', 'Ela aponta para trás']}
+  certa={2}
+  explicacao="A segunda lei relaciona a força resultante com a aceleração, não com a velocidade. Velocidade constante significa aceleração zero, e portanto resultante zero, por mais alta que seja a velocidade."
+>
+  Um carro anda em alta velocidade, mas a velocidade não muda. O que se pode dizer da força resultante sobre ele?
+</Pergunta>
+
+<Quadro tipo="resumo">
+  - A segunda lei de Newton: Fr = m · a.
+  - Mais força, mais aceleração; mais massa, menos aceleração.
+  - A aceleração tem a direção e o sentido da força resultante; força grande não significa velocidade grande, e sim velocidade mudando depressa.
+  - 1 N = 1 kg · m/s².
+</Quadro>
