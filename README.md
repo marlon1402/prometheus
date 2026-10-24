@@ -31,3 +31,10 @@ O site é pensado para:
 ## Sobre o nome
 
 No mito grego, Prometeu entregou o fogo aos humanos. A ideia aqui é a mesma: levar o conhecimento a qualquer pessoa, sem pedir nada em troca.
+
+## Licença
+
+- **Código** (site, componentes e simulações): [MIT](LICENSE).
+- **Textos** das lições e das páginas: [CC BY-SA 4.0](LICENSE-CONTENT). Pode copiar, adaptar e redistribuir, inclusive para fins comerciais, desde que cite a fonte e compartilhe sob a mesma licença.
+
+Imagens de terceiros, como fotos do Wikimedia Commons, seguem a licença indicada no crédito de cada uma.
