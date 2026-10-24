@@ -1,0 +1,66 @@
+---
+// Objeto pendurado por dois fios presos ao teto. Arraste os pontos de fixação
+// para abrir ou fechar os fios e veja as trações; um aviso aparece quando um
+// fio arrebentaria.
+//   <DoisFios />
+//   <DoisFios angulo1={30} angulo2={30} />
+import Sim from '../../../components/licao/Sim.astro';
+import { fmt } from '../../../kit/formato';
+import { ANGULO_MAX, ANGULO_MIN, LIMITE_FIO, PESO, tracoes } from './simulacao';
+
+interface Props {
+  /** Ângulos iniciais dos fios com a horizontal, em graus. */
+  angulo1?: number;
+  angulo2?: number;
+  dica?: string;
+}
+
+const {
+  angulo1 = 60,
+  angulo2 = 60,
+  dica = `Arraste os pontos presos no teto, ou use os controles. Abra os fios até quase a horizontal e veja as trações passarem do peso do quadro. Cada fio aguenta até ${LIMITE_FIO} N.`,
+} = Astro.props;
+const { t1, t2 } = tracoes({ a1: angulo1, a2: angulo2 });
+---
+
+<Sim nome="dois-fios" rotulo="Simulação: objeto pendurado por dois fios" dica={dica}>
+  <div class="sim-palco">
+    <canvas
+      data-palco
+      class="arrastavel"
+      role="img"
+      aria-label={`Um quadro de ${PESO} N pendurado por dois fios presos ao teto. Setas mostram a tração em cada fio e o peso do quadro.`}
+    ></canvas>
+  </div>
+  <div class="sim-ctl">
+    <label>
+      <b>Fio 1 · ângulo com a horizontal <output data-saida="a1">{angulo1}°</output></b>
+      <input type="range" data-entrada="a1" min={ANGULO_MIN} max={ANGULO_MAX} step="1" value={angulo1} />
+    </label>
+    <label>
+      <b>Fio 2 · ângulo com a horizontal <output data-saida="a2">{angulo2}°</output></b>
+      <input type="range" data-entrada="a2" min={ANGULO_MIN} max={ANGULO_MAX} step="1" value={angulo2} />
+    </label>
+  </div>
+  <div class="sim-leituras">
+    <span>Peso do quadro <b>{PESO} N</b></span>
+    <span>Tração no fio 1 <b data-leitura="t1">{fmt(t1)} N</b></span>
+    <span>Tração no fio 2 <b data-leitura="t2">{fmt(t2)} N</b></span>
+  </div>
+  <p class="sim-resultado" data-resultado aria-live="polite"></p>
+</Sim>
+
+<style>
+  /* Sem isso, arrastar os pontos no celular rolaria a página. */
+  .arrastavel {
+    touch-action: none;
+    cursor: ew-resize;
+  }
+</style>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciar } from './index';
+
+  montar('dois-fios', iniciar);
+</script>

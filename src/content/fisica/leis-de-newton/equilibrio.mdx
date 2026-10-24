@@ -1,5 +1,67 @@
 ---
 titulo: Equilíbrio
+descricao: O livro em cima da mesa está parado. Mesmo assim, a Terra o puxa para baixo o tempo todo, e a mesa o empurra para cima.
 ordem: 4
-embreve: true
+nivel: fundamental-medio
+duracao: 12
 ---
+
+import Tex from '../../../components/licao/Tex.astro';
+import DoisFios from '../../../sims/fisica/dois-fios/DoisFios.astro';
+
+Uma lâmpada pendurada também está parada, puxada para baixo pelo próprio peso e para cima pelo fio. Estar parado não significa que nenhuma força age. Significa que as forças se compensam.
+
+## Resultante nula
+
+Um corpo está em *equilíbrio* quando a força resultante sobre ele é zero. As forças continuam lá, mas a soma delas, levando em conta as direções, dá zero.
+
+Na prática, isso quer dizer que as forças se compensam em cada direção:
+
+- a soma das forças horizontais é zero (<Tex tex="\Sigma F_x = 0" />);
+- a soma das forças verticais é zero (<Tex tex="\Sigma F_y = 0" />).
+
+No livro sobre a mesa, o peso para baixo é compensado pela força da mesa para cima. Na lâmpada, o peso é compensado pela tração do fio.
+
+## Dois tipos de equilíbrio
+
+O equilíbrio não é só para quem está parado:
+
+- **Equilíbrio estático:** o corpo está em repouso e continua em repouso. O livro na mesa, um quadro na parede.
+- **Equilíbrio dinâmico:** o corpo se move em linha reta com velocidade constante. Um paraquedista que já atingiu a velocidade máxima de queda, com a resistência do ar igual ao peso; um carro em velocidade constante numa estrada reta, com a força do motor compensando o atrito e a resistência do ar.
+
+Nos dois casos, a resultante é zero. A diferença é só o estado em que o corpo já estava. Essa ideia, de que resultante zero não significa parado, é o centro da próxima lição, sobre inércia.
+
+<Pergunta
+  titulo="Antes de testar, aposte"
+  opcoes={['Diminui, porque o peso se divide melhor', 'Fica igual, porque o peso do quadro é o mesmo', 'Aumenta, e muito']}
+  certa={3}
+  explicacao="Com os fios quase horizontais, só uma pequena parte de cada tração aponta para cima para segurar o peso. Para compensar, as trações precisam ficar muito maiores. É por isso que um varal muito esticado arrebenta com facilidade."
+>
+  Um quadro está pendurado por dois fios presos no mesmo prego. O que acontece com a força em cada fio se os fios ficarem mais abertos, quase na horizontal?
+</Pergunta>
+
+<DoisFios />
+
+## Teste o que você aprendeu
+
+<Pergunta
+  opcoes={['Para a frente, porque o carro está se movendo', 'Zero', 'Igual à força do motor']}
+  certa={2}
+  explicacao="Se a velocidade não muda e o carro anda em linha reta, ele está em equilíbrio dinâmico. A força do motor é compensada pelo atrito e pela resistência do ar, e a resultante é zero."
+>
+  Um carro anda a 80 km/h, em linha reta, sem mudar a velocidade. A força resultante sobre ele é:
+</Pergunta>
+
+<Pergunta
+  opcoes={['20 N', '10 N', '40 N']}
+  certa={1}
+  explicacao="Em equilíbrio, as forças verticais se compensam. A tração para cima precisa ser igual ao peso para baixo: 20 N."
+>
+  Uma lâmpada de 20 N está pendurada por um único fio vertical, parada. Qual é a tração no fio?
+</Pergunta>
+
+<Quadro tipo="resumo">
+  - Um corpo está em equilíbrio quando a força resultante sobre ele é zero.
+  - No equilíbrio estático, o corpo está parado; no dinâmico, ele se move em linha reta com velocidade constante.
+  - Para verificar o equilíbrio, as forças devem se compensar na horizontal e na vertical.
+</Quadro>
