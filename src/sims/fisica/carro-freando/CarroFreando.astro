@@ -1,0 +1,59 @@
+---
+// Carro freando ou batendo, com um boneco no banco. Escolha a velocidade,
+// ligue ou desligue o cinto e aperte “Frear” ou “Bater”.
+//   <CarroFreando />
+//   <CarroFreando velocidade={80} cinto />
+import Sim from '../../../components/licao/Sim.astro';
+
+interface Props {
+  /** Velocidade inicial, em km/h. */
+  velocidade?: number;
+  /** Começa com o cinto afivelado. */
+  cinto?: boolean;
+  dica?: string;
+}
+
+const {
+  velocidade = 50,
+  cinto = false,
+  dica = 'Sem cinto, nada segura o boneco: ele continua com a velocidade que tinha enquanto o carro para. Compare com o cinto afivelado.',
+} = Astro.props;
+---
+
+<Sim nome="carro-freando" rotulo="Simulação: carro freando, com e sem cinto" dica={dica}>
+  <div class="sim-palco">
+    <canvas
+      data-palco
+      role="img"
+      aria-label="Um carro andando numa estrada, visto de lado, com um boneco no banco do motorista. O carro pode frear ou bater num muro."
+    ></canvas>
+  </div>
+  <div class="sim-ctl">
+    <label>
+      <b>Velocidade <output data-saida="v">{velocidade} km/h</output></b>
+      <input type="range" data-entrada="v" min="20" max="80" step="10" value={velocidade} />
+    </label>
+    <div class="sim-btns">
+      <button type="button" class="sim-btn" data-acao="cinto" aria-pressed={cinto ? 'true' : 'false'}>
+        Cinto afivelado
+      </button>
+    </div>
+    <div class="sim-btns">
+      <button type="button" class="sim-btn" data-acao="frear">Frear</button>
+      <button type="button" class="sim-btn" data-acao="bater">Bater</button>
+      <button type="button" class="sim-btn sec" data-acao="reiniciar">Reiniciar</button>
+    </div>
+  </div>
+  <div class="sim-leituras">
+    <span>Velocidade do carro <b data-leitura="carro">{velocidade} km/h</b></span>
+    <span>Velocidade do boneco <b data-leitura="boneco">{velocidade} km/h</b></span>
+  </div>
+  <p class="sim-resultado" data-resultado aria-live="polite"></p>
+</Sim>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciar } from './index';
+
+  montar('carro-freando', iniciar);
+</script>

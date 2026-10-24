@@ -104,6 +104,13 @@
   transform: scale(0.96);
 }
 
+.sim-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none;
+  transform: none;
+}
+
 .sim-btn.sec,
 .sim-btn[aria-pressed='false'] {
   background: transparent;

@@ -1,5 +1,78 @@
 ---
 titulo: Massa e inércia no dia a dia
+descricao: Você está em pé num ônibus. Quando ele arranca, seu corpo parece ser jogado para trás. Quando freia de repente, você é “jogado” para a frente e precisa se segurar.
 ordem: 6
-embreve: true
+nivel: fundamental
+duracao: 12
 ---
+
+import CarroFreando from '../../../sims/fisica/carro-freando/CarroFreando.astro';
+
+Mas ninguém empurrou você. O que aconteceu?
+
+## Ninguém jogou você
+
+Quando o ônibus freia, ele diminui a velocidade porque os freios atuam sobre as rodas. Você, em pé, não está preso ao ônibus. Pela lei da inércia, seu corpo tende a continuar com a velocidade que tinha. O ônibus para, você continua, e por isso parece que foi jogado para a frente.
+
+Na arrancada, acontece o contrário: o ônibus ganha velocidade, e seu corpo tende a continuar parado. Os seus pés, presos ao chão pelo atrito, acompanham o ônibus, mas o resto do corpo “fica para trás”.
+
+Não existe nenhuma força empurrando você nessas situações. Para quem olha de fora, na calçada, você simplesmente continua se movendo como antes, enquanto o ônibus muda de velocidade.
+
+## Massa: a medida da inércia
+
+Todo corpo tem inércia, mas alguns resistem mais a mudanças de movimento do que outros. É muito mais difícil colocar em movimento um carro do que uma bicicleta, e muito mais difícil pará-lo também. A grandeza que mede essa resistência é a *massa*. Quanto maior a massa, maior a inércia.
+
+Isso explica por que cabecear uma bola de futebol é um esporte, e cabecear uma bola de boliche é um péssimo plano. A bola de boliche, com muito mais massa, resiste muito mais a mudar o movimento, e é a sua cabeça que sente essa resistência.
+
+Um cuidado com as palavras: massa e peso não são a mesma coisa. Massa, medida em quilogramas, mede a inércia de um corpo e é a mesma em qualquer lugar. Peso é a força com que um planeta atrai esse corpo, e muda de um lugar para outro. A diferença vai ficar clara no módulo Forças do dia a dia.
+
+<Pergunta
+  titulo="Antes de testar, aposte"
+  opcoes={[
+    'Ele é empurrado para trás contra o banco',
+    'Ele para junto com o carro',
+    'Ele continua a 50 km/h até bater no painel ou no para-brisa',
+  ]}
+  certa={3}
+  explicacao="O carro para em uma fração de segundo, mas nada segura o passageiro. Pela inércia, ele segue a 50 km/h até encontrar algo à frente. O cinto existe para aplicar a força que faz o corpo parar junto com o carro, de forma mais suave e distribuída."
+>
+  Um carro bate num muro a 50 km/h. O que acontece com um passageiro sem cinto?
+</Pergunta>
+
+<CarroFreando />
+
+<Quadro tipo="casa">
+  Coloque uma folha de papel na borda de uma mesa e um copo plástico vazio em cima. Puxe a folha bem rápido, na horizontal: o copo quase não sai do lugar. Agora puxe devagar: o copo vem junto. Quanto mais rápido o puxão, menos tempo o atrito tem para colocar o copo em movimento, e a inércia o mantém parado.
+</Quadro>
+
+## Teste o que você aprendeu
+
+<Pergunta
+  opcoes={[
+    'Porque existe uma força que empurra para fora da curva',
+    'Porque o corpo deles tende a continuar em linha reta enquanto o ônibus vira',
+    'Porque o motor empurra os passageiros para a direita',
+  ]}
+  certa={2}
+  explicacao="Pela inércia, os passageiros tendem a seguir em linha reta. O ônibus vira para a esquerda “por baixo” deles, e a sensação é de serem jogados para a direita, mas nenhuma força os empurra para lá."
+>
+  Num ônibus que faz uma curva para a esquerda, os passageiros em pé sentem que foram empurrados para a direita. Por quê?
+</Pergunta>
+
+<Pergunta
+  opcoes={[
+    'Uma bola de isopor grande',
+    'Uma bola de chumbo pequena, com mais massa',
+    'Os dois têm a mesma inércia, porque ambos são bolas',
+  ]}
+  certa={2}
+  explicacao="A inércia depende da massa, não do tamanho. A bola de chumbo, com mais massa, resiste mais a mudanças de movimento."
+>
+  Qual destes objetos tem mais inércia?
+</Pergunta>
+
+<Quadro tipo="resumo">
+  - Quando um veículo muda de velocidade, o corpo dos passageiros tende a manter o movimento que tinha; não há força “jogando” ninguém.
+  - A massa mede a inércia: quanto maior a massa, mais difícil mudar o movimento.
+  - Massa e peso são grandezas diferentes: massa em quilogramas, peso em newtons.
+</Quadro>
