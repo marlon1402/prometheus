@@ -7,7 +7,7 @@ const assentar = (s: ReturnType<typeof criar>, segundos = 6, dt = 1 / 240) => {
 
 describe('dinamômetro', () => {
   it('o peso é m · g', () => {
-    expect(peso(0.1)).toBeCloseTo(0.98, 9);
+    expect(peso(0.1)).toBeCloseTo(1, 9);
     expect(peso(1)).toBe(G);
   });
 

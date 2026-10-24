@@ -2,7 +2,12 @@
 // assenta no estiramento proporcional ao peso (lei de Hooke).
 // O estiramento é medido na escala do aparelho, em newtons.
 
-export const G = 9.8;
+/**
+ * Gravidade em m/s². Aqui usa-se a aproximação 10, e não 9,8 como nas outras
+ * simulações, para os valores baterem com o texto da lição 1 (100 g ≈ 1 N).
+ * A simulação avisa o valor em uso.
+ */
+export const G = 10;
 
 /** Rigidez e amortecimento do movimento até o equilíbrio (só afetam a animação). */
 const K = 90;

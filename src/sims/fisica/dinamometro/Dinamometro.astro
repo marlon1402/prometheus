@@ -3,7 +3,7 @@
 //   <Dinamometro />
 import Sim from '../../../components/licao/Sim.astro';
 import { fmt } from '../../../kit/formato';
-import { peso } from './simulacao';
+import { G, peso } from './simulacao';
 
 interface Props {
   dica?: string;
@@ -41,6 +41,7 @@ const objetos = [
   <div class="sim-leituras">
     <span>Massa <b data-leitura="m">100 g</b></span>
     <span>Força medida <b data-leitura="f">{fmt(peso(0.1))} N</b></span>
+    <span>Gravidade usada <b>g = {fmt(G, 0)} m/s²</b></span>
   </div>
 </Sim>
 
