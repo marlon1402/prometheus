@@ -1,0 +1,23 @@
+---
+// Moldura de uma simulação. Cada simulação (src/sims/…) usa este componente
+// e põe dentro dele o palco, os controles e as leituras. O script dela procura
+// [data-sim="<nome>"] para montar (ver src/kit/montar.ts).
+import type { HTMLAttributes } from 'astro/types';
+import '../../styles/sim.css';
+
+interface Props extends HTMLAttributes<'section'> {
+  /** Identificador usado pelo script da simulação. */
+  nome: string;
+  /** Nome acessível, por exemplo "Simulação: inércia". */
+  rotulo: string;
+  dica?: string;
+}
+
+const { nome, rotulo, dica, ...resto } = Astro.props;
+---
+
+<section class="sim largo" data-sim={nome} aria-label={rotulo} {...resto}>
+  <slot />
+  {dica && <p class="sim-dica">{dica}</p>}
+  <noscript><p class="sim-erro">Esta simulação precisa de JavaScript para funcionar.</p></noscript>
+</section>

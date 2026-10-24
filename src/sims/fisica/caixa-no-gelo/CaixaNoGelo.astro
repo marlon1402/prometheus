@@ -1,0 +1,85 @@
+---
+// Caixa deslizando num lago congelado, sem atrito.
+//   <CaixaNoGelo />                    força e massa ajustáveis (segunda lei)
+//   <CaixaNoGelo modo="empurrao" />    um empurrão curto e depois nada (inércia)
+import Sim from '../../../components/licao/Sim.astro';
+import { fmt } from '../../../kit/formato';
+
+interface Props {
+  modo?: 'forca' | 'empurrao';
+  /** Valores iniciais dos sliders. */
+  forca?: number;
+  massa?: number;
+  dica?: string;
+}
+
+const { modo = 'forca', forca = 20, massa = 5 } = Astro.props;
+const dica =
+  Astro.props.dica ??
+  (modo === 'forca'
+    ? 'Dobre a massa mantendo a força: a aceleração cai pela metade.'
+    : 'O empurrão dura meio segundo. Depois disso, nenhuma força age na caixa, e a linha do gráfico fica reta.');
+const F0 = modo === 'forca' ? forca : 0;
+---
+
+<Sim
+  nome="caixa-no-gelo"
+  rotulo={modo === 'forca' ? 'Simulação: força, massa e aceleração' : 'Simulação: inércia'}
+  dica={dica}
+>
+  <div class="sim-grid">
+    <div class="sim-palco">
+      <canvas
+        data-palco
+        role="img"
+        aria-label="Uma caixa de madeira sobre um lago congelado. Setas mostram a força aplicada e a velocidade da caixa."
+      ></canvas>
+    </div>
+    <div class="sim-grafico">
+      <h4>Velocidade × tempo</h4>
+      <canvas data-grafico role="img" aria-label="Gráfico da velocidade da caixa ao longo do tempo"></canvas>
+    </div>
+  </div>
+  <div class="sim-ctl">
+    {
+      modo === 'forca' && (
+        <label>
+          <b>
+            Força <output data-saida="F">{forca} N</output>
+          </b>
+          <input type="range" data-entrada="F" min="0" max="40" step="1" value={forca} />
+        </label>
+      )
+    }
+    <label>
+      <b>Massa <output data-saida="m">{massa} kg</output></b>
+      <input type="range" data-entrada="m" min="1" max="20" step="1" value={massa} />
+    </label>
+    <div class="sim-btns">
+      {
+        modo === 'forca' ? (
+          <button type="button" class="sim-btn" data-acao="iniciar">
+            Iniciar
+          </button>
+        ) : (
+          <button type="button" class="sim-btn" data-acao="empurrar">
+            Dar um empurrão
+          </button>
+        )
+      }
+      <button type="button" class="sim-btn sec" data-acao="reiniciar">Reiniciar</button>
+    </div>
+  </div>
+  <div class="sim-leituras">
+    <span>Aceleração <b data-leitura="a">{fmt(F0 / massa)} m/s²</b></span>
+    <span>Velocidade <b data-leitura="v">{fmt(0)} m/s</b></span>
+    <span>Tempo <b data-leitura="t">{fmt(0)} s</b></span>
+  </div>
+</Sim>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciar } from './index';
+
+  montar('caixa-no-gelo', iniciar);
+</script>

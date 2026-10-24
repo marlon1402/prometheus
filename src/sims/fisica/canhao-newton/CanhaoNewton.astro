@@ -1,0 +1,51 @@
+---
+// O canhão de Newton: escolha a velocidade do disparo e veja a bala cair,
+// entrar em órbita ou escapar da Terra.
+//   <CanhaoNewton />
+import Sim from '../../../components/licao/Sim.astro';
+import { fmt } from '../../../kit/formato';
+
+interface Props {
+  /** Velocidade inicial do slider, em km/s. */
+  velocidade?: number;
+  dica?: string;
+}
+
+const {
+  velocidade = 5,
+  dica = 'Tente 6, 7 e 7,8 km/s; depois 10 e 11,1 km/s. As setas mostram a velocidade (azul) e a gravidade (âmbar). O tempo está acelerado.',
+} = Astro.props;
+---
+
+<Sim nome="canhao-newton" rotulo="Simulação: o canhão de Newton" dica={dica}>
+  <div class="sim-palco">
+    <canvas
+      data-palco
+      role="img"
+      aria-label="A Terra com uma montanha altíssima e um canhão no topo. As trajetórias dos disparos aparecem ao redor do planeta."
+    ></canvas>
+  </div>
+  <div class="sim-ctl">
+    <label>
+      <b>Velocidade do disparo <output data-saida="v">{fmt(velocidade)} km/s</output></b>
+      <input type="range" data-entrada="v" min="1" max="12" step="0.1" value={velocidade} />
+    </label>
+    <div class="sim-btns">
+      <button type="button" class="sim-btn" data-acao="disparar">Disparar</button>
+      <button type="button" class="sim-btn sec" data-acao="limpar">Limpar trajetórias</button>
+    </div>
+  </div>
+  <div class="sim-leituras">
+    <span>Velocidade <b data-leitura="v">–</b></span>
+    <span>Altitude <b data-leitura="h">–</b></span>
+    <span>Tempo de voo <b data-leitura="t">–</b></span>
+  </div>
+  <p class="sim-resultado" data-resultado aria-live="polite">Escolha uma velocidade e dispare.</p>
+</Sim>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciar } from './index';
+
+  montar('canhao-newton', iniciar);
+</script>

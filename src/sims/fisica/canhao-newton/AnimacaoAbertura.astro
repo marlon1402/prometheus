@@ -1,0 +1,41 @@
+---
+// Abertura da Home: a animação do canhão de Newton por cima da ilustração
+// estática. Sem JavaScript ou com movimento reduzido, fica só a ilustração.
+import HeroArte from '../../../components/HeroArte.astro';
+---
+
+<figure class="abertura" data-sim="abertura-canhao">
+  <HeroArte />
+  <canvas aria-hidden="true"></canvas>
+</figure>
+
+<style>
+  .abertura {
+    position: relative;
+    margin: 0;
+  }
+
+  canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    visibility: hidden;
+  }
+
+  .animada canvas {
+    visibility: visible;
+  }
+
+  /* A ilustração continua ocupando o espaço (o canvas fica por cima), mas some. */
+  .animada :global(.hero-arte) {
+    visibility: hidden;
+  }
+</style>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciarAbertura } from './abertura';
+
+  montar('abertura-canhao', iniciarAbertura);
+</script>

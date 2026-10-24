@@ -3,7 +3,7 @@
 // precisarem mudar a cada conteúdo novo.
 import Base from '../layouts/Base.astro';
 import BlocoDisciplina from '../components/BlocoDisciplina.astro';
-import HeroArte from '../components/HeroArte.astro';
+import AnimacaoAbertura from '../sims/fisica/canhao-newton/AnimacaoAbertura.astro';
 import { disciplinas } from '../lib/catalogo';
 import { url } from '../lib/url';
 
@@ -21,7 +21,7 @@ const lista = await disciplinas();
         <span class="selo">Gratuito e sem cadastro</span>
       </div>
     </div>
-    <HeroArte />
+    <AnimacaoAbertura />
   </section>
 
   <section class="manifesto">
@@ -360,8 +360,9 @@ const lista = await disciplinas();
       gap: 16px;
       padding: 48px 20px 24px;
     }
-    .hero :global(.hero-arte) {
+    .hero :global(.abertura) {
       justify-self: center;
+      width: 100%;
       max-width: 420px;
     }
     .manifesto {

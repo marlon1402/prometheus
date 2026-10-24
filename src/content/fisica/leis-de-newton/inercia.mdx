@@ -1,6 +1,6 @@
 ---
 titulo: Inércia
-descricao: Por que as coisas param? A primeira lei de Newton.
+descricao: Por que um carrinho de supermercado para quando você o solta? A resposta de Newton surpreende, e não é porque o empurrão acabou.
 ordem: 2
 nivel: fundamental-medio
 duracao: 10
@@ -8,8 +8,20 @@ prerequisitos:
   - fisica/leis-de-newton/o-que-e-forca
 ---
 
-Conteúdo de teste para validar a plataforma.
+import CaixaNoGelo from '../../../sims/fisica/caixa-no-gelo/CaixaNoGelo.astro';
+
+{/* Conteúdo de teste para validar a plataforma. O texto vem do rascunho do protótipo. */}
 
 ## Por que as coisas param?
 
-Texto de exemplo.
+Por séculos, a experiência do dia a dia parecia provar que o movimento “precisa” de algo o mantendo. Você empurra, o carrinho anda; você solta, ele para. Newton viu o contrário: o carrinho para porque o atrito com o chão e a resistência do ar estão freando ele.
+
+Sem nenhuma força agindo, um objeto parado continua parado, e um objeto em movimento continua em linha reta, com a mesma velocidade, para sempre. Essa é a *primeira lei de Newton*, a lei da inércia.
+
+## Tirando o atrito da cena
+
+Para ver isso, precisamos tirar o atrito da cena. Na simulação, a caixa está num lago congelado, onde ela desliza sem atrito. Dê um empurrão e observe o que acontece depois que ele termina.
+
+<CaixaNoGelo modo="empurrao" />
+
+Na Terra, quase nada desliza para sempre, porque sempre há algum atrito. No espaço, longe de tudo, a inércia aparece pura: as sondas Voyager, lançadas em 1977, continuam se afastando do Sol décadas depois, sem nenhum motor ligado.

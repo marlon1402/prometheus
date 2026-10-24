@@ -8,6 +8,7 @@ bncc: [EF09CI01]
 ---
 
 import EfeitosDaForca from '../../../components/ilustracoes/fisica/EfeitosDaForca.astro';
+import Dinamometro from '../../../sims/fisica/dinamometro/Dinamometro.astro';
 
 {/*
   Lição de exemplo para validar a plataforma: usa todos os componentes de lição.
@@ -83,7 +84,9 @@ O instrumento que mede forças é o *dinamômetro*: uma mola presa a uma escala.
   A garrafa d’água tem 10 vezes a massa da maçã. Pendurada no dinamômetro, ela vai esticar a mola:
 </Pergunta>
 
-{/* A simulação do dinamômetro entra aqui quando o kit de simulação existir (Passo 6). */}
+<Dinamometro />
+
+Repare que a mola estica sempre na mesma proporção: com a garrafa, que puxa com dez vezes mais força que a maçã, ela estica dez vezes mais. É essa regularidade que permite usar uma mola como instrumento de medida. Ela tem nome, lei de Hooke, e vai ganhar uma lição própria.
 
 ## Teste o que você aprendeu
 

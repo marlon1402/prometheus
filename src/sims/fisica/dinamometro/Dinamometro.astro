@@ -1,0 +1,52 @@
+---
+// Dinamômetro: pendure objetos de massas diferentes e compare quanto a mola estica.
+//   <Dinamometro />
+import Sim from '../../../components/licao/Sim.astro';
+import { fmt } from '../../../kit/formato';
+import { peso } from './simulacao';
+
+interface Props {
+  dica?: string;
+}
+
+const { dica = 'Troque o objeto e compare quanto a mola estica. A escala ao lado da mola está em newtons.' } = Astro.props;
+
+const objetos = [
+  { massa: 0.1, nome: 'Maçã · 100 g' },
+  { massa: 0.2, nome: 'Celular · 200 g' },
+  { massa: 0.5, nome: 'Livro · 500 g' },
+  { massa: 1, nome: 'Garrafa · 1 kg' },
+];
+---
+
+<Sim nome="dinamometro" rotulo="Simulação: dinamômetro" dica={dica}>
+  <div class="sim-palco">
+    <canvas
+      data-palco
+      role="img"
+      aria-label="Uma mola presa a um suporte, com um objeto pendurado e uma escala em newtons ao lado."
+    ></canvas>
+  </div>
+  <div class="sim-ctl">
+    <div class="sim-btns" role="group" aria-label="Objeto pendurado">
+      {
+        objetos.map(({ massa, nome }, i) => (
+          <button type="button" class="sim-btn" data-massa={massa} aria-pressed={i === 0 ? 'true' : 'false'}>
+            {nome}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+  <div class="sim-leituras">
+    <span>Massa <b data-leitura="m">100 g</b></span>
+    <span>Força medida <b data-leitura="f">{fmt(peso(0.1))} N</b></span>
+  </div>
+</Sim>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciar } from './index';
+
+  montar('dinamometro', iniciar);
+</script>
