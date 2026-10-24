@@ -9,6 +9,7 @@ import Classificar from './Classificar.astro';
 import Foto from './Foto.astro';
 import Galeria from './Galeria.astro';
 import Ilustracao from './Ilustracao.astro';
+import Lei from './Lei.astro';
 import Numeros from './Numeros.astro';
 import Pergunta from './Pergunta.astro';
 import Quadro from './Quadro.astro';
@@ -19,6 +20,7 @@ export const componentesDaLicao = {
   Foto,
   Galeria,
   Ilustracao,
+  Lei,
   Numeros,
   Pergunta,
   Quadro,

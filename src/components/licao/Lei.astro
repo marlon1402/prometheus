@@ -1,0 +1,53 @@
+---
+// Enunciado de uma lei em destaque, como uma citação.
+//   <Lei titulo="Primeira lei de Newton">Um corpo em repouso tende a…</Lei>
+// A cor acompanha a disciplina da lição (variável --cor-ink do layout).
+interface Props {
+  /** Nome da lei, mostrado acima do enunciado. */
+  titulo: string;
+}
+
+const { titulo } = Astro.props;
+---
+
+<figure class="lei">
+  <figcaption>{titulo}</figcaption>
+  <blockquote>
+    <slot />
+  </blockquote>
+</figure>
+
+<style>
+  .lei {
+    margin: 32px auto;
+    padding: 4px 0 4px 24px;
+    border-left: 4px solid var(--cor-ink, var(--ink));
+  }
+
+  figcaption {
+    margin-bottom: 8px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--cor-ink, var(--muted));
+  }
+
+  blockquote {
+    margin: 0;
+    font-size: 23px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  blockquote :global(p) {
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    blockquote {
+      font-size: 20px;
+    }
+  }
+</style>

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { avancar } from '../../../kit/passo';
-import { aceleracao, criar, empurrar, passo } from './simulacao';
+import { aceleracao, atrito, criar, empurrar, G, passo, SUPERFICIES } from './simulacao';
 
 const PASSO = 1 / 120;
 const rodar = (s: ReturnType<typeof criar>, segundos: number) => {
@@ -42,6 +42,48 @@ describe('caixa no gelo', () => {
     const v = s.v;
     rodar(s, 4);
     expect(s.v).toBe(v);
+  });
+
+  it('com atrito, a caixa vai parando depois do empurrão', () => {
+    const s = criar(0, 5, SUPERFICIES.madeira.mu);
+    empurrar(s, 30, 0.5);
+    rodar(s, 0.5);
+    const v = s.v;
+    expect(v).toBeGreaterThan(0);
+    rodar(s, 0.2);
+    // Freando, a desaceleração é μ · g.
+    expect((v - s.v) / 0.2).toBeCloseTo(SUPERFICIES.madeira.mu * G, 6);
+    rodar(s, 5);
+    expect(s.v).toBe(0);
+  });
+
+  it('o atrito para a caixa, mas não a empurra para trás', () => {
+    const s = criar(0, 5, SUPERFICIES.borracha.mu);
+    empurrar(s, 40, 0.5);
+    rodar(s, 6);
+    const x = s.x;
+    rodar(s, 2);
+    expect(s.v).toBe(0);
+    expect(s.x).toBe(x);
+  });
+
+  it('parada, a caixa não sai do lugar se a força não vence o atrito', () => {
+    // Borracha, 10 kg: o atrito segura até 0,5 · 10 · 9,8 = 49 N.
+    const s = criar(30, 10, SUPERFICIES.borracha.mu);
+    expect(atrito(s)).toBe(-30);
+    expect(aceleracao(s)).toBe(0);
+    rodar(s, 2);
+    expect(s.x).toBe(0);
+  });
+
+  it('com mais atrito, a caixa para mais cedo', () => {
+    const distancia = (mu: number) => {
+      const s = criar(0, 5, mu);
+      empurrar(s, 30, 0.5);
+      rodar(s, 10);
+      return s.x;
+    };
+    expect(distancia(SUPERFICIES.borracha.mu)).toBeLessThan(distancia(SUPERFICIES.madeira.mu));
   });
 
   it('o resultado não depende da taxa de quadros da tela', () => {

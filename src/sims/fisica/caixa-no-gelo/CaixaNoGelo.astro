@@ -1,24 +1,30 @@
 ---
 // Caixa deslizando num lago congelado, sem atrito.
-//   <CaixaNoGelo />                    força e massa ajustáveis (segunda lei)
-//   <CaixaNoGelo modo="empurrao" />    um empurrão curto e depois nada (inércia)
+//   <CaixaNoGelo />                          força e massa ajustáveis (segunda lei)
+//   <CaixaNoGelo modo="empurrao" />          um empurrão curto e depois nada (inércia)
+//   <CaixaNoGelo modo="empurrao" atrito />   com botões para trocar o gelo por madeira ou borracha
 import Sim from '../../../components/licao/Sim.astro';
 import { fmt } from '../../../kit/formato';
+import { SUPERFICIES } from './simulacao';
 
 interface Props {
   modo?: 'forca' | 'empurrao';
   /** Valores iniciais dos sliders. */
   forca?: number;
   massa?: number;
+  /** Mostra os botões de superfície (gelo, madeira, borracha). */
+  atrito?: boolean;
   dica?: string;
 }
 
-const { modo = 'forca', forca = 20, massa = 5 } = Astro.props;
+const { modo = 'forca', forca = 20, massa = 5, atrito = false } = Astro.props;
 const dica =
   Astro.props.dica ??
   (modo === 'forca'
     ? 'Dobre a massa mantendo a força: a aceleração cai pela metade.'
-    : 'O empurrão dura meio segundo. Depois disso, nenhuma força age na caixa, e a linha do gráfico fica reta.');
+    : atrito
+      ? 'O empurrão dura meio segundo. No gelo, a caixa segue com a mesma velocidade e a linha do gráfico fica reta. Na madeira ou na borracha, o atrito freia a caixa e a linha desce.'
+      : 'O empurrão dura meio segundo. Depois disso, nenhuma força age na caixa, e a linha do gráfico fica reta.');
 const F0 = modo === 'forca' ? forca : 0;
 ---
 
@@ -49,6 +55,17 @@ const F0 = modo === 'forca' ? forca : 0;
           </b>
           <input type="range" data-entrada="F" min="0" max="40" step="1" value={forca} />
         </label>
+      )
+    }
+    {
+      atrito && (
+        <div class="sim-btns" role="group" aria-label="Superfície">
+          {Object.values(SUPERFICIES).map(({ nome, mu }) => (
+            <button type="button" class="sim-btn" data-mu={mu} aria-pressed={mu === 0 ? 'true' : 'false'}>
+              {nome}
+            </button>
+          ))}
+        </div>
       )
     }
     <label>

@@ -1,6 +1,7 @@
 // Liga a simulação da caixa no gelo aos controles da página.
 // Modo "forca": sliders de força e massa, botão iniciar/pausar.
 // Modo "empurrao": só a massa e um empurrão de meio segundo (lição de inércia).
+// Com os botões de superfície, a caixa pode deslizar sobre madeira ou borracha.
 import { ligarSliders } from '../../../kit/controles';
 import { fmt } from '../../../kit/formato';
 import { graficoTempo } from '../../../kit/grafico';
@@ -13,9 +14,18 @@ import { aceleracao, criar, empurrar, passo } from './simulacao';
 export function iniciar(raiz: HTMLElement) {
   const entradaF = raiz.querySelector<HTMLInputElement>('[data-entrada="F"]');
   const entradaM = buscar<HTMLInputElement>(raiz, '[data-entrada="m"]');
+  const botoesSuperficie = [...raiz.querySelectorAll<HTMLButtonElement>('[data-mu]')];
   const forcaInicial = () => (entradaF ? Number(entradaF.value) : 0);
-  const s = criar(forcaInicial(), Number(entradaM.value));
+  const muInicial = Number(botoesSuperficie.find((b) => b.getAttribute('aria-pressed') === 'true')?.dataset.mu ?? 0);
+  const s = criar(forcaInicial(), Number(entradaM.value), muInicial);
   let rodando = false;
+
+  for (const botao of botoesSuperficie) {
+    botao.addEventListener('click', () => {
+      s.mu = Number(botao.dataset.mu);
+      for (const b of botoesSuperficie) b.setAttribute('aria-pressed', String(b === botao));
+    });
+  }
 
   const palco = criarTela(buscar(raiz, '[data-palco]'), { altura: 270 });
   const grafico = criarTela(buscar(raiz, '[data-grafico]'), { altura: 206 });
@@ -44,7 +54,7 @@ export function iniciar(raiz: HTMLElement) {
   });
 
   buscar(raiz, '[data-acao="reiniciar"]').addEventListener('click', () => {
-    Object.assign(s, criar(forcaInicial(), s.m));
+    Object.assign(s, criar(forcaInicial(), s.m, s.mu));
     rodando = false;
     if (botaoIniciar) botaoIniciar.textContent = 'Iniciar';
   });

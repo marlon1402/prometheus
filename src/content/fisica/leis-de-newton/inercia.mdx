@@ -1,27 +1,67 @@
 ---
 titulo: Inércia
-descricao: Por que um carrinho de supermercado para quando você o solta? A resposta de Newton surpreende, e não é porque o empurrão acabou.
+descricao: Empurre um carrinho de supermercado e solte. Ele anda um pouco e para. Chute uma bola no gramado, e ela rola e, aos poucos, para também.
 ordem: 5
-nivel: fundamental-medio
-duracao: 10
+nivel: fundamental
+duracao: 12
 prerequisitos:
   - fisica/leis-de-newton/o-que-e-forca
 ---
 
 import CaixaNoGelo from '../../../sims/fisica/caixa-no-gelo/CaixaNoGelo.astro';
 
-{/* Conteúdo de teste para validar a plataforma. O texto vem do rascunho do protótipo. */}
+Pela experiência do dia a dia, parece óbvio que as coisas param sozinhas quando ninguém mais as empurra. Mas essa conclusão está errada, e entender por quê é o primeiro passo para entender toda a física do movimento.
 
-## Por que as coisas param?
+## A ideia antiga
 
-Por séculos, a experiência do dia a dia parecia provar que o movimento “precisa” de algo o mantendo. Você empurra, o carrinho anda; você solta, ele para. Newton viu o contrário: o carrinho para porque o atrito com o chão e a resistência do ar estão freando ele.
+Por quase dois mil anos, valeu a explicação de Aristóteles: o estado natural de um objeto é o repouso, e para continuar em movimento ele precisa de algo que o mantenha se movendo. Quando o empurrão acaba, o movimento acaba. A ideia combina com o que vemos, e por isso durou tanto.
 
-Sem nenhuma força agindo, um objeto parado continua parado, e um objeto em movimento continua em linha reta, com a mesma velocidade, para sempre. Essa é a *primeira lei de Newton*, a lei da inércia.
+## O que Galileu percebeu
 
-## Tirando o atrito da cena
+No século XVII, Galileu Galilei fez uma pergunta diferente: e se nada estivesse freando? Ele observou bolas rolando em rampas: uma bola que desce uma rampa e sobe outra quase chega à mesma altura de onde partiu. Quanto mais lisas as rampas, mais perto ela chega. E se a segunda rampa fosse ficando cada vez mais deitada, até virar um plano horizontal? A bola continuaria rolando para sempre, procurando uma altura que nunca alcança.
 
-Para ver isso, precisamos tirar o atrito da cena. Na simulação, a caixa está num lago congelado, onde ela desliza sem atrito. Dê um empurrão e observe o que acontece depois que ele termina.
+A conclusão de Galileu é que o carrinho e a bola não param porque o empurrão acabou. Eles param porque algo os freia: o atrito com o chão e a resistência do ar.
 
-<CaixaNoGelo modo="empurrao" />
+## A primeira lei de Newton
 
-Na Terra, quase nada desliza para sempre, porque sempre há algum atrito. No espaço, longe de tudo, a inércia aparece pura: as sondas Voyager, lançadas em 1977, continuam se afastando do Sol décadas depois, sem nenhum motor ligado.
+Isaac Newton transformou essa ideia na primeira das suas três leis, a lei da inércia:
+
+<Lei titulo="Primeira lei de Newton">
+  Um corpo em repouso tende a permanecer em repouso, e um corpo em movimento tende a permanecer em movimento em linha reta e com velocidade constante, a menos que uma força resultante aja sobre ele.
+</Lei>
+
+Em outras palavras: força não é necessária para manter o movimento. Força é necessária para *mudar* o movimento, seja para começar, parar, acelerar, frear ou fazer uma curva. É a mesma ideia do equilíbrio da lição anterior: com resultante zero, o corpo mantém o estado em que está.
+
+<CaixaNoGelo modo="empurrao" atrito />
+
+## Inércia fora da Terra
+
+Na Terra, é quase impossível escapar do atrito, por isso a inércia fica escondida. No espaço, longe de tudo, ela aparece pura. As sondas Voyager, lançadas em 1977, já passaram dos limites do Sistema Solar e continuam se afastando há décadas, sem nenhum motor ligado. Ninguém precisa empurrá-las: basta que nada as freie.
+
+## Teste o que você aprendeu
+
+<Pergunta
+  opcoes={['Vai parando aos poucos', 'Continua com a mesma velocidade, em linha reta', 'Acelera, porque nada o freia']}
+  certa={2}
+  explicacao="Sem nenhuma força resultante, o disco mantém o movimento que tinha. Ele não para nem acelera; segue em linha reta com velocidade constante."
+>
+  Um disco de hóquei desliza sobre um gelo perfeitamente liso, sem atrito. O que acontece com ele?
+</Pergunta>
+
+<Pergunta
+  opcoes={[
+    'Porque sem o motor não haveria força para manter o movimento',
+    'Porque o motor precisa compensar o atrito e a resistência do ar',
+    'Porque o carro perde a inércia com o tempo',
+  ]}
+  certa={2}
+  explicacao="Se não houvesse atrito nem resistência do ar, o carro seguiria com velocidade constante sem motor. O motor só é necessário para compensar as forças que freiam, mantendo a resultante zero."
+>
+  Por que um carro precisa manter o motor ligado para andar com velocidade constante numa estrada reta?
+</Pergunta>
+
+<Quadro tipo="resumo">
+  - Pela lei da inércia, um corpo mantém seu estado de repouso ou de movimento retilíneo com velocidade constante se a resultante for zero.
+  - Força não mantém o movimento: força muda o movimento.
+  - As coisas param no dia a dia por causa do atrito e da resistência do ar, não porque o empurrão acabou.
+</Quadro>
