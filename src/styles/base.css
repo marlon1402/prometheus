@@ -84,6 +84,23 @@ a {
   filter: brightness(1.15);
 }
 
+/* Variantes para fundos escuros, como a faixa final da Home */
+.btn.claro {
+  background: var(--faixa-txt);
+  color: var(--faixa);
+}
+
+.btn.contorno {
+  background: transparent;
+  color: var(--faixa-txt);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--faixa-txt) 40%, transparent);
+}
+
+.btn.contorno:hover {
+  filter: none;
+  box-shadow: inset 0 0 0 1px var(--faixa-txt);
+}
+
 /* Visível só para leitores de tela */
 .sr-only {
   position: absolute;

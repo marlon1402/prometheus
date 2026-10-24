@@ -1,0 +1,83 @@
+---
+// Texto provisório, vindo do protótipo. Será reescrito (pendência no registro de decisões).
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+
+<Base titulo="Sobre" descricao="Por que o Prometheus existe, de onde vem o nome e como as lições são feitas.">
+  <article class="sobre leitura">
+    <h1>Sobre o projeto</h1>
+    <p class="lede">
+      Prometheus é um projeto pessoal, feito no tempo livre, com uma ideia simples: muita coisa fica mais fácil de entender
+      quando você pode ver acontecendo.
+    </p>
+
+    <h2>Por que Prometheus</h2>
+    <p>
+      No mito grego, Prometeu roubou o fogo dos deuses e o entregou aos humanos. Na tragédia <em>Prometeu Acorrentado</em>,
+      ele conta que também ensinou os números, a escrita e a leitura dos astros. O fogo virou símbolo do conhecimento que
+      tira as pessoas da escuridão.
+    </p>
+    <p>A ideia aqui é a mesma: entregar ciência a qualquer pessoa, de graça, sem cadastro e sem nada em troca.</p>
+
+    <h2>Por que existe</h2>
+    <p>
+      Polias, órbitas, reações químicas, o relevo de um país inteiro: são assuntos difíceis de imaginar só com texto e uma
+      figura parada. Com uma simulação, dá para mudar um valor e ver a consequência na hora.
+    </p>
+
+    <h2>Como as lições são feitas</h2>
+    <p>
+      Cada lição é escrita para começar do básico e avançar até o nível do ensino médio. As simulações usam as fórmulas
+      reais da física e dados oficiais, como os mapas do IBGE. Novos conteúdos são publicados aos poucos.
+    </p>
+
+    <h2>Encontrou um erro?</h2>
+    <p>
+      Todo o conteúdo está no <a href={SITE.github} target="_blank" rel="noopener">GitHub</a>. Você pode{' '}
+      <a href={`${SITE.github}/issues`} target="_blank" rel="noopener">abrir uma issue</a> descrevendo o problema ou sugerir
+      a correção diretamente. Professores são especialmente bem-vindos.
+    </p>
+
+    <h2>Licença</h2>
+    <p>
+      Os textos são livres para usar e adaptar, desde que você cite a fonte e compartilhe da mesma forma
+      (<a href={`${SITE.github}/blob/main/LICENSE-CONTENT`} target="_blank" rel="noopener license">CC BY-SA 4.0</a>). O
+      código é aberto sob a licença <a href={`${SITE.github}/blob/main/LICENSE`} target="_blank" rel="noopener license">MIT</a>.
+    </p>
+  </article>
+</Base>
+
+<style>
+  .sobre {
+    padding: 56px 24px 100px;
+  }
+
+  h1 {
+    margin: 0 0 12px;
+    font-weight: 500;
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .lede {
+    margin: 0 0 20px;
+    font-size: 23px;
+    color: var(--muted);
+  }
+
+  h2 {
+    margin: 44px 0 10px;
+    font-weight: 500;
+    font-size: 26px;
+  }
+
+  p {
+    margin: 0 0 18px;
+  }
+
+  a {
+    text-underline-offset: 3px;
+  }
+</style>
