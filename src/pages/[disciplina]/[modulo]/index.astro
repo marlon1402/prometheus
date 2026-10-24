@@ -31,15 +31,15 @@ const cor = disciplina.data.cor;
     <p class="meta">{lista.length === 1 ? '1 lição' : `${lista.length} lições`}</p>
     <Etiquetas modulo={modulo} rotulo="Pré-requisitos" vazio="Nenhum: dá para começar por aqui." class="pre-modulo" />
 
-    <div class="corpo">
+    <div class="corpo prosa">
       <Content />
     </div>
 
-    <ol class="lista">
+    <ol class="lista" data-revelar="filhos">
       {
         lista.map((l) => (
           <li>
-            <a class="tit" href={rota(l)}>
+            <a class="tit link-linha" href={rota(l)}>
               {l.data.titulo}
             </a>
             <span class="desc">
@@ -53,7 +53,7 @@ const cor = disciplina.data.cor;
       }
     </ol>
 
-    <a class="btn" href={rota(lista[0])}>Começar pela primeira lição</a>
+    <a class="btn link-seta" href={rota(lista[0])}>Começar pela primeira lição</a>
   </article>
 </Base>
 
@@ -128,13 +128,6 @@ const cor = disciplina.data.cor;
   .tit {
     font-size: 21px;
     font-weight: 500;
-    text-decoration: none;
-  }
-
-  .tit:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1px;
   }
 
   .desc {

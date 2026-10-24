@@ -7,11 +7,11 @@ import { SITE } from '../site';
   <div>
     <span class="marca">Prometheus</span>
     <nav aria-label="Rodapé">
-      <a href={url('conteudos/')}>Conteúdos</a>
-      <a href={url('sobre/')}>Sobre</a>
-      <a href={SITE.github} target="_blank" rel="noopener">GitHub</a>
+      <a href={url('conteudos/')} class="link-linha">Conteúdos</a>
+      <a href={url('sobre/')} class="link-linha">Sobre</a>
+      <a href={SITE.github} target="_blank" rel="noopener" class="link-linha">GitHub</a>
     </nav>
-    <p>
+    <p class="prosa">
       Gratuito, sem cadastro e sem anúncios. Textos sob{' '}
       <a href={`${SITE.github}/blob/main/LICENSE-CONTENT`} target="_blank" rel="noopener license">CC BY-SA 4.0</a>{' '}
       e código sob <a href={`${SITE.github}/blob/main/LICENSE`} target="_blank" rel="noopener license">MIT</a>.

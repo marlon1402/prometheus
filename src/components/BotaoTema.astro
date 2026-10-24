@@ -25,6 +25,18 @@
   :global(:root[data-escuro]) .lua {
     display: inline;
   }
+
+  /* Depois de um clique, o ícone que aparece entra girando. */
+  .trocou svg {
+    animation: girar var(--medio) var(--curva);
+  }
+
+  @keyframes girar {
+    from {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.6);
+    }
+  }
 </style>
 
 <script>
@@ -44,6 +56,7 @@
     botao.addEventListener('click', () => {
       const novo = efetivo() === 'dark' ? 'light' : 'dark';
       raiz.dataset.theme = novo;
+      botao.classList.add('trocou');
       try {
         localStorage.setItem('tema', novo);
       } catch {}

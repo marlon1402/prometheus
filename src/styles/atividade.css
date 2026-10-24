@@ -33,6 +33,15 @@
   font-weight: 500;
   text-align: left;
   cursor: pointer;
+  transition:
+    background var(--medio) var(--curva),
+    color var(--medio) var(--curva),
+    box-shadow var(--rapido),
+    transform var(--rapido) var(--curva);
+}
+
+.atividade button:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .atividade button:hover:not(:disabled) {

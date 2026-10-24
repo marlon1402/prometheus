@@ -17,7 +17,7 @@ const atual = Astro.url.pathname;
     <nav aria-label="Principal">
       {
         links.map(({ href, rotulo }) => (
-          <a href={href} aria-current={atual.startsWith(href) ? 'page' : undefined}>
+          <a href={href} class="link-linha" aria-current={atual.startsWith(href) ? 'page' : undefined}>
             {rotulo}
           </a>
         ))
@@ -44,6 +44,14 @@ const atual = Astro.url.pathname;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
+    /* Fica parado durante a transição entre páginas */
+    view-transition-name: topo;
+    transition: box-shadow var(--medio) var(--curva);
+  }
+
+  /* Sombra discreta depois que a página rola */
+  .topo.rolou {
+    box-shadow: 0 6px 24px -12px rgb(0 0 0 / 0.18);
   }
 
   .topo-in {
@@ -64,6 +72,11 @@ const atual = Astro.url.pathname;
     font-size: 22px;
     letter-spacing: -0.025em;
     text-decoration: none;
+    transition: opacity var(--rapido);
+  }
+
+  .marca:hover {
+    opacity: 0.75;
   }
 
   nav {
@@ -94,6 +107,14 @@ const atual = Astro.url.pathname;
     height: 38px;
     border-radius: 50%;
     color: var(--muted);
+    transition:
+      color var(--rapido),
+      background var(--rapido),
+      transform var(--medio) var(--curva);
+  }
+
+  .topo :global(.ico:active) {
+    transform: scale(0.9);
   }
 
   .topo :global(.ico:hover) {
@@ -116,3 +137,10 @@ const atual = Astro.url.pathname;
     }
   }
 </style>
+
+<script>
+  const topo = document.querySelector('.topo');
+  const atualizar = () => topo?.classList.toggle('rolou', scrollY > 8);
+  addEventListener('scroll', atualizar, { passive: true });
+  atualizar();
+</script>

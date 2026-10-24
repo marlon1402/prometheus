@@ -14,19 +14,19 @@ const progresso = `${(posicao / total) * 100}%`;
 ---
 
 <nav class="nav-licao" aria-label="Navegação entre lições">
-  <div class="prog">
-    <span>Lição {posicao} de {total} · <a href={rota(modulo)}>{modulo.data.titulo}</a></span>
+  <div class="prog" data-revelar>
+    <span>Lição {posicao} de {total} · <a href={rota(modulo)} class="link-linha">{modulo.data.titulo}</a></span>
     <span class="barra" role="progressbar" aria-label="Progresso no módulo" aria-valuemin="1" aria-valuemax={total} aria-valuenow={posicao}>
       <i style={`width: ${progresso}`}></i>
     </span>
   </div>
   <div class="par">
     <a class="ant" href={anterior ? rota(anterior) : rota(modulo)} rel={anterior ? 'prev' : undefined}>
-      <small>{anterior ? 'Anterior' : 'Início do módulo'}</small>
+      <small><span class="seta" aria-hidden="true">←</span> {anterior ? 'Anterior' : 'Início do módulo'}</small>
       <b>{anterior ? anterior.data.titulo : modulo.data.titulo}</b>
     </a>
     <a class="prox" href={proxima ? rota(proxima) : rota(modulo)} rel={proxima ? 'next' : undefined}>
-      <small>{proxima ? 'Próxima' : 'Fim do módulo'}</small>
+      <small>{proxima ? 'Próxima' : 'Fim do módulo'} <span class="seta" aria-hidden="true">→</span></small>
       <b>{proxima ? proxima.data.titulo : modulo.data.titulo}</b>
     </a>
   </div>
@@ -64,6 +64,8 @@ const progresso = `${(posicao / total) * 100}%`;
 
   .barra i {
     display: block;
+    transform-origin: left;
+    transition: transform 1s var(--curva) 0.25s;
     height: 100%;
     border-radius: 2px;
     background: var(--cor-ink, var(--ink));
@@ -84,10 +86,35 @@ const progresso = `${(posicao / total) * 100}%`;
     border-radius: 16px;
     background: var(--surface);
     text-decoration: none;
+    transition:
+      background var(--rapido),
+      transform var(--rapido) var(--curva);
   }
 
   .par a:hover {
     background: color-mix(in srgb, var(--surface) 70%, var(--line));
+  }
+
+  .par a:active {
+    transform: scale(0.99);
+  }
+
+  .seta {
+    display: inline-block;
+    transition: transform var(--medio) var(--curva);
+  }
+
+  .ant:hover .seta {
+    transform: translateX(-4px);
+  }
+
+  .prox:hover .seta {
+    transform: translateX(4px);
+  }
+
+  /* A barra se preenche quando a navegação aparece na tela */
+  :global(.revelar-ativo) .prog:not(.revelado) .barra i {
+    transform: scaleX(0);
   }
 
   .prox {

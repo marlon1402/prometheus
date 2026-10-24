@@ -259,7 +259,13 @@
   font-size: 14px;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.2s;
+  transition:
+    background var(--medio) var(--curva),
+    transform var(--rapido) var(--curva);
+}
+
+.mc-abas button:active {
+  transform: scale(0.95);
 }
 
 .mc-abas button:hover {

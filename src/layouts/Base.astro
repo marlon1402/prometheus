@@ -78,5 +78,31 @@ const imagem = new URL(url('og.png'), Astro.site);
       <slot />
     </main>
     <Rodape />
+
+    <script>
+      // Elementos com [data-revelar] surgem ao entrar na tela (estilos em base.css).
+      // O que já está visível ao abrir a página aparece direto, sem piscar.
+      const alvos = [...document.querySelectorAll<HTMLElement>('[data-revelar]')];
+      if (alvos.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observador = new IntersectionObserver(
+          (entradas) => {
+            for (const entrada of entradas) {
+              if (!entrada.isIntersecting) continue;
+              entrada.target.classList.add('revelado');
+              observador.unobserve(entrada.target);
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px' },
+        );
+        for (const alvo of alvos) {
+          if (alvo.dataset.revelar === 'filhos') {
+            [...alvo.children].forEach((filho, i) => (filho as HTMLElement).style.setProperty('--i', String(i)));
+          }
+          if (alvo.getBoundingClientRect().top < innerHeight) alvo.classList.add('revelado');
+          else observador.observe(alvo);
+        }
+        document.documentElement.classList.add('revelar-ativo');
+      }
+    </script>
   </body>
 </html>

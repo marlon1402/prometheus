@@ -15,9 +15,9 @@ const { disciplina, modulo, moduloComLink = false } = Astro.props;
 ---
 
 <nav class="trilha" aria-label="Você está em">
-  <a href={url(`conteudos/${disciplina.id}/`)}>{disciplina.data.nome}</a>
+  <a href={url(`conteudos/${disciplina.id}/`)} class="link-linha">{disciplina.data.nome}</a>
   <span aria-hidden="true">/</span>
-  {moduloComLink ? <a href={rota(modulo)}>{modulo.data.titulo}</a> : <span aria-current="page">{modulo.data.titulo}</span>}
+  {moduloComLink ? <a href={rota(modulo)} class="link-linha">{modulo.data.titulo}</a> : <span aria-current="page">{modulo.data.titulo}</span>}
 </nav>
 
 <style>
@@ -33,11 +33,5 @@ const { disciplina, modulo, moduloComLink = false } = Astro.props;
 
   a {
     color: var(--cor-ink, var(--ink));
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-    text-underline-offset: 3px;
   }
 </style>

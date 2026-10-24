@@ -71,12 +71,12 @@ const atual = filtro ? todas.find((d) => d.id === filtro) : undefined;
             {d.data.nome}
           </h2>
           {itens.length ? (
-            <ul class="lista">
+            <ul class="lista" data-revelar="filhos">
               {itens.map(({ modulo: m, total }) => (
                 <li class:list={{ breve: !total }}>
                   <i style={`background: var(--${d.data.cor}-ink)`} />
                   {total ? (
-                    <a class="tit" href={rota(m)}>
+                    <a class="tit link-linha" href={rota(m)}>
                       {m.data.titulo}
                     </a>
                   ) : (
@@ -91,7 +91,7 @@ const atual = filtro ? todas.find((d) => d.id === filtro) : undefined;
               ))}
             </ul>
           ) : (
-            <div class="vazio">
+            <div class="vazio prosa">
               <p>{d.data.nome} ainda não tem módulos publicados.</p>
               <p>
                 Os conteúdos novos são anunciados no{' '}
@@ -147,10 +147,19 @@ const atual = filtro ? todas.find((d) => d.id === filtro) : undefined;
     font-size: 15px;
     line-height: 1.2;
     text-decoration: none;
+    transition:
+      background var(--rapido),
+      color var(--rapido),
+      box-shadow var(--rapido),
+      transform var(--rapido) var(--curva);
   }
 
   .filtros a:hover {
     background: var(--surface);
+  }
+
+  .filtros a:active {
+    transform: scale(0.96);
   }
 
   .filtros a[aria-current='page'] {
@@ -221,15 +230,6 @@ const atual = filtro ? todas.find((d) => d.id === filtro) : undefined;
     font-weight: 500;
   }
 
-  a.tit {
-    text-decoration: none;
-  }
-
-  a.tit:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1px;
-  }
 
   .breve .tit {
     color: var(--muted);

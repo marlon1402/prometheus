@@ -88,10 +88,20 @@
   font: inherit;
   font-weight: 500;
   cursor: pointer;
+  transition:
+    background var(--rapido),
+    color var(--rapido),
+    box-shadow var(--rapido),
+    transform var(--rapido) var(--curva),
+    filter var(--rapido);
 }
 
 .sim-btn:hover {
   filter: brightness(1.08);
+}
+
+.sim-btn:active {
+  transform: scale(0.96);
 }
 
 .sim-btn.sec,

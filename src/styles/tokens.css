@@ -66,6 +66,12 @@
   --wide: 980px;
   --page: 1240px;
 
+  /* Movimento: curva com saída suave e três durações */
+  --curva: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --rapido: 0.2s;
+  --medio: 0.35s;
+  --lento: 0.7s;
+
   color-scheme: light;
 }
 

@@ -7,9 +7,42 @@
 }
 
 html {
-  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 64px);
+  /* Âncoras param abaixo do cabeçalho fixo, com folga */
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 80px);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Transição entre páginas, nativa do navegador (sem JavaScript) */
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+::view-transition-old(root) {
+  animation: var(--rapido) var(--curva) both pagina-sai;
+}
+
+::view-transition-new(root) {
+  animation: var(--medio) var(--curva) both pagina-entra;
+}
+
+@keyframes pagina-sai {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes pagina-entra {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 
 body {
@@ -78,10 +111,21 @@ a {
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
+  transition:
+    transform var(--rapido) var(--curva),
+    box-shadow var(--rapido) var(--curva),
+    filter var(--rapido);
 }
 
 .btn:hover {
   filter: brightness(1.15);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -8px rgb(0 0 0 / 0.35);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: none;
 }
 
 /* Variantes para fundos escuros, como a faixa final da Home */
@@ -99,6 +143,64 @@ a {
 .btn.contorno:hover {
   filter: none;
   box-shadow: inset 0 0 0 1px var(--faixa-txt);
+}
+
+/* Links: sublinhado que cresce da esquerda para a direita (menus, listas, trilha) */
+.link-linha {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0% 1px no-repeat;
+  transition:
+    background-size var(--medio) var(--curva),
+    color var(--rapido);
+}
+
+.link-linha:hover,
+.link-linha[aria-current='page'] {
+  background-size: 100% 1px;
+}
+
+/* Links no meio do texto: sublinhado discreto sempre visível, que se completa no hover */
+.prosa a:not([class]) {
+  color: var(--cor-ink, inherit);
+  text-decoration: none;
+  background:
+    linear-gradient(currentColor, currentColor) 0 100% / 0% 1.5px no-repeat,
+    linear-gradient(color-mix(in srgb, currentColor 35%, transparent), color-mix(in srgb, currentColor 35%, transparent)) 0 100% / 100% 1px no-repeat;
+  transition: background-size var(--medio) var(--curva);
+}
+
+.prosa a:not([class]):hover {
+  background-size: 100% 1.5px, 100% 1px;
+}
+
+/* Links de “ir para”: seta que avança no hover */
+.link-seta::after {
+  content: '→';
+  display: inline-block;
+  margin-left: 0.4em;
+  transition: transform var(--medio) var(--curva);
+}
+
+.link-seta:hover::after {
+  transform: translateX(4px);
+}
+
+/* Elementos que surgem ao entrar na tela (ver Base.astro). Só com JavaScript e sem
+   movimento reduzido; com data-revelar="filhos", os filhos surgem em sequência. */
+@media (prefers-reduced-motion: no-preference) {
+  .revelar-ativo [data-revelar]:not([data-revelar='filhos']),
+  .revelar-ativo [data-revelar='filhos'] > * {
+    transition:
+      opacity var(--lento) var(--curva),
+      transform var(--lento) var(--curva);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  .revelar-ativo [data-revelar]:not([data-revelar='filhos']):not(.revelado),
+  .revelar-ativo [data-revelar='filhos']:not(.revelado) > * {
+    opacity: 0;
+    transform: translateY(24px);
+  }
 }
 
 /* Visível só para leitores de tela */

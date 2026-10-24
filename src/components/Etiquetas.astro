@@ -71,10 +71,14 @@ const itens = await prerequisitos(modulo);
     font-weight: 500;
     line-height: 1;
     text-decoration: none;
+    transition:
+      background var(--rapido),
+      transform var(--rapido) var(--curva);
   }
 
   a.tag:hover {
     background: color-mix(in srgb, var(--surface) 70%, var(--line));
+    transform: translateY(-1px);
   }
 
   .tag i {
