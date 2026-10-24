@@ -1,0 +1,64 @@
+---
+// Terra e Lua se puxando com forças de mesma intensidade e sentidos opostos
+// (um par de ação e reação). A Lua tem cerca de 27% do raio da Terra; a
+// distância entre elas não está em escala.
+// Usar dentro de <Ilustracao>, que fornece as classes il-*.
+---
+
+<svg
+  viewBox="0 0 900 300"
+  role="img"
+  aria-label="A Terra e a Lua. Uma seta na Terra aponta para a Lua e uma seta na Lua aponta para a Terra, as duas do mesmo tamanho: a Lua puxa a Terra e a Terra puxa a Lua com a mesma intensidade."
+>
+  <rect width="900" height="300" rx="18" class="il-fundo"></rect>
+  <defs>
+    <clipPath id="terra-e-lua-globo"><circle cx="230" cy="140" r="104"></circle></clipPath>
+  </defs>
+
+  <!-- Terra -->
+  <circle cx="230" cy="140" r="104" class="oceano"></circle>
+  <g clip-path="url(#terra-e-lua-globo)" class="terra">
+    <path d="M150 62q34-14 58 4t10 46q-10 26-40 28t-44-26q-8-38 16-52z"></path>
+    <path d="M232 128q30-8 52 10t6 52q-14 30-44 26t-30-40q0-40 16-48z"></path>
+    <path d="M262 50q22-6 40 8t-2 26q-20 8-36-6t-2-28z"></path>
+  </g>
+  <circle cx="230" cy="140" r="104" class="contorno"></circle>
+
+  <!-- Lua -->
+  <circle cx="700" cy="140" r="28" class="lua"></circle>
+  <circle cx="690" cy="132" r="6" class="cratera"></circle>
+  <circle cx="710" cy="150" r="4" class="cratera"></circle>
+
+  <!-- Força da Lua sobre a Terra -->
+  <g class="il-seta"><path d="M350 140H442"></path><path d="M432 131l14 9-14 9z"></path></g>
+  <text x="396" y="116" text-anchor="middle" class="il-txt">Lua puxa a Terra</text>
+
+  <!-- Força da Terra sobre a Lua -->
+  <g class="il-seta"><path d="M650 140H558"></path><path d="M568 131l-14 9 14 9z"></path></g>
+  <text x="604" y="116" text-anchor="middle" class="il-txt">Terra puxa a Lua</text>
+
+  <text x="230" y="276" text-anchor="middle" class="il-rot">Terra</text>
+  <text x="700" y="276" text-anchor="middle" class="il-rot">Lua</text>
+</svg>
+
+<style>
+  .oceano {
+    fill: var(--earth);
+  }
+  .terra path {
+    fill: var(--land);
+  }
+  .contorno {
+    fill: none;
+    stroke: var(--earth-line);
+    stroke-width: 4;
+  }
+  .lua {
+    fill: #d5d8dc;
+    stroke: #aab0b7;
+    stroke-width: 3;
+  }
+  .cratera {
+    fill: #bfc4ca;
+  }
+</style>

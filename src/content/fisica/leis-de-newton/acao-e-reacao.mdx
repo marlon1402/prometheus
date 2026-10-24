@@ -1,5 +1,130 @@
 ---
 titulo: Ação e reação
+descricao: Empurre uma parede com força. Você sente a parede empurrando sua mão de volta. Agora pense em andar, o que empurra você para a frente?
 ordem: 8
-embreve: true
+nivel: fundamental-medio
+duracao: 15
 ---
+
+import TerraELua from '../../../components/ilustracoes/fisica/TerraELua.astro';
+import Patinadores from '../../../sims/fisica/patinadores/Patinadores.astro';
+
+Não são seus próprios músculos “de dentro para fora”. Seu pé empurra o chão para trás, e o chão empurra você para a frente. Toda força vem acompanhada de outra.
+
+## A terceira lei de Newton
+
+<Lei titulo="Terceira lei de Newton">
+  Quando um corpo A exerce uma força sobre um corpo B, o corpo B exerce sobre A uma força de mesma intensidade, mesma direção e sentido oposto.
+</Lei>
+
+As duas forças formam um *par de ação e reação*. Elas têm sempre:
+
+- a mesma intensidade;
+- a mesma direção;
+- sentidos opostos;
+- a mesma natureza (se uma é gravitacional, a outra também é; se uma é de contato, a outra também);
+- e agem em corpos diferentes.
+
+Os nomes “ação” e “reação” são só um jeito de falar. As duas forças surgem ao mesmo tempo, e qualquer uma pode ser chamada de ação.
+
+## Exemplos por toda parte
+
+- **Caminhar:** o pé empurra o chão para trás; o chão empurra o pé para a frente.
+- **Nadar:** a mão empurra a água para trás; a água empurra o nadador para a frente.
+- **Foguete:** o motor empurra os gases para baixo com enorme força; os gases empurram o foguete para cima. Como ele não precisa de ar para se apoiar, funciona no vácuo do espaço.
+- **Terra e Lua:** a Terra puxa a Lua, e a Lua puxa a Terra com a mesma intensidade. É essa puxada da Lua que causa as marés.
+- **Ímãs:** dois ímãs se atraem com forças iguais e opostas, mesmo que um seja bem maior.
+
+<Ilustracao legenda="A Terra puxa a Lua e a Lua puxa a Terra, com forças de mesma intensidade e sentidos opostos. Os tamanhos estão em escala; a distância, não.">
+  <TerraELua />
+</Ilustracao>
+
+## Por que os pares não se anulam
+
+Se as forças são iguais e opostas, por que não se cancelam? Porque agem em corpos diferentes. Só faz sentido somar forças que agem sobre o mesmo corpo. Quando o cavalo puxa a carroça, a carroça puxa o cavalo para trás com a mesma intensidade; mas, para saber se a carroça anda, só interessam as forças sobre a carroça. E, para saber se o cavalo anda, as forças sobre o cavalo, incluindo o empurrão do chão em suas patas.
+
+E se as forças são iguais, por que a Terra quase não se move com a puxada da Lua? Pela segunda lei: a mesma força, num corpo de massa muito maior, produz uma aceleração muito menor. A massa da Terra é cerca de 81 vezes a da Lua.
+
+<Pergunta
+  titulo="Antes de testar, aposte"
+  opcoes={[
+    'Só a criança se move, porque é mais leve',
+    'Os dois se afastam, e a criança ganha o dobro da velocidade',
+    'O adulto empurra com mais força, então a criança vai mais longe por isso',
+  ]}
+  certa={2}
+  explicacao="Os dois recebem forças de mesma intensidade, em sentidos opostos. Como a criança tem metade da massa, sua aceleração é o dobro, e ela se afasta mais rápido."
+>
+  Um adulto de 80 kg e uma criança de 40 kg estão parados, de patins, um de frente para o outro, e se empurram. O que acontece?
+</Pergunta>
+
+<Patinadores />
+
+## Um engano comum
+
+Num livro em cima da mesa, o peso (para baixo) e a força da mesa (para cima) são iguais e opostos. Mas eles *não* formam um par de ação e reação: os dois agem sobre o mesmo corpo, o livro, e têm naturezas diferentes. O par do peso do livro é a força com que o livro puxa a Terra para cima. O par da força da mesa no livro é a força com que o livro empurra a mesa para baixo.
+
+<Pares
+  titulo="Encontre o par"
+  instrucao="Para cada força, escolha qual é a reação correspondente."
+  rotulo="Reação"
+  itens={[
+    {
+      texto: 'O pé empurra o chão para trás',
+      opcoes: ['A Terra puxa a pessoa para baixo', 'O chão empurra o pé para a frente', 'O pé empurra o ar para trás'],
+      certa: 2,
+      explicacao: 'O par envolve os mesmos dois corpos, o pé e o chão, empurrando-se em sentidos opostos.',
+    },
+    {
+      texto: 'A Terra puxa a maçã para baixo',
+      opcoes: ['O galho segura a maçã para cima', 'O ar empurra a maçã para cima', 'A maçã puxa a Terra para cima'],
+      certa: 3,
+      explicacao: 'O par do peso da maçã é a força com que ela puxa a Terra: também gravitacional e com a mesma intensidade.',
+    },
+    {
+      texto: 'A mão empurra a parede',
+      opcoes: ['A parede empurra a mão de volta', 'O chão segura a parede', 'O braço empurra a mão para a frente'],
+      certa: 1,
+      explicacao: 'A parede empurra a mão com a mesma intensidade, no sentido oposto. É o que você sente na palma.',
+    },
+    {
+      texto: 'O livro empurra a mesa para baixo',
+      opcoes: ['A Terra puxa o livro para baixo', 'O chão empurra a mesa para cima', 'A mesa empurra o livro para cima'],
+      certa: 3,
+      explicacao: 'A reação é a força da mesa no livro, de contato, entre os mesmos dois corpos. O peso do livro não é o par: ele é uma interação com a Terra.',
+    },
+  ]}
+/>
+
+## Teste o que você aprendeu
+
+<Pergunta
+  opcoes={[
+    'Maior que a força que o carro faz no caminhão',
+    'Igual à força que o carro faz no caminhão',
+    'Menor, porque o carro é mais frágil',
+  ]}
+  certa={2}
+  explicacao="Pela terceira lei, as duas forças têm a mesma intensidade. O carro sofre mais porque tem menos massa: a mesma força causa nele uma aceleração muito maior."
+>
+  Um caminhão bate de frente num carro pequeno. Durante a batida, a força que o caminhão faz no carro é:
+</Pergunta>
+
+<Pergunta
+  opcoes={[
+    'A força com que o chão empurra você para cima',
+    'A força com que você puxa a Terra para cima',
+    'Não existe reação ao peso',
+  ]}
+  certa={2}
+  explicacao="O par de ação e reação envolve os mesmos dois corpos, com a mesma natureza. A Terra puxa você; você puxa a Terra, com a mesma intensidade. A força do chão é outra interação, de contato."
+>
+  Qual é a reação à força com que a Terra puxa você para baixo (o seu peso)?
+</Pergunta>
+
+<Quadro tipo="resumo">
+  - Toda força faz parte de um par: mesma intensidade, mesma direção, sentidos opostos e mesma natureza.
+  - As forças do par agem em corpos diferentes, por isso não se anulam.
+  - Mesma força, massas diferentes: o corpo de menor massa acelera mais.
+  - Peso e normal não formam um par de ação e reação.
+</Quadro>

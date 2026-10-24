@@ -12,6 +12,7 @@ import Galeria from './Galeria.astro';
 import Ilustracao from './Ilustracao.astro';
 import Lei from './Lei.astro';
 import Numeros from './Numeros.astro';
+import Pares from './Pares.astro';
 import Pergunta from './Pergunta.astro';
 import Quadro from './Quadro.astro';
 import SaibaMais from './SaibaMais.astro';
@@ -24,6 +25,7 @@ export const componentesDaLicao = {
   Ilustracao,
   Lei,
   Numeros,
+  Pares,
   Pergunta,
   Quadro,
   SaibaMais,

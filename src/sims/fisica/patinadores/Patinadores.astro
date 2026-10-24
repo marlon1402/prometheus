@@ -1,0 +1,63 @@
+---
+// Dois patinadores parados no gelo se empurram. Setas mostram as forças iguais
+// e opostas durante o empurrão e, depois, as velocidades diferentes. Dá para
+// escolher qual patinador observar: só as forças sobre ele ficam em destaque.
+//   <Patinadores />
+//   <Patinadores esquerda={80} direita={40} />
+import Sim from '../../../components/licao/Sim.astro';
+import { fmt } from '../../../kit/formato';
+import { FORCA } from './simulacao';
+
+interface Props {
+  /** Massas iniciais dos patinadores, em kg. */
+  esquerda?: number;
+  direita?: number;
+  dica?: string;
+}
+
+const {
+  esquerda = 80,
+  direita = 40,
+  dica = `Durante o empurrão, cada um recebe uma força de ${FORCA} N, em sentidos opostos. Compare as velocidades depois: quem tem menos massa sai mais rápido.`,
+} = Astro.props;
+---
+
+<Sim nome="patinadores" rotulo="Simulação: patinadores se empurrando" dica={dica}>
+  <div class="sim-palco">
+    <canvas
+      data-palco
+      role="img"
+      aria-label="Dois patinadores parados no gelo, um de frente para o outro, com as mãos encostadas. Ao se empurrarem, setas mostram as forças iguais e opostas e, depois, as velocidades de cada um."
+    ></canvas>
+  </div>
+  <div class="sim-ctl">
+    <label>
+      <b>Patinador da esquerda <output data-saida="ma">{esquerda} kg</output></b>
+      <input type="range" data-entrada="ma" min="20" max="100" step="5" value={esquerda} />
+    </label>
+    <label>
+      <b>Patinador da direita <output data-saida="mb">{direita} kg</output></b>
+      <input type="range" data-entrada="mb" min="20" max="100" step="5" value={direita} />
+    </label>
+    <div class="sim-btns" role="group" aria-label="Forças em destaque">
+      <button type="button" class="sim-btn" data-observar="ambos" aria-pressed="true">Os dois</button>
+      <button type="button" class="sim-btn" data-observar="a" aria-pressed="false">Só a esquerda</button>
+      <button type="button" class="sim-btn" data-observar="b" aria-pressed="false">Só a direita</button>
+    </div>
+    <div class="sim-btns">
+      <button type="button" class="sim-btn" data-acao="empurrar">Empurrar</button>
+      <button type="button" class="sim-btn sec" data-acao="reiniciar">Reiniciar</button>
+    </div>
+  </div>
+  <div class="sim-leituras">
+    <span>Velocidade da esquerda <b data-leitura="va">{fmt(0, 2)} m/s</b></span>
+    <span>Velocidade da direita <b data-leitura="vb">{fmt(0, 2)} m/s</b></span>
+  </div>
+</Sim>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciar } from './index';
+
+  montar('patinadores', iniciar);
+</script>

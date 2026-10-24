@@ -1,0 +1,156 @@
+---
+// Atividade de encontrar o par: para cada item, a pessoa escolhe a opção
+// correspondente entre as dela, com retorno na hora e o placar no fim.
+// Na lição de ação e reação, cada item é uma força e as opções são reações.
+//   <Pares
+//     titulo="Encontre o par"
+//     instrucao="Para cada força, escolha a reação."
+//     rotulo="Reação"
+//     itens={[
+//       {
+//         texto: 'O pé empurra o chão para trás',
+//         opcoes: ['O chão empurra o pé para a frente', 'A Terra puxa a pessoa para baixo'],
+//         certa: 1,
+//         explicacao: 'Pé e chão trocam empurrões em sentidos opostos.',
+//       },
+//     ]}
+//   />
+// `certa` é a posição da opção correta, contando a partir de 1.
+import '../../styles/atividade.css';
+
+interface Item {
+  texto: string;
+  opcoes: string[];
+  certa: number;
+  /** Mostrada depois da resposta, certa ou errada. */
+  explicacao?: string;
+}
+
+interface Props {
+  titulo: string;
+  instrucao?: string;
+  /** Nome do que se escolhe em cada item, por exemplo "Reação". */
+  rotulo?: string;
+  itens: Item[];
+}
+
+const { titulo, instrucao, rotulo = 'Par', itens } = Astro.props;
+for (const { texto, opcoes, certa } of itens) {
+  if (!Number.isInteger(certa) || certa < 1 || certa > opcoes.length) {
+    throw new Error(`Pares: no item "${texto}", "certa" deve ser um número de 1 a ${opcoes.length}, mas é ${certa}.`);
+  }
+}
+---
+
+<section class="atividade pares" aria-label={`Atividade: ${titulo}`}>
+  <h3>{titulo}</h3>
+  {instrucao && <p class="instrucao">{instrucao}</p>}
+  <ol>
+    {
+      itens.map(({ texto, opcoes, certa, explicacao }) => (
+        <li data-certa={certa} data-explicacao={explicacao ?? ''}>
+          <p class="forca">{texto}</p>
+          <div role="group" aria-label={`${rotulo} de: ${texto}`}>
+            <span class="rot">{rotulo}:</span>
+            {opcoes.map((opcao, i) => (
+              <button type="button" data-opcao={i + 1}>
+                {opcao}
+              </button>
+            ))}
+          </div>
+          <p class="fb" aria-live="polite" />
+        </li>
+      ))
+    }
+  </ol>
+  <p class="placar" aria-live="polite"></p>
+</section>
+
+<style>
+  .instrucao {
+    color: var(--muted);
+  }
+
+  ol {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    gap: 8px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: var(--bg);
+  }
+
+  .forca {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  li > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .rot {
+    margin-right: 4px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  li button:not(.certo):not(.errado) {
+    background: var(--surface);
+  }
+
+  .fb {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .fb:empty,
+  .placar:empty {
+    display: none;
+  }
+
+  .placar {
+    margin: 12px 0 0;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  for (const atividade of document.querySelectorAll<HTMLElement>('.pares')) {
+    const itens = [...atividade.querySelectorAll<HTMLLIElement>('li')];
+    const placar = atividade.querySelector<HTMLElement>('.placar')!;
+    let feitos = 0;
+    let certos = 0;
+
+    for (const item of itens) {
+      const botoes = [...item.querySelectorAll<HTMLButtonElement>('button')];
+      for (const botao of botoes) {
+        botao.addEventListener('click', () => {
+          const acertou = botao.dataset.opcao === item.dataset.certa;
+          for (const b of botoes) {
+            b.disabled = true;
+            if (b.dataset.opcao === item.dataset.certa) b.classList.add('certo');
+          }
+          if (!acertou) botao.classList.add('errado');
+          const explicacao = item.dataset.explicacao ?? '';
+          item.querySelector('.fb')!.textContent = `${acertou ? 'Certo.' : 'Não é esse.'} ${explicacao}`.trim();
+
+          feitos++;
+          if (acertou) certos++;
+          if (feitos === itens.length) placar.textContent = `Você acertou ${certos} de ${itens.length}.`;
+        });
+      }
+    }
+  }
+</script>
