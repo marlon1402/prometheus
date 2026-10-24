@@ -43,9 +43,12 @@ let validacao: Promise<void> | undefined;
 
 /**
  * Confere o que o esquema não consegue ver: pastas sem disciplina ou módulo
- * correspondente e ordens repetidas. Roda uma vez por build.
+ * correspondente e ordens repetidas. Roda uma vez por build; no ambiente de
+ * desenvolvimento, roda a cada consulta, porque o conteúdo muda enquanto o
+ * servidor está aberto e um erro já corrigido não pode ficar guardado.
  */
 function validar() {
+  if (import.meta.env.DEV) validacao = undefined;
   validacao ??= (async () => {
     const [ds, ms, ls] = await Promise.all([
       getCollection('disciplinas'),
