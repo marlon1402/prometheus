@@ -1,36 +1,98 @@
 ---
-// Texto provisório, vindo do protótipo. Será reescrito (pendência no registro de decisões).
 import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
 import { SITE } from '../site';
+
+const contatos = [
+  { rotulo: 'Site pessoal', href: 'https://marlon1402.github.io/', texto: 'marlon1402.github.io' },
+  { rotulo: 'GitHub', href: 'https://github.com/marlon1402', texto: 'github.com/marlon1402' },
+  { rotulo: 'LinkedIn', href: 'https://www.linkedin.com/in/marlonsamuel1402/', texto: 'linkedin.com/in/marlonsamuel1402' },
+  { rotulo: 'E-mail', href: 'mailto:marlonsamuel.dev@gmail.com', texto: 'marlonsamuel.dev@gmail.com' },
+];
 ---
 
-<Base titulo="Sobre" descricao="Por que o Prometheus existe, de onde vem o nome e como as lições são feitas.">
+<Base titulo="Sobre" descricao="O que é o Prometheus, por que ele existe, como as lições são feitas e quem está por trás do projeto.">
   <article class="sobre leitura prosa">
     <h1>Sobre o projeto</h1>
     <p class="lede">
-      Prometheus é um projeto pessoal, feito no tempo livre, com uma ideia simples: muita coisa fica mais fácil de entender
-      quando você pode ver acontecendo.
+      Prometheus é um site gratuito que explica ciência com simulações interativas. Em vez de só ler uma explicação, você
+      muda um valor e vê o que acontece.
+    </p>
+
+    <h2>Por que existe</h2>
+    <p>
+      Polias, órbitas, reações químicas, o relevo de um país inteiro: são assuntos difíceis de imaginar só com texto e uma
+      figura parada. Com uma simulação, a consequência de cada mudança aparece na hora, e a ideia por trás da fórmula fica
+      mais fácil de entender.
+    </p>
+    <p>
+      As lições vão do básico ao ensino médio e são pensadas para estudantes que querem entender, não só decorar; para
+      professores, que podem projetar as simulações em sala ou indicá-las à turma; e para quem gosta de aprender pelo
+      prazer de entender como o mundo funciona.
     </p>
 
     <h2>Por que Prometheus</h2>
     <p>
       No mito grego, Prometeu roubou o fogo dos deuses e o entregou aos humanos. Na tragédia <em>Prometeu Acorrentado</em>,
       ele conta que também ensinou os números, a escrita e a leitura dos astros. O fogo virou símbolo do conhecimento que
-      tira as pessoas da escuridão.
-    </p>
-    <p>A ideia aqui é a mesma: entregar ciência a qualquer pessoa, de graça, sem cadastro e sem nada em troca.</p>
-
-    <h2>Por que existe</h2>
-    <p>
-      Polias, órbitas, reações químicas, o relevo de um país inteiro: são assuntos difíceis de imaginar só com texto e uma
-      figura parada. Com uma simulação, dá para mudar um valor e ver a consequência na hora.
+      tira as pessoas da escuridão. A ideia aqui é a mesma: entregar ciência a qualquer pessoa, sem pedir nada em troca.
     </p>
 
     <h2>Como as lições são feitas</h2>
     <p>
-      Cada lição é escrita para começar do básico e avançar até o nível do ensino médio. As simulações usam as fórmulas
-      reais da física e dados oficiais, como os mapas do IBGE. Novos conteúdos são publicados aos poucos.
+      Cada lição parte de uma pergunta do dia a dia e leva de 10 a 15 minutos, entre leitura e experimentação. Antes de
+      escrever, cada assunto passa por uma pesquisa em livros didáticos, materiais de referência e na BNCC. As simulações
+      usam as fórmulas reais da física e dados oficiais, como os mapas do IBGE. Os conteúdos são publicados aos poucos,
+      começando por Física e Geografia.
     </p>
+
+    <h2>Princípios</h2>
+    <ul class="principios">
+      <li><b>Gratuito</b>, hoje e sempre.</li>
+      <li><b>Sem cadastro:</b> é só abrir e usar.</li>
+      <li><b>Sem anúncios.</b></li>
+      <li>
+        <b>Sem coleta de dados:</b> nada de rastreadores, e até as fontes são servidas pelo próprio site. O tema que você
+        escolhe fica salvo só no seu navegador.
+      </li>
+      <li><b>Aberto:</b> código e textos disponíveis para consulta e correção.</li>
+    </ul>
+
+    <h2>Quem faz</h2>
+    <p>
+      Eu sou Marlon Samuel e faço o Prometheus no meu tempo livre, como um projeto pessoal. Se quiser conhecer outros
+      trabalhos meus ou falar comigo, estes são os caminhos:
+    </p>
+    <ul class="contatos">
+      {
+        contatos.map(({ rotulo, href, texto }) => (
+          <li>
+            <span>{rotulo}</span>
+            <a href={href} {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener me' } : {})}>
+              {texto}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2>Outros projetos em educação</h2>
+    <section class="projeto" aria-labelledby="lumeread">
+      <div class="projeto-cab">
+        <h3 id="lumeread">LumeRead</h3>
+        <span class="selo">Em breve na Google Play</span>
+      </div>
+      <p class="slogan">Sua luz para grandes histórias.</p>
+      <p>
+        Um leitor de livros digitais (EPUB) para o celular, para quem gosta de ler: prateleiras organizáveis, grifos e
+        anotações, temas de leitura (incluindo um modo preto e branco no espírito do Kindle), leitura em voz alta, dicionário
+        e estatísticas de leitura.
+      </p>
+      <p>
+        Segue os mesmos princípios do Prometheus: funciona sem internet, sem cadastro e sem coleta de dados. Os livros e
+        tudo o que você faz com eles ficam só no seu aparelho.
+      </p>
+    </section>
 
     <h2>Encontrou um erro?</h2>
     <p>
@@ -44,6 +106,10 @@ import { SITE } from '../site';
       Os textos são livres para usar e adaptar, desde que você cite a fonte e compartilhe da mesma forma
       (<a href={`${SITE.github}/blob/main/LICENSE-CONTENT`} target="_blank" rel="noopener license">CC BY-SA 4.0</a>). O
       código é aberto sob a licença <a href={`${SITE.github}/blob/main/LICENSE`} target="_blank" rel="noopener license">MIT</a>.
+    </p>
+
+    <p class="voltar">
+      <a class="btn link-seta" href={url('conteudos/')}>Explorar conteúdos</a>
     </p>
   </article>
 </Base>
@@ -68,7 +134,7 @@ import { SITE } from '../site';
   }
 
   h2 {
-    margin: 44px 0 10px;
+    margin: 48px 0 12px;
     font-weight: 500;
     font-size: 26px;
   }
@@ -77,7 +143,91 @@ import { SITE } from '../site';
     margin: 0 0 18px;
   }
 
-  a {
-    text-underline-offset: 3px;
+  .principios {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding-left: 22px;
+  }
+
+  .principios b {
+    font-weight: 600;
+  }
+
+  /* Contatos: rótulo à esquerda, link à direita */
+  .contatos {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .contatos li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contatos span {
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  .contatos a {
+    font-family: var(--sans);
+    font-size: 16px;
+    overflow-wrap: anywhere;
+  }
+
+  /* Cartão de projeto */
+  .projeto {
+    padding: 24px 26px;
+    border-radius: 20px;
+    background: var(--surface);
+  }
+
+  .projeto-cab {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-bottom: 4px;
+  }
+
+  h3 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .selo {
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--bg);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .slogan {
+    margin-bottom: 14px;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .projeto p:last-child {
+    margin-bottom: 0;
+  }
+
+  .voltar {
+    margin-top: 48px;
   }
 </style>
