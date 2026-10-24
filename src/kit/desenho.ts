@@ -3,19 +3,28 @@ import { cor } from './cores';
 
 type Ctx = CanvasRenderingContext2D;
 
-/** Vetor com haste grossa, ponta arredondada e rótulo numa etiqueta da mesma cor. */
-export function seta(ctx: Ctx, x1: number, y1: number, x2: number, y2: number, corSeta: string, rotulo?: string) {
+/** Vetor com haste grossa, ponta arredondada e rótulo numa etiqueta da mesma cor. `espessura` é a da haste. */
+export function seta(
+  ctx: Ctx,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  corSeta: string,
+  rotulo?: string,
+  espessura = 3.4,
+) {
   const ang = Math.atan2(y2 - y1, x2 - x1);
   const len = Math.hypot(x2 - x1, y2 - y1);
   if (len < 2) return;
-  const p = Math.min(12, len * 0.5);
+  const p = Math.min(12 + (espessura - 3.4) * 2, len * 0.5);
   const cs = Math.cos(ang);
   const sn = Math.sin(ang);
 
   ctx.save();
   ctx.strokeStyle = ctx.fillStyle = corSeta;
   ctx.lineCap = ctx.lineJoin = 'round';
-  ctx.lineWidth = 3.4;
+  ctx.lineWidth = espessura;
   ctx.beginPath();
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2 - cs * p * 0.7, y2 - sn * p * 0.7);

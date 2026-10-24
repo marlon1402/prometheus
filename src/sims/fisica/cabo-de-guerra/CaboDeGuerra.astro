@@ -1,0 +1,58 @@
+---
+// Cabo de guerra: dois times puxam a corda com forças ajustáveis. A seta no
+// centro mostra a resultante; com resultante zero, a corda não sai do lugar.
+//   <CaboDeGuerra />
+//   <CaboDeGuerra esquerda={1200} direita={1000} />
+import Sim from '../../../components/licao/Sim.astro';
+import { fmt } from '../../../kit/formato';
+import { aceleracao, criar, descrever, resultante } from './simulacao';
+
+interface Props {
+  /** Forças iniciais dos times, em N. */
+  esquerda?: number;
+  direita?: number;
+  dica?: string;
+}
+
+const {
+  esquerda = 1000,
+  direita = 1000,
+  dica = 'Ajuste a força de cada time e aperte “Puxar”. Com forças iguais, a resultante é zero e a corda não sai do lugar.',
+} = Astro.props;
+const s = criar(esquerda, direita);
+---
+
+<Sim nome="cabo-de-guerra" rotulo="Simulação: cabo de guerra" dica={dica}>
+  <div class="sim-palco">
+    <canvas
+      data-palco
+      role="img"
+      aria-label="Dois times puxando uma corda em sentidos opostos. Setas mostram a força de cada time e a força resultante no centro da corda."
+    ></canvas>
+  </div>
+  <div class="sim-ctl">
+    <label>
+      <b>Time da esquerda <output data-saida="esq">{fmt(esquerda, 0)} N</output></b>
+      <input type="range" data-entrada="esq" min="0" max="1500" step="50" value={esquerda} />
+    </label>
+    <label>
+      <b>Time da direita <output data-saida="dir">{fmt(direita, 0)} N</output></b>
+      <input type="range" data-entrada="dir" min="0" max="1500" step="50" value={direita} />
+    </label>
+    <div class="sim-btns">
+      <button type="button" class="sim-btn" data-acao="puxar">Puxar</button>
+      <button type="button" class="sim-btn sec" data-acao="reiniciar">Reiniciar</button>
+    </div>
+  </div>
+  <div class="sim-leituras">
+    <span>Resultante <b data-leitura="fr">{descrever(resultante(s))}</b></span>
+    <span>Aceleração <b data-leitura="a">{fmt(Math.abs(aceleracao(s)), 2)} m/s²</b></span>
+  </div>
+</Sim>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciar } from './index';
+
+  montar('cabo-de-guerra', iniciar);
+</script>

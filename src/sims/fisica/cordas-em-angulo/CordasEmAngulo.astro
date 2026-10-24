@@ -1,0 +1,97 @@
+---
+// Caixa vista de cima, puxada por até três cordas com intensidade e ângulo
+// ajustáveis. A resultante aparece como uma seta mais grossa, e a caixa,
+// solta, se move na direção dela. Uma corda com 0 N fica de fora.
+//   <CordasEmAngulo />
+//   <CordasEmAngulo cordas={[{ F: 30, theta: 0 }, { F: 40, theta: 90 }]} />
+import Sim from '../../../components/licao/Sim.astro';
+import { fmt } from '../../../kit/formato';
+import { resultante, type Corda } from './simulacao';
+
+interface Props {
+  /** Valores iniciais de até três cordas; as que faltarem começam com 0 N. */
+  cordas?: Corda[];
+  dica?: string;
+}
+
+const {
+  cordas: iniciais = [
+    { F: 30, theta: 0 },
+    { F: 40, theta: 90 },
+  ],
+  dica = 'Comece pelos 30 N para o leste e 40 N para o norte: a resultante tem 50 N, não 70 N. Depois ligue a terceira corda e tente anular a resultante.',
+} = Astro.props;
+const padrao = [{ F: 0, theta: 0 }, { F: 0, theta: 90 }, { F: 0, theta: 225 }];
+const cordas = padrao.map((c, i) => iniciais[i] ?? c);
+const r = resultante(cordas);
+const cores = ['var(--vel)', 'var(--grav)', 'var(--fogo)'];
+---
+
+<Sim nome="cordas-em-angulo" rotulo="Simulação: cordas em ângulo" dica={dica}>
+  <div class="sim-palco">
+    <canvas
+      data-palco
+      role="img"
+      aria-label="Uma caixa vista de cima, puxada por cordas em direções diferentes. Setas mostram a força de cada corda e a resultante, mais grossa."
+    ></canvas>
+  </div>
+  <div class="sim-ctl">
+    {
+      cordas.map((c, i) => (
+        <div class="corda" style={`--cor-corda: ${cores[i]}`}>
+          <label>
+            <b>
+              <span>
+                <i aria-hidden="true" />
+                Corda {i + 1} · intensidade
+              </span>
+              <output data-saida={`${i}-F`}>{c.F} N</output>
+            </b>
+            <input type="range" data-corda={i} data-campo="F" min="0" max="100" step="5" value={c.F} />
+          </label>
+          <label>
+            <b>
+              Corda {i + 1} · ângulo <output data-saida={`${i}-theta`}>{c.theta}°</output>
+            </b>
+            <input type="range" data-corda={i} data-campo="theta" min="0" max="359" step="1" value={c.theta} />
+          </label>
+        </div>
+      ))
+    }
+    <div class="sim-btns">
+      <button type="button" class="sim-btn" data-acao="soltar">Soltar a caixa</button>
+      <button type="button" class="sim-btn sec" data-acao="reiniciar">Reiniciar</button>
+    </div>
+  </div>
+  <div class="sim-leituras">
+    <span>Resultante <b data-leitura="fr">{fmt(r.F)} N</b></span>
+    <span>Direção <b data-leitura="theta">{fmt(r.theta, 0)}°</b></span>
+  </div>
+  <p class="sim-resultado" data-resultado aria-live="polite"></p>
+</Sim>
+
+<style>
+  /* Cada corda numa linha, com a intensidade e o ângulo lado a lado. */
+  .corda {
+    flex: 1 1 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+  }
+
+  .corda i {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: var(--cor-corda);
+  }
+</style>
+
+<script>
+  import { montar } from '../../../kit/montar';
+  import { iniciar } from './index';
+
+  montar('cordas-em-angulo', iniciar);
+</script>

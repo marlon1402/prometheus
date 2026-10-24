@@ -1,5 +1,60 @@
 ---
 titulo: Força resultante
+descricao: Num cabo de guerra, dois times puxam a mesma corda com toda a força, e mesmo assim a corda pode ficar parada. Em outro momento, um dos lados ganha e a corda dispara.
 ordem: 3
-embreve: true
+nivel: fundamental-medio
+duracao: 12
 ---
+
+import Formula from '../../../components/licao/Formula.astro';
+import Tex from '../../../components/licao/Tex.astro';
+import CaboDeGuerra from '../../../sims/fisica/cabo-de-guerra/CaboDeGuerra.astro';
+import CordasEmAngulo from '../../../sims/fisica/cordas-em-angulo/CordasEmAngulo.astro';
+
+O que decide o resultado não é a força de cada time sozinho, e sim a combinação de todas as forças.
+
+## Somando forças
+
+Quando várias forças agem sobre o mesmo corpo, o efeito é o mesmo que o de uma única força, chamada *força resultante* (<Tex tex="F_r" />). Encontrar a resultante é somar as forças, mas como elas são vetores, a soma depende das direções.
+
+**Mesma direção e mesmo sentido:** as intensidades se somam. Duas pessoas empurrando um carro para a frente, uma com 300 N e outra com 200 N, equivalem a uma única força de 500 N para a frente.
+
+**Mesma direção e sentidos opostos:** as intensidades se subtraem, e a resultante aponta para o lado da força maior. No cabo de guerra, se um time puxa com 1.200 N para a esquerda e o outro com 1.000 N para a direita, a resultante é de 200 N para a esquerda.
+
+**Forças iguais e opostas:** a resultante é zero. É o cabo de guerra empatado.
+
+<CaboDeGuerra />
+
+## Forças em direções diferentes
+
+Quando as forças não estão na mesma linha, a resultante não é a simples soma das intensidades. Imagine dois rebocadores puxando um navio: um com 3.000 N para o leste e outro com 4.000 N para o norte. A resultante não é de 7.000 N. Como as forças são perpendiculares, ela é a diagonal do retângulo que as duas formam, calculada pelo teorema de Pitágoras:
+
+<Formula tex="F_r^2 = 3{.}000^2 + 4{.}000^2 \quad\Rightarrow\quad F_r = 5{.}000\,\text{N}" legenda="a resultante aponta entre o leste e o norte" />
+
+Para forças em qualquer ângulo, a resultante é a diagonal do paralelogramo formado por elas (a *regra do paralelogramo*). Outra forma de pensar é separar cada força em componentes horizontal e vertical, somar as componentes de cada eixo e só então juntar as duas somas.
+
+<CordasEmAngulo />
+
+## Teste o que você aprendeu
+
+<Pergunta
+  opcoes={['80 N para a direita', 'Zero', '40 N para a direita']}
+  certa={2}
+  explicacao="Para a esquerda, as forças somam 25 + 15 = 40 N, que equilibra os 40 N para a direita. A resultante é zero."
+>
+  Três forças agem numa caixa, todas na horizontal: 40 N para a direita, 25 N para a esquerda e 15 N para a esquerda. Qual é a resultante?
+</Pergunta>
+
+<Pergunta
+  opcoes={['14 N', '2 N', '10 N']}
+  certa={3}
+  explicacao="Como as forças são perpendiculares, Fr² = 6² + 8² = 36 + 64 = 100, então Fr = 10 N. Somar 6 + 8 só valeria se elas apontassem para o mesmo lado."
+>
+  Duas forças perpendiculares de 6 N e 8 N agem no mesmo corpo. Qual é a intensidade da resultante?
+</Pergunta>
+
+<Quadro tipo="resumo">
+  - A força resultante é a única força que tem o mesmo efeito de todas as forças juntas.
+  - Na mesma direção, as forças se somam ou se subtraem conforme o sentido.
+  - Em direções diferentes, a resultante é a soma vetorial: Pitágoras para forças perpendiculares, regra do paralelogramo ou componentes no caso geral.
+</Quadro>
