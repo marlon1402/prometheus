@@ -1,0 +1,55 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import Fontes from '../components/Fontes.astro';
+import Cabecalho from '../components/Cabecalho.astro';
+import Rodape from '../components/Rodape.astro';
+import { SITE } from '../site';
+
+interface Props {
+  /** Título da página, sem o nome do site. Vazio na Home. */
+  titulo?: string;
+  descricao?: string;
+}
+
+const { titulo, descricao = SITE.descricao } = Astro.props;
+const tituloCompleto = titulo ? `${titulo} · ${SITE.nome}` : SITE.nome;
+const canonica = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonica} />
+
+    <!-- Aplica o tema salvo antes da primeira pintura, para não piscar. -->
+    <script is:inline>
+      (function () {
+        var raiz = document.documentElement;
+        try {
+          var tema = localStorage.getItem('tema');
+          if (tema === 'light' || tema === 'dark') raiz.dataset.theme = tema;
+        } catch (e) {}
+        var escuro = (raiz.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark';
+        raiz.toggleAttribute('data-escuro', escuro);
+      })();
+    </script>
+
+    <Fontes />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    <Cabecalho />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Rodape />
+  </body>
+</html>

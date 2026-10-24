@@ -1,0 +1,176 @@
+/*
+  Tokens de cor, tipografia e medidas.
+  O modo escuro aparece duas vezes: uma para quem segue o sistema
+  (sem escolha salva) e outra para quem escolheu o escuro no botão.
+*/
+
+:root {
+  /* Interface */
+  --bg: #ffffff;
+  --surface: #f6f6f4;
+  --line: #e6e7e4;
+  --ink: #22252a;
+  --muted: #646a72;
+  --faixa: #1f2328;
+  --faixa-txt: #ffffff;
+
+  /* Disciplinas: fundo pastel e cor de texto e ícones */
+  --fis: #e7eff8;
+  --fis-ink: #33618e;
+  --geo: #f6efe1;
+  --geo-ink: #7d5f22;
+  --mat: #f9eaec;
+  --mat-ink: #8e3f4a;
+  --qui: #efeaf7;
+  --qui-ink: #634a8a;
+  --bio: #e6f1e5;
+  --bio-ink: #3d6b38;
+
+  /* Cenas das simulações e ilustrações */
+  --fogo: #f28a1f;
+  --fogo-claro: #ffc94d;
+  --ceu: #e8f2fb;
+  --nuvem: #ffffff;
+  --colina1: #d7ead2;
+  --colina2: #b6d9aa;
+  --arvore: #80c07b;
+  --tronco: #9a7a5a;
+  --gelo: #e2f1fa;
+  --gelo-linha: #bfdcef;
+  --caixa: #e2ab70;
+  --caixa-esc: #b8804a;
+  --vel: #3a6fa8;
+  --grav: #b7792a;
+  --earth: #cfe3e6;
+  --earth-line: #a9c7cc;
+  --land: #d9e7cf;
+
+  /* Biomas: cor do mapa e versão escura para texto */
+  --AMZ: #3fa45b;
+  --MAT: #2e9c8a;
+  --CER: #e2a93b;
+  --CAAT: #e0794d;
+  --PMP: #a3c14a;
+  --PTN: #3d8fd6;
+  --AMZ-ink: #2f6b33;
+  --MAT-ink: #2a6b5c;
+  --CER-ink: #7a5a16;
+  --CAAT-ink: #8a4a2e;
+  --PMP-ink: #566619;
+  --PTN-ink: #2e5c88;
+
+  /* Tipografia e medidas */
+  --serif: "Literata", Georgia, "Times New Roman", serif;
+  --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --read: 680px;
+  --wide: 980px;
+  --page: 1240px;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16181b;
+    --surface: #1f2226;
+    --line: #2e3237;
+    --ink: #e6e7e9;
+    --muted: #9aa0a7;
+    --faixa: #23272d;
+    --faixa-txt: #e6e7e9;
+
+    --fis: #1c2632;
+    --fis-ink: #9cc2e8;
+    --geo: #29251c;
+    --geo-ink: #e3c98f;
+    --mat: #2d2023;
+    --mat-ink: #eab3bb;
+    --qui: #25212e;
+    --qui-ink: #c8b5e6;
+    --bio: #1d281e;
+    --bio-ink: #a9d3a2;
+
+    --ceu: #17212b;
+    --nuvem: #263342;
+    --colina1: #1d2b23;
+    --colina2: #243c2b;
+    --arvore: #3d6b43;
+    --tronco: #5b4938;
+    --gelo: #1d2f3d;
+    --gelo-linha: #2b4558;
+    --caixa: #b98451;
+    --caixa-esc: #8a5f35;
+    --vel: #8bb8ec;
+    --grav: #e5b06a;
+    --earth: #22363a;
+    --earth-line: #35545a;
+    --land: #2b3a2c;
+
+    --AMZ: #3c9655;
+    --MAT: #2b8a7b;
+    --CER: #c99636;
+    --CAAT: #c96e48;
+    --PMP: #93ad43;
+    --PTN: #3a7fc0;
+    --AMZ-ink: #a8d6a2;
+    --MAT-ink: #98d3c1;
+    --CER-ink: #ead39a;
+    --CAAT-ink: #efbfa8;
+    --PMP-ink: #d3e3a0;
+    --PTN-ink: #b0cfec;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #16181b;
+  --surface: #1f2226;
+  --line: #2e3237;
+  --ink: #e6e7e9;
+  --muted: #9aa0a7;
+  --faixa: #23272d;
+  --faixa-txt: #e6e7e9;
+
+  --fis: #1c2632;
+  --fis-ink: #9cc2e8;
+  --geo: #29251c;
+  --geo-ink: #e3c98f;
+  --mat: #2d2023;
+  --mat-ink: #eab3bb;
+  --qui: #25212e;
+  --qui-ink: #c8b5e6;
+  --bio: #1d281e;
+  --bio-ink: #a9d3a2;
+
+  --ceu: #17212b;
+  --nuvem: #263342;
+  --colina1: #1d2b23;
+  --colina2: #243c2b;
+  --arvore: #3d6b43;
+  --tronco: #5b4938;
+  --gelo: #1d2f3d;
+  --gelo-linha: #2b4558;
+  --caixa: #b98451;
+  --caixa-esc: #8a5f35;
+  --vel: #8bb8ec;
+  --grav: #e5b06a;
+  --earth: #22363a;
+  --earth-line: #35545a;
+  --land: #2b3a2c;
+
+  --AMZ: #3c9655;
+  --MAT: #2b8a7b;
+  --CER: #c99636;
+  --CAAT: #c96e48;
+  --PMP: #93ad43;
+  --PTN: #3a7fc0;
+  --AMZ-ink: #a8d6a2;
+  --MAT-ink: #98d3c1;
+  --CER-ink: #ead39a;
+  --CAAT-ink: #efbfa8;
+  --PMP-ink: #d3e3a0;
+  --PTN-ink: #b0cfec;
+
+  color-scheme: dark;
+}

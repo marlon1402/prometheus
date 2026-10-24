@@ -1,0 +1,56 @@
+---
+// Alterna entre claro e escuro. Sem escolha salva, segue o sistema.
+// O tema inicial é aplicado antes da pintura por um script no <head> (Base.astro).
+---
+
+<button class="ico" type="button" data-botao-tema aria-label="Mudar para o modo escuro">
+  <svg class="sol" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
+    <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path>
+    </g>
+  </svg>
+  <svg class="lua" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+    <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
+  </svg>
+</button>
+
+<style>
+  .lua {
+    display: none;
+  }
+  :global(:root[data-escuro]) .sol {
+    display: none;
+  }
+  :global(:root[data-escuro]) .lua {
+    display: inline;
+  }
+</style>
+
+<script>
+  const raiz = document.documentElement;
+  const sistema = matchMedia('(prefers-color-scheme: dark)');
+  const efetivo = () => raiz.dataset.theme ?? (sistema.matches ? 'dark' : 'light');
+
+  function sincronizar() {
+    const escuro = efetivo() === 'dark';
+    raiz.toggleAttribute('data-escuro', escuro);
+    for (const botao of document.querySelectorAll('[data-botao-tema]')) {
+      botao.setAttribute('aria-label', escuro ? 'Mudar para o modo claro' : 'Mudar para o modo escuro');
+    }
+  }
+
+  for (const botao of document.querySelectorAll('[data-botao-tema]')) {
+    botao.addEventListener('click', () => {
+      const novo = efetivo() === 'dark' ? 'light' : 'dark';
+      raiz.dataset.theme = novo;
+      try {
+        localStorage.setItem('tema', novo);
+      } catch {}
+      sincronizar();
+    });
+  }
+
+  sistema.addEventListener('change', sincronizar);
+  sincronizar();
+</script>

@@ -1,0 +1,37 @@
+---
+// Fontes hospedadas no próprio site (public/fonts), sem Google Fonts:
+// nenhuma requisição sai para terceiros. Arquivos variáveis do Fontsource,
+// só com o subconjunto latino. Licenças em public/fonts/OFL-*.txt.
+import { url } from '../lib/url';
+
+const literata = url('fonts/literata-normal.woff2');
+const literataItalico = url('fonts/literata-italic.woff2');
+const instrument = url('fonts/instrument-sans.woff2');
+
+const css = `
+@font-face {
+  font-family: "Literata";
+  src: url("${literata}") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Literata";
+  src: url("${literataItalico}") format("woff2");
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("${instrument}") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}`;
+---
+
+<link rel="preload" href={literata} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={instrument} as="font" type="font/woff2" crossorigin />
+<style is:inline set:html={css} />

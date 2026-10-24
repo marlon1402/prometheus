@@ -1,0 +1,75 @@
+---
+import { url } from '../lib/url';
+import { SITE } from '../site';
+---
+
+<footer class="rodape">
+  <div>
+    <span class="marca">Prometheus</span>
+    <nav aria-label="Rodapé">
+      <a href={url('conteudos/')}>Conteúdos</a>
+      <a href={url('sobre/')}>Sobre</a>
+      <a href={SITE.github} target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <p>
+      Gratuito, sem cadastro e sem anúncios. Textos sob
+      <a href={`${SITE.github}/blob/main/LICENSE-CONTENT`} target="_blank" rel="noopener license">CC BY-SA 4.0</a>
+      e código sob <a href={`${SITE.github}/blob/main/LICENSE`} target="_blank" rel="noopener license">MIT</a>.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    border-top: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  .rodape > div {
+    max-width: var(--page);
+    margin: 0 auto;
+    padding: 32px 32px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    align-items: baseline;
+  }
+
+  .marca {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+
+  nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  nav a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--ink);
+  }
+
+  p {
+    margin: 0;
+    flex-basis: 100%;
+  }
+
+  p a {
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 820px) {
+    .rodape > div {
+      padding: 28px 20px 36px;
+    }
+  }
+</style>
