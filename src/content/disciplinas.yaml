@@ -1,0 +1,32 @@
+# Disciplinas do site. A chave é o id e o nome da pasta em src/content/.
+# Uma disciplina aparece como “Em breve” enquanto não tiver lições publicadas.
+
+fisica:
+  nome: Física
+  resumo: Movimento, forças e energia.
+  ordem: 1
+  cor: fis
+
+geografia:
+  nome: Geografia
+  resumo: O território e a natureza do Brasil.
+  ordem: 2
+  cor: geo
+
+matematica:
+  nome: Matemática
+  resumo: A linguagem das ciências.
+  ordem: 3
+  cor: mat
+
+quimica:
+  nome: Química
+  resumo: Do que tudo é feito.
+  ordem: 4
+  cor: qui
+
+biologia:
+  nome: Biologia
+  resumo: A vida, das células aos ecossistemas.
+  ordem: 5
+  cor: bio
