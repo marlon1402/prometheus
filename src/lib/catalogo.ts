@@ -14,6 +14,13 @@ export const disciplinaId = (id: string) => id.split('/')[0];
 /** Id do módulo de uma lição: as duas primeiras pastas. */
 export const moduloId = (licao: Licao) => licao.id.split('/').slice(0, 2).join('/');
 
+/** Rótulo de cada nível, como aparece nas listas. */
+export const NIVEIS: Record<Licao['data']['nivel'], string> = {
+  fundamental: 'Fundamental',
+  'fundamental-medio': 'Fundamental ao médio',
+  medio: 'Médio',
+};
+
 /** Endereço da página de um módulo ou de uma lição. */
 export const rota = (entrada: Modulo | Licao) => url(`${entrada.id}/`);
 

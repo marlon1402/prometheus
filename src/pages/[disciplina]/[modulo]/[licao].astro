@@ -1,0 +1,19 @@
+---
+import { render } from 'astro:content';
+import Licao from '../../../layouts/Licao.astro';
+import { licoes } from '../../../lib/catalogo';
+
+export async function getStaticPaths() {
+  return (await licoes()).map((licao) => {
+    const [disciplina, modulo, slug] = licao.id.split('/');
+    return { params: { disciplina, modulo, licao: slug }, props: { licao } };
+  });
+}
+
+const { licao } = Astro.props;
+const { Content, headings } = await render(licao);
+---
+
+<Licao licao={licao} headings={headings}>
+  <Content />
+</Licao>

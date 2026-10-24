@@ -1,0 +1,12 @@
+---
+import PaginaConteudos from '../../components/PaginaConteudos.astro';
+import { disciplinas } from '../../lib/catalogo';
+
+export async function getStaticPaths() {
+  return (await disciplinas()).map((d) => ({ params: { disciplina: d.id } }));
+}
+
+const { disciplina } = Astro.params;
+---
+
+<PaginaConteudos filtro={disciplina} />

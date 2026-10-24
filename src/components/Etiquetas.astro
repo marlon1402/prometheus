@@ -1,0 +1,94 @@
+---
+// Etiquetas de pré-requisito de um módulo. Levam ao módulo indicado quando ele
+// já tem lições publicadas; senão, aparecem apagadas.
+import { prerequisitos, rota, type Modulo } from '../lib/catalogo';
+
+interface Props {
+  modulo: Modulo;
+  rotulo: string;
+  /** Texto quando não há pré-requisitos. Sem ele, nada é exibido. */
+  vazio?: string;
+  class?: string;
+}
+
+const { modulo, rotulo, vazio, class: classe } = Astro.props;
+const itens = await prerequisitos(modulo);
+---
+
+{
+  (itens.length > 0 || vazio) && (
+    <span class:list={['pre', classe]}>
+      <span class="pre-rot">{rotulo}</span>
+      {itens.length === 0 && <span class="pre-nenhum">{vazio}</span>}
+      {itens.map(({ modulo: m, disciplina: d, publicado }) => {
+        const bolinha = `background: var(--${d.data.cor}-ink)`;
+        return publicado ? (
+          <a class="tag" href={rota(m)} title={`${d.data.nome} · ${m.data.titulo}`}>
+            <i style={bolinha} />
+            {m.data.titulo}
+          </a>
+        ) : (
+          <span class="tag off" title={`${d.data.nome} · ${m.data.titulo} (em breve)`}>
+            <i style={bolinha} />
+            {m.data.titulo}
+          </span>
+        );
+      })}
+    </span>
+  )
+}
+
+<style>
+  .pre {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--sans);
+  }
+
+  .pre-rot {
+    margin-right: 4px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .pre-nenhum {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--ink);
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  a.tag:hover {
+    background: color-mix(in srgb, var(--surface) 70%, var(--line));
+  }
+
+  .tag i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex: none;
+  }
+
+  .tag.off {
+    color: var(--muted);
+  }
+
+  .tag.off i {
+    opacity: 0.5;
+  }
+</style>

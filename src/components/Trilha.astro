@@ -1,0 +1,43 @@
+---
+// Trilha “Física / Leis de Newton” no topo de módulos e lições.
+// A disciplina leva ao filtro dela em Conteúdos.
+import { rota, type Disciplina, type Modulo } from '../lib/catalogo';
+import { url } from '../lib/url';
+
+interface Props {
+  disciplina: Disciplina;
+  /** Na página de uma lição, o módulo vira link. Na do módulo, é só texto. */
+  modulo: Modulo;
+  moduloComLink?: boolean;
+}
+
+const { disciplina, modulo, moduloComLink = false } = Astro.props;
+---
+
+<nav class="trilha" aria-label="Você está em">
+  <a href={url(`conteudos/${disciplina.id}/`)}>{disciplina.data.nome}</a>
+  <span aria-hidden="true">/</span>
+  {moduloComLink ? <a href={rota(modulo)}>{modulo.data.titulo}</a> : <span aria-current="page">{modulo.data.titulo}</span>}
+</nav>
+
+<style>
+  .trilha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  a {
+    color: var(--cor-ink, var(--ink));
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

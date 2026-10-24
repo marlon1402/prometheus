@@ -1,0 +1,151 @@
+---
+// Página de abertura de um módulo: gancho, pré-requisitos e o caminho completo.
+// Só módulos com lições publicadas ganham página.
+import { render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Etiquetas from '../../../components/Etiquetas.astro';
+import Trilha from '../../../components/Trilha.astro';
+import { disciplinaDe, licoes, modulos, NIVEIS, publicado, rota, type Modulo } from '../../../lib/catalogo';
+
+export async function getStaticPaths() {
+  const lista: Modulo[] = [];
+  for (const m of await modulos()) if (await publicado(m)) lista.push(m);
+  return lista.map((modulo) => {
+    const [disciplina, slug] = modulo.id.split('/');
+    return { params: { disciplina, modulo: slug }, props: { modulo } };
+  });
+}
+
+const { modulo } = Astro.props;
+const disciplina = await disciplinaDe(modulo);
+const lista = await licoes(modulo.id);
+const { Content } = await render(modulo);
+const cor = disciplina.data.cor;
+---
+
+<Base titulo={modulo.data.titulo} descricao={modulo.data.descricao}>
+  <article class="modulo leitura" style={`--cor: var(--${cor}); --cor-ink: var(--${cor}-ink)`}>
+    <Trilha disciplina={disciplina} modulo={modulo} />
+    <h1>{modulo.data.titulo}</h1>
+    <p class="lede">{modulo.data.gancho ?? modulo.data.descricao}</p>
+    <p class="meta">{lista.length === 1 ? '1 lição' : `${lista.length} lições`}</p>
+    <Etiquetas modulo={modulo} rotulo="Pré-requisitos" vazio="Nenhum: dá para começar por aqui." class="pre-modulo" />
+
+    <div class="corpo">
+      <Content />
+    </div>
+
+    <ol class="lista">
+      {
+        lista.map((l) => (
+          <li>
+            <a class="tit" href={rota(l)}>
+              {l.data.titulo}
+            </a>
+            <span class="desc">
+              {l.data.descricao}{' '}
+              <span class="nivel">
+                {NIVEIS[l.data.nivel]} · {l.data.duracao} min{l.data.rascunho && ' · rascunho'}
+              </span>
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+
+    <a class="btn" href={rota(lista[0])}>Começar pela primeira lição</a>
+  </article>
+</Base>
+
+<style>
+  .modulo {
+    padding: 56px 24px 120px;
+  }
+
+  h1 {
+    margin: 0 0 20px;
+    font-weight: 500;
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .lede {
+    margin: 0 0 12px;
+    font-size: 23px;
+    color: var(--muted);
+  }
+
+  .meta {
+    margin: 0 0 16px;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  .modulo :global(.pre-modulo) {
+    margin-bottom: 32px;
+  }
+
+  .corpo :global(p) {
+    margin: 0 0 22px;
+  }
+
+  .lista {
+    list-style: none;
+    margin: 8px 0 40px;
+    padding: 0;
+    counter-reset: l;
+  }
+
+  .lista li {
+    counter-increment: l;
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 2px 16px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .lista li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .lista li::before {
+    content: counter(l);
+    grid-row: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--cor-ink);
+    color: var(--bg);
+    font: 600 15px var(--sans);
+  }
+
+  .tit {
+    font-size: 21px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .tit:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+  }
+
+  .desc {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .nivel {
+    font-family: var(--sans);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+</style>
