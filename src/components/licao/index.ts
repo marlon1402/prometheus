@@ -15,6 +15,7 @@ import Numeros from './Numeros.astro';
 import Pares from './Pares.astro';
 import Pergunta from './Pergunta.astro';
 import Quadro from './Quadro.astro';
+import Ref from './Ref.astro';
 import SaibaMais from './SaibaMais.astro';
 
 export const componentesDaLicao = {
@@ -28,5 +29,6 @@ export const componentesDaLicao = {
   Pares,
   Pergunta,
   Quadro,
+  Ref,
   SaibaMais,
 };

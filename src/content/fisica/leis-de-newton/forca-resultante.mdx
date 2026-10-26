@@ -4,6 +4,11 @@ descricao: Num cabo de guerra, dois times puxam a mesma corda com toda a força,
 ordem: 3
 nivel: fundamental-medio
 duracao: 12
+referencias:
+  - halliday
+  - nussenzveig
+complementares:
+  - phet-forcas
 ---
 
 import Formula from '../../../components/licao/Formula.astro';
@@ -15,7 +20,7 @@ O que decide o resultado não é a força de cada time sozinho, e sim a combina�
 
 ## Somando forças
 
-Quando várias forças agem sobre o mesmo corpo, o efeito é o mesmo que o de uma única força, chamada *força resultante* (<Tex tex="F_r" />). Encontrar a resultante é somar as forças, mas como elas são vetores, a soma depende das direções.
+Quando várias forças agem sobre o mesmo corpo, o efeito é o mesmo que o de uma única força, chamada *força resultante* (<Tex tex="F_r" />). Encontrar a resultante é somar as forças, mas como elas são vetores, a soma depende das direções.<Ref id="halliday" />
 
 **Mesma direção e mesmo sentido:** as intensidades se somam. Duas pessoas empurrando um carro para a frente, uma com 300 N e outra com 200 N, equivalem a uma única força de 500 N para a frente.
 
@@ -31,7 +36,7 @@ Quando as forças não estão na mesma linha, a resultante não é a simples som
 
 <Formula tex="F_r^2 = 3{.}000^2 + 4{.}000^2 \quad\Rightarrow\quad F_r = 5{.}000\,\text{N}" legenda="a resultante aponta entre o leste e o norte" />
 
-Para forças em qualquer ângulo, a resultante é a diagonal do paralelogramo formado por elas (a *regra do paralelogramo*). Outra forma de pensar é separar cada força em componentes horizontal e vertical, somar as componentes de cada eixo e só então juntar as duas somas.
+Para forças em qualquer ângulo, a resultante é a diagonal do paralelogramo formado por elas (a *regra do paralelogramo*)<Ref id="nussenzveig" />. Outra forma de pensar é separar cada força em componentes horizontal e vertical, somar as componentes de cada eixo e só então juntar as duas somas.
 
 <CordasEmAngulo />
 

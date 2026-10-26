@@ -3,16 +3,18 @@
 // classe .largo (simulações, ilustrações, mapas) ocupam uma largura maior.
 import type { MarkdownHeading } from 'astro';
 import Base from './Base.astro';
+import Fontes from '../components/licao/Fontes.astro';
 import NavLicao from '../components/NavLicao.astro';
 import Trilha from '../components/Trilha.astro';
-import { disciplinaDe, moduloDe, type Licao } from '../lib/catalogo';
+import { disciplinaDe, moduloDe, type Fonte, type Licao } from '../lib/catalogo';
 
 interface Props {
   licao: Licao;
   headings: MarkdownHeading[];
+  fontes: { referencias: Fonte[]; complementares: Fonte[] };
 }
 
-const { licao, headings } = Astro.props;
+const { licao, headings, fontes } = Astro.props;
 const [disciplina, modulo] = await Promise.all([disciplinaDe(licao), moduloDe(licao)]);
 const partes = headings.filter((h) => h.depth === 2);
 const cor = disciplina.data.cor;
@@ -43,6 +45,8 @@ const cor = disciplina.data.cor;
     <div class="corpo prosa">
       <slot />
     </div>
+
+    <Fontes {...fontes} />
 
     <footer class="leitura">
       <NavLicao licao={licao} modulo={modulo} />

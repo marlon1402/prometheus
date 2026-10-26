@@ -1,0 +1,173 @@
+# Fontes citadas nas lições. A chave é o id usado no cabeçalho da lição
+# (referencias e complementares) e nas chamadas do texto: <Ref id="halliday" />.
+#
+# Os campos seguem a ordem da referência ABNT (NBR 6023):
+#   AUTOR. Capítulo. In: AUTOR. Título: subtítulo. Nota. Edição. Local: Editora, ano. Trecho.
+#   Disponível em: url. Acesso em: data.
+# Autores no formato “SOBRENOME, Nome”; instituições em maiúsculas.
+# Itens marcados com “conferir” dependem do exemplar ou da versão consultada.
+
+# Obras-base
+
+halliday:
+  autores: ["HALLIDAY, David", "RESNICK, Robert", "WALKER, Jearl"]
+  titulo: Fundamentos de física
+  subtitulo: mecânica
+  edicao: 10. ed. # conferir
+  local: Rio de Janeiro
+  editora: LTC
+  ano: 2016 # conferir
+  trecho: v. 1
+
+nussenzveig:
+  autores: ["NUSSENZVEIG, H. Moysés"]
+  titulo: Curso de física básica
+  subtitulo: mecânica
+  edicao: 5. ed. # conferir
+  local: São Paulo
+  editora: Blucher
+  ano: 2013 # conferir
+  trecho: v. 1
+
+# Fontes primárias
+
+galileu:
+  autores: ["GALILEI, Galileo"]
+  titulo: Two new sciences
+  subtitulo: including centers of gravity and force of percussion
+  nota: 'Tradução: Stillman Drake'
+  local: Madison
+  editora: University of Wisconsin Press
+  ano: 1974
+
+newton-principia:
+  autores: ["NEWTON, Isaac"]
+  titulo: The Principia
+  subtitulo: mathematical principles of natural philosophy
+  nota: 'Tradução: I. Bernard Cohen e Anne Whitman'
+  local: Berkeley
+  editora: University of California Press
+  ano: 1999
+
+# Feynman Lectures, edição online
+
+feynman-9:
+  autores: ["FEYNMAN, Richard P.", "LEIGHTON, Robert B.", "SANDS, Matthew"]
+  capitulo: Newton’s laws of dynamics
+  titulo: The Feynman Lectures on Physics
+  edicao: New millennium ed.
+  local: Pasadena
+  editora: California Institute of Technology
+  ano: 2013 # conferir
+  trecho: v. 1, cap. 9
+  url: https://www.feynmanlectures.caltech.edu/I_09.html
+  acesso: 26 out. 2026
+
+feynman-11:
+  autores: ["FEYNMAN, Richard P.", "LEIGHTON, Robert B.", "SANDS, Matthew"]
+  capitulo: Vectors
+  titulo: The Feynman Lectures on Physics
+  edicao: New millennium ed.
+  local: Pasadena
+  editora: California Institute of Technology
+  ano: 2013 # conferir
+  trecho: v. 1, cap. 11
+  url: https://www.feynmanlectures.caltech.edu/I_11.html
+  acesso: 26 out. 2026
+
+feynman-12:
+  autores: ["FEYNMAN, Richard P.", "LEIGHTON, Robert B.", "SANDS, Matthew"]
+  capitulo: Characteristics of force
+  titulo: The Feynman Lectures on Physics
+  edicao: New millennium ed.
+  local: Pasadena
+  editora: California Institute of Technology
+  ano: 2013 # conferir
+  trecho: v. 1, cap. 12
+  url: https://www.feynmanlectures.caltech.edu/I_12.html
+  acesso: 26 out. 2026
+
+openstax-up1:
+  autores: ["LING, Samuel J.", "SANNY, Jeff", "MOEBS, William"]
+  capitulo: Newton’s laws of motion
+  titulo: University Physics
+  local: Houston
+  editora: OpenStax
+  ano: 2016
+  trecho: v. 1, cap. 5
+  url: https://openstax.org/books/university-physics-volume-1/pages/5-introduction
+  acesso: 26 out. 2026
+
+# Documentos e páginas institucionais
+
+bipm-si:
+  autores: ["BUREAU INTERNATIONAL DES POIDS ET MESURES"]
+  titulo: The International System of Units (SI)
+  edicao: 9th ed. # conferir a versão da brochura
+  local: Sèvres
+  editora: BIPM
+  ano: 2019
+  url: https://www.bipm.org/en/publications/si-brochure
+  acesso: 26 out. 2026
+
+gref-mecanica:
+  autores: ["GRUPO DE REELABORAÇÃO DO ENSINO DE FÍSICA"]
+  titulo: Leituras de física
+  subtitulo: mecânica
+  local: São Paulo
+  editora: Instituto de Física da USP
+  url: https://fep.if.usp.br/~profis/gref.html # conferir
+  acesso: 26 out. 2026
+
+oms-transito:
+  autores: ["WORLD HEALTH ORGANIZATION"]
+  titulo: Road traffic injuries
+  nota: Fact sheet
+  local: Geneva
+  editora: WHO
+  url: https://www.who.int/news-room/fact-sheets/detail/road-traffic-injuries
+  acesso: 26 out. 2026
+
+nasa-voyager:
+  autores: ["NASA"]
+  titulo: Voyager
+  nota: Página da missão
+  url: https://science.nasa.gov/mission/voyager/
+  acesso: 26 out. 2026
+
+nasa-lua:
+  autores: ["NASA"]
+  titulo: Moon fact sheet
+  local: Greenbelt
+  editora: NASA Space Science Data Coordinated Archive
+  url: https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html
+  acesso: 26 out. 2026
+
+nasa-terceira-lei:
+  autores: ["NASA"]
+  titulo: Newton’s third law of motion
+  local: Cleveland
+  editora: Glenn Research Center
+  url: https://www.grc.nasa.gov/www/k-12/airplane/newton3.html # conferir
+  acesso: 26 out. 2026
+
+# Simulações
+
+phet-forcas:
+  autores: ["PHET INTERACTIVE SIMULATIONS"]
+  titulo: Forças e movimento
+  subtitulo: noções básicas
+  nota: Simulação interativa
+  local: Boulder
+  editora: University of Colorado
+  url: https://phet.colorado.edu/pt_BR/simulations/forces-and-motion-basics
+  acesso: 26 out. 2026
+
+phet-vetores:
+  autores: ["PHET INTERACTIVE SIMULATIONS"]
+  titulo: Adição de vetores
+  nota: Simulação interativa
+  local: Boulder
+  editora: University of Colorado
+  url: https://phet.colorado.edu/pt_BR/simulations/vector-addition
+  acesso: 26 out. 2026

@@ -1,11 +1,13 @@
 // Consultas ao catálogo de conteúdo. Páginas e componentes usam estas funções
 // em vez de chamar getCollection diretamente, para que a ordem, os rascunhos
 // e a validação sejam tratados num lugar só.
-import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import { getCollection, getEntries, getEntry, type CollectionEntry } from 'astro:content';
+import { citacoes } from './fontes';
 import { url } from './url';
 
 export type Disciplina = CollectionEntry<'disciplinas'>;
 export type Modulo = CollectionEntry<'modulos'>;
+export type Fonte = CollectionEntry<'fontes'>;
 /** Qualquer lição do catálogo, inclusive as “em breve”, que ainda não têm texto. */
 export type EntradaLicao = CollectionEntry<'licoes'>;
 type DadosLicao = EntradaLicao['data'];
@@ -43,17 +45,19 @@ let validacao: Promise<void> | undefined;
 
 /**
  * Confere o que o esquema não consegue ver: pastas sem disciplina ou módulo
- * correspondente e ordens repetidas. Roda uma vez por build; no ambiente de
+ * correspondente, ordens repetidas e fontes sem chamada no texto (ou chamadas
+ * sem fonte). Roda uma vez por build; no ambiente de
  * desenvolvimento, roda a cada consulta, porque o conteúdo muda enquanto o
  * servidor está aberto e um erro já corrigido não pode ficar guardado.
  */
 function validar() {
   if (import.meta.env.DEV) validacao = undefined;
   validacao ??= (async () => {
-    const [ds, ms, ls] = await Promise.all([
+    const [ds, ms, ls, fs] = await Promise.all([
       getCollection('disciplinas'),
       getCollection('modulos'),
       getCollection('licoes'),
+      getCollection('fontes'),
     ]);
     const erros: string[] = [];
     const idsDisciplinas = new Set(ds.map((d) => d.id));
@@ -80,6 +84,27 @@ function validar() {
     for (const l of ls) {
       for (const { id } of l.data.prerequisitos) {
         if (!idsLicoes.has(id)) erros.push(`A lição “${l.id}” tem como pré-requisito “${id}”, que não existe.`);
+      }
+    }
+
+    const idsFontes = new Set(fs.map((f) => f.id));
+    for (const l of ls) {
+      const referencias = l.data.referencias.map((r) => r.id);
+      const complementares = l.data.complementares.map((r) => r.id);
+      const chamadas = citacoes(l.body ?? '');
+      for (const id of new Set([...referencias, ...complementares])) {
+        if (!idsFontes.has(id)) erros.push(`A lição “${l.id}” cita a fonte “${id}”, que não existe em fontes.yaml.`);
+      }
+      for (const id of chamadas) {
+        if (!referencias.includes(id)) {
+          erros.push(`A lição “${l.id}” tem <Ref id="${id}" />, mas “${id}” não está nas referencias do cabeçalho.`);
+        }
+      }
+      for (const id of referencias) {
+        if (!chamadas.includes(id)) {
+          erros.push(`A fonte “${id}” está nas referencias de “${l.id}” sem nenhuma chamada no texto. Cite-a ou mova-a para complementares.`);
+        }
+        if (complementares.includes(id)) erros.push(`A fonte “${id}” está nas referencias e nas complementares de “${l.id}”.`);
       }
     }
 
@@ -157,6 +182,21 @@ export async function prerequisitos(modulo: Modulo) {
       return { modulo: m, disciplina: await disciplinaDe(m), publicado: await publicado(m) };
     }),
   );
+}
+
+/**
+ * Fontes de uma lição. As referências vêm na ordem da primeira chamada no
+ * texto, que é a numeração usada por <Ref> e pela lista no fim da lição.
+ */
+export async function fontesDa(licao: Licao) {
+  await validar();
+  const ordem = citacoes(licao.body ?? '');
+  const [referencias, complementares] = await Promise.all([
+    getEntries(licao.data.referencias),
+    getEntries(licao.data.complementares),
+  ]);
+  referencias.sort((a, b) => ordem.indexOf(a.id) - ordem.indexOf(b.id));
+  return { referencias, complementares };
 }
 
 /**

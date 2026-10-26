@@ -2,6 +2,7 @@
 //
 // src/content/
 // ├── disciplinas.yaml             uma entrada por disciplina
+// ├── fontes.yaml                  referências citadas nas lições, em ABNT
 // └── <disciplina>/<modulo>/
 //     ├── index.mdx                página de abertura do módulo
 //     └── <licao>.mdx              uma lição por arquivo
@@ -44,6 +45,32 @@ const modulos = defineCollection({
   }),
 });
 
+const fontes = defineCollection({
+  loader: file(`${BASE}/fontes.yaml`),
+  schema: z
+    .object({
+      /** No formato “SOBRENOME, Nome”. Para instituições, o nome em maiúsculas: ["NASA"]. */
+      autores: z.array(z.string()).min(1),
+      /** Título do capítulo, quando a fonte é parte de uma obra maior (sai como “In:”). */
+      capitulo: z.string().optional(),
+      titulo: z.string(),
+      subtitulo: z.string().optional(),
+      /** Tradução ou outra observação: “Tradução: Stillman Drake”. */
+      nota: z.string().optional(),
+      edicao: z.string().optional(),
+      local: z.string().optional(),
+      editora: z.string().optional(),
+      /** Ano, ou data estimada entre colchetes, como “[20--]”. */
+      ano: z.union([z.number().int(), z.string()]).optional(),
+      /** Volume, capítulo ou páginas consultadas: “v. 1, cap. 12”. */
+      trecho: z.string().optional(),
+      url: z.url().optional(),
+      /** Data de acesso, obrigatória para fontes online: “26 out. 2026”. */
+      acesso: z.string().optional(),
+    })
+    .refine((f) => !f.url || f.acesso, { path: ['acesso'], message: 'Fontes online precisam da data de acesso.' }),
+});
+
 const licoes = defineCollection({
   loader: glob({
     base: BASE,
@@ -68,6 +95,13 @@ const licoes = defineCollection({
         .default([]),
       /** Lições de outros módulos que convém ler antes. */
       prerequisitos: z.array(reference('licoes')).default([]),
+      /**
+       * Fontes que sustentam o texto. Cada uma precisa de ao menos uma chamada
+       * <Ref id="…" /> no texto, e a numeração segue a ordem das chamadas.
+       */
+      referencias: z.array(reference('fontes')).default([]),
+      /** Leituras e simulações para ir além, sem chamada no texto. */
+      complementares: z.array(reference('fontes')).default([]),
       /** Rascunhos aparecem só no ambiente de desenvolvimento. */
       rascunho: z.boolean().default(false),
       /**
@@ -86,4 +120,4 @@ const licoes = defineCollection({
     }),
 });
 
-export const collections = { disciplinas, modulos, licoes };
+export const collections = { disciplinas, fontes, modulos, licoes };

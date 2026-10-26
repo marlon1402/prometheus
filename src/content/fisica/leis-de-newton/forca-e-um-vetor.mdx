@@ -4,6 +4,11 @@ descricao: Imagine que alguém diz “empurrei a caixa com 10 newtons”. Você 
 ordem: 2
 nivel: fundamental-medio
 duracao: 10
+referencias:
+  - halliday
+  - feynman-11
+complementares:
+  - phet-vetores
 ---
 
 import Formula from '../../../components/licao/Formula.astro';
@@ -20,7 +25,7 @@ Toda força tem três características:
 - **Direção**: a linha em que ela age, como horizontal, vertical ou inclinada a 30°.
 - **Sentido**: para qual lado dessa linha ela aponta, como para a direita ou para a esquerda, para cima ou para baixo.
 
-Grandezas que precisam dessas três informações se chamam *vetoriais*. Força é uma delas, assim como velocidade e aceleração. Já massa, tempo e temperatura são *escalares*: um número com unidade basta.
+Grandezas que precisam dessas três informações se chamam *vetoriais*. Força é uma delas, assim como velocidade e aceleração. Já massa, tempo e temperatura são *escalares*: um número com unidade basta.<Ref id="halliday" />
 
 ## Como desenhar uma força
 
@@ -47,7 +52,7 @@ Para uma força <Tex tex="F" /> inclinada de um ângulo <Tex tex="\theta" /> em 
 
 <Formula tex="F_y = F \cdot \operatorname{sen}\theta" legenda="componente vertical" />
 
-Quanto mais deitada a força, maior a componente horizontal. Quanto mais em pé, maior a vertical.
+Quanto mais deitada a força, maior a componente horizontal. Quanto mais em pé, maior a vertical.<Ref id="feynman-11" />
 
 <ForcaVetor />
 

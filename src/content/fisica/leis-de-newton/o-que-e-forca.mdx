@@ -5,6 +5,13 @@ ordem: 1
 nivel: fundamental
 duracao: 12
 bncc: [EF09CI01]
+referencias:
+  - feynman-12
+  - bipm-si
+complementares:
+  - halliday
+  - gref-mecanica
+  - phet-forcas
 ---
 
 import EfeitosDaForca from '../../../components/ilustracoes/fisica/EfeitosDaForca.astro';
@@ -19,7 +26,7 @@ import Dinamometro from '../../../sims/fisica/dinamometro/Dinamometro.astro';
 
 ## Força é uma interação
 
-Uma força sempre aparece entre dois corpos: quem empurra e quem é empurrado, quem puxa e quem é puxado. Quando você chuta uma bola, a força existe porque o seu pé e a bola estão interagindo. Quando o contato acaba, a força acaba também.
+Uma força sempre aparece entre dois corpos: quem empurra e quem é empurrado, quem puxa e quem é puxado. Quando você chuta uma bola, a força existe porque o seu pé e a bola estão interagindo. Quando o contato acaba, a força acaba também.<Ref id="feynman-12" />
 
 Por isso, força não é algo que um objeto “tem” ou “carrega”. Uma bola rolando não leva o chute dentro dela. Essa ideia parece estranha no começo, e vamos voltar a ela com calma na lição sobre inércia.
 
@@ -67,14 +74,14 @@ Outras agem mesmo com os corpos separados. A Terra puxa uma maçã que se solta 
 
 ## Como medir uma força
 
-A força é medida em *newtons* (N), em homenagem a Isaac Newton. Para ter uma ideia do tamanho de 1 newton: segurar uma maçã pequena, de cerca de 100 gramas, exige uma força de aproximadamente 1 N.
+A força é medida em *newtons* (N)<Ref id="bipm-si" />, em homenagem a Isaac Newton. Para ter uma ideia do tamanho de 1 newton: segurar uma maçã pequena, de cerca de 100 gramas, exige uma força de aproximadamente 1 N.
 
 <Formula tex="1\,\text{N} = 1\,\text{kg} \cdot \text{m/s}^2" legenda="1 newton é a força que acelera 1 kg em 1 m/s a cada segundo" />
 
 O instrumento que mede forças é o *dinamômetro*: uma mola presa a uma escala. Quanto maior a força que puxa a mola, mais ela estica, e a escala mostra o valor. Para molas comuns, o estiramento <Tex tex="x" /> é proporcional à força: <Tex tex="F = k \cdot x" />.
 
 <SaibaMais titulo="Por que a unidade se chama newton">
-  Isaac Newton (1643–1727) publicou em 1687 os *Princípios Matemáticos da Filosofia Natural*, o livro em que apresentou as três leis do movimento e a gravitação universal. O nome newton para a unidade de força foi adotado em 1948 e depois incorporado ao Sistema Internacional de Unidades, criado em 1960.
+  Isaac Newton (1643–1727) publicou em 1687 os *Princípios Matemáticos da Filosofia Natural*, o livro em que apresentou as três leis do movimento e a gravitação universal. O nome newton para a unidade de força foi adotado em 1948 e depois incorporado ao Sistema Internacional de Unidades, criado em 1960.<Ref id="bipm-si" />
 </SaibaMais>
 
 <Pergunta

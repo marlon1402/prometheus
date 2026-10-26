@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import Licao from '../../../layouts/Licao.astro';
 import { componentesDaLicao } from '../../../components/licao';
-import { licoes } from '../../../lib/catalogo';
+import { fontesDa, licoes } from '../../../lib/catalogo';
 
 export async function getStaticPaths() {
   return (await licoes()).map((licao) => {
@@ -12,9 +12,12 @@ export async function getStaticPaths() {
 }
 
 const { licao } = Astro.props;
+const fontes = await fontesDa(licao);
+// <Ref> numera as chamadas pela posição nesta lista, lida durante a renderização do texto.
+Astro.locals.referencias = fontes.referencias.map((f) => f.id);
 const { Content, headings } = await render(licao);
 ---
 
-<Licao licao={licao} headings={headings}>
+<Licao licao={licao} headings={headings} fontes={fontes}>
   <Content components={componentesDaLicao} />
 </Licao>

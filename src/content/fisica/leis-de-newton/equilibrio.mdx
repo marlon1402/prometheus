@@ -4,6 +4,11 @@ descricao: O livro em cima da mesa está parado. Mesmo assim, a Terra o puxa par
 ordem: 4
 nivel: fundamental-medio
 duracao: 12
+referencias:
+  - halliday
+  - nussenzveig
+complementares:
+  - gref-mecanica
 ---
 
 import Tex from '../../../components/licao/Tex.astro';
@@ -18,7 +23,7 @@ Um corpo está em *equilíbrio* quando a força resultante sobre ele é zero. As
 Na prática, isso quer dizer que as forças se compensam em cada direção:
 
 - a soma das forças horizontais é zero (<Tex tex="\Sigma F_x = 0" />);
-- a soma das forças verticais é zero (<Tex tex="\Sigma F_y = 0" />).
+- a soma das forças verticais é zero (<Tex tex="\Sigma F_y = 0" />).<Ref id="halliday" />
 
 No livro sobre a mesa, o peso para baixo é compensado pela força da mesa para cima. Na lâmpada, o peso é compensado pela tração do fio.
 
@@ -27,7 +32,7 @@ No livro sobre a mesa, o peso para baixo é compensado pela força da mesa para 
 O equilíbrio não é só para quem está parado:
 
 - **Equilíbrio estático:** o corpo está em repouso e continua em repouso. O livro na mesa, um quadro na parede.
-- **Equilíbrio dinâmico:** o corpo se move em linha reta com velocidade constante. Um paraquedista que já atingiu a velocidade máxima de queda, com a resistência do ar igual ao peso; um carro em velocidade constante numa estrada reta, com a força do motor compensando o atrito e a resistência do ar.
+- **Equilíbrio dinâmico:** o corpo se move em linha reta com velocidade constante. Um paraquedista que já atingiu a velocidade máxima de queda, com a resistência do ar igual ao peso; um carro em velocidade constante numa estrada reta, com a força do motor compensando o atrito e a resistência do ar.<Ref id="nussenzveig" />
 
 Nos dois casos, a resultante é zero. A diferença é só o estado em que o corpo já estava. Essa ideia, de que resultante zero não significa parado, é o centro da próxima lição, sobre inércia.
 

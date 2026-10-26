@@ -1,0 +1,34 @@
+---
+// Chamada numérica para uma fonte da lição: <Ref id="halliday" />.
+// O número vem da ordem das chamadas no texto (ver fontesDa em lib/catalogo.ts);
+// o link leva à referência completa na seção “Fontes”, no fim da lição.
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const n = (Astro.locals.referencias ?? []).indexOf(id) + 1;
+if (n === 0) throw new Error(`<Ref id="${id}" /> não corresponde a nenhuma referência desta lição.`);
+---
+
+<sup class="ref"><a href={`#fonte-${id}`} aria-label={`Fonte ${n}`}>{n}</a></sup>
+
+<style>
+  .ref {
+    margin-left: 0.1em;
+    font-family: var(--sans);
+    font-size: 0.65em;
+    font-weight: 600;
+    line-height: 0;
+  }
+
+  .ref a {
+    padding: 0 0.15em;
+    color: var(--cor-ink, var(--ink));
+    text-decoration: none;
+  }
+
+  .ref a:hover {
+    text-decoration: underline;
+  }
+</style>

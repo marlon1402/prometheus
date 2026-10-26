@@ -1,0 +1,97 @@
+---
+// Seção “Fontes” no fim da lição: as referências numeradas, na ordem das
+// chamadas <Ref> do texto, e as leituras para ir além. Formato ABNT (NBR 6023).
+import { abnt } from '../../lib/fontes';
+import type { Fonte } from '../../lib/catalogo';
+
+interface Props {
+  referencias: Fonte[];
+  complementares: Fonte[];
+}
+
+const { referencias, complementares } = Astro.props;
+// Só as referências são numeradas e têm âncora, porque só elas recebem chamadas.
+const grupos = [
+  { titulo: 'Referências', Lista: 'ol', fontes: referencias, ancora: true },
+  { titulo: 'Para ir além', Lista: 'ul', fontes: complementares, ancora: false },
+] as const;
+---
+
+{
+  (referencias.length > 0 || complementares.length > 0) && (
+    <section class="fontes leitura" aria-labelledby="titulo-fontes">
+      <h2 id="titulo-fontes">Fontes</h2>
+      {grupos.map(
+        ({ titulo, Lista, fontes, ancora }) =>
+          fontes.length > 0 && (
+            <>
+              <h3>{titulo}</h3>
+              <Lista>
+                {fontes.map((f) => {
+                  const r = abnt(f.data);
+                  return (
+                    // Numa linha só: a quebra viraria um espaço antes da pontuação.
+                    <li id={ancora ? `fonte-${f.id}` : undefined}>{r.antes}<strong>{r.titulo}</strong>{r.depois}{r.url && <> Disponível em: <a href={r.url}>{r.url}</a>. Acesso em: {r.acesso}.</>}</li>
+                  );
+                })}
+              </Lista>
+            </>
+          ),
+      )}
+    </section>
+  )
+}
+
+<style>
+  .fontes {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  h2 {
+    margin: 0 0 12px;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--ink);
+  }
+
+  h3 {
+    margin: 20px 0 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  ol,
+  ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding-left: 22px;
+  }
+
+  li {
+    overflow-wrap: anywhere;
+  }
+
+  li:target {
+    margin-inline: -6px;
+    padding-inline: 6px;
+    border-radius: 6px;
+    background: var(--cor, var(--surface));
+  }
+
+  strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  a {
+    color: inherit;
+  }
+</style>
